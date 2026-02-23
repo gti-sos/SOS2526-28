@@ -1,0 +1,20 @@
+{
+  "name": "sos2526-28-ajm",
+  "version": "0.0.0",
+  "description": "Proyecto de AJM",
+  "homepage": "https://github.com/gti-sos/SOS2526-28#readme",
+  "bugs": {
+    "url": "https://github.com/gti-sos/SOS2526-28/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gti-sos/SOS2526-28.git"
+  },
+  "license": "ISC",
+  "author": "Alberto Jiménez Mateos",
+  "type": "commonjs",
+  "main": "index-AJM.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
