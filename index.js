@@ -1,23 +1,35 @@
-const express = require('express');
-const cool = require('cool-ascii-faces');
-const path = require('path');
+//IMPORTACIONES
+import apiAJM from "./api-AJM.js";
+import express from 'express';
+import cool from 'cool-ascii-faces';
+import path from 'path'; // <-- Cambiado de require a import
+import { fileURLToPath } from 'url'; // <-- Necesario para fabricar __dirname
+
+//Módulos ES para poder usar __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
-//Para servir los archivos estáticos desde la carpeta "public"
+//Para utilizar los archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/about", (req, res) => {
-    res.sendFile(join(__dirname, 'public', 'about', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'about', 'index.html'));
     console.log("New request to /about");
 });
+
 
 //Ruta dinámica /cool
 app.get('/cool', (req, res) => {
     console.log("Requested /cool route");
     res.send(`<html><body><h1>Faces:</h1><p>${cool()}</p></body></html>`);
 });
+
+//NUESTRAS APIs
+apiAJM(app);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
