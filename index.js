@@ -8,6 +8,11 @@ const port = process.env.PORT || 3000;
 //Para servir los archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get("/about", (req, res) => {
+    res.sendFile(join(__dirname, 'public', 'about', 'index.html'));
+    console.log("New request to /about");
+});
+
 //Ruta dinámica /cool
 app.get('/cool', (req, res) => {
     console.log("Requested /cool route");
