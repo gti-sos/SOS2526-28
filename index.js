@@ -3,7 +3,7 @@ const cool = require('cool-ascii-faces');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 10000;
+const port = process.env.PORT || 3000;
 
 //Para servir los archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
