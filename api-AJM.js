@@ -17,9 +17,9 @@ export default function (app) {
         { year: 2014, flag_of_registration_label: "Antigua and Barbuda", beneficial_ownership_label: "Latvia", dead_weight_tons: 36.465, percentage_of_total_fleet: 28.172, number_of_ships: 10 }
     ];
 
-    // -------------------------------------------------------
-    // 0. CARGA INICIAL
-    // -------------------------------------------------------
+    
+    // CARGA INICIAL    ////////////////////////////////////////////////////////////////////
+    
     app.get(`${BASE_API_URL}/loadInitialData`, (req, res) => {
         if (datos_ajm.length === 0) {
             datos_ajm = [...datosIniciales];
@@ -29,23 +29,22 @@ export default function (app) {
         }
     });
 
-    // -------------------------------------------------------
-    // A. OPERACIONES SOBRE LA COLECCIÓN (Lista de recursos)
-    // -------------------------------------------------------
 
-    // GET: Obtener lista (200 OK)
+    // OPERACIONES SOBRE LA COLECCIÓN   ///////////////////////////////////////////////////
+
+    // GET: Obtengo lista (200 OK)
     app.get(BASE_API_URL, (req, res) => {
         res.status(200).json(datos_ajm);
     });
 
-    // POST: Crear un nuevo recurso (201 Created, 400 Bad Request, 409 Conflict)
+    // POST: Creo un nuevo recurso (201 Created, 400 Bad Request, 409 Conflict)
     app.post(BASE_API_URL, (req, res) => {
         const nuevoDato = req.body;
-        // Validar que vengan todos los campos
+        // Valido que vengan todos los campos
         if (!nuevoDato.year || !nuevoDato.flag_of_registration_label || !nuevoDato.beneficial_ownership_label || !nuevoDato.dead_weight_tons || !nuevoDato.percentage_of_total_fleet || !nuevoDato.number_of_ships) {
             return res.status(400).send("Bad Request: Faltan campos obligatorios");
         }
-        // Validar que no exista (usamos país de registro y propietario como identificador para ese año)
+        // Valido que no exista (uso país de registro y propietario como identificador para ese año)
         const existe = datos_ajm.find(d => d.year === nuevoDato.year && d.flag_of_registration_label === nuevoDato.flag_of_registration_label && d.beneficial_ownership_label === nuevoDato.beneficial_ownership_label);
         if (existe) {
             return res.status(409).send("Conflict: El recurso ya existe.");
@@ -54,27 +53,26 @@ export default function (app) {
         res.status(201).send("Created: Recurso creado correctamente.");
     });
 
-    // PUT: Actualizar lista completa (405 Method Not Allowed) - Tabla Azul
+    // PUT: Intento actualizar la lista completa (405 Method Not Allowed)
     app.put(BASE_API_URL, (req, res) => {
         res.status(405).send("Method Not Allowed: No se puede actualizar la colección completa");
     });
 
-    // DELETE: Borrar lista completa (200 OK) - Tabla Azul
+    // DELETE: Borro la lista completa (200 OK)
     app.delete(BASE_API_URL, (req, res) => {
         datos_ajm = [];
         res.status(200).send("OK: Lista de recursos borrada");
     });
 
-    // -------------------------------------------------------
-    // B. OPERACIONES SOBRE UN RECURSO CONCRETO (/pais/año)
-    // -------------------------------------------------------
 
-    // GET: Obtener un recurso concreto (200 OK, 404 Not Found)
+    // OPERACIONES SOBRE UN RECURSO CONCRETO (/pais/año)    //////////////////////////////////////////////
+
+    // GET: Obtengo un recurso concreto (200 OK, 404 Not Found)
     app.get(`${BASE_API_URL}/:flag/:year`, (req, res) => {
         const flag = req.params.flag;
         const year = parseInt(req.params.year);
         
-        // Filtramos todos los registros de ese país y año
+        // Filtro todos los registros de ese país y año
         const resultados = datos_ajm.filter(d => d.flag_of_registration_label === flag && d.year === year);
         if (resultados.length > 0) {
             res.status(200).json(resultados);
@@ -83,23 +81,23 @@ export default function (app) {
         }
     });
 
-    // POST: Crear a un recurso concreto (405 Method Not Allowed) - Tabla Azul
+    // POST: Intento crear un recurso concreto (405 Method Not Allowed)
     app.post(`${BASE_API_URL}/:flag/:year`, (req, res) => {
         res.status(405).send("Method Not Allowed: No se puede hacer POST a un recurso concreto");
     });
 
-    // PUT: Actualizar recurso concreto (200 OK, 400 Bad Request, 404 Not Found)
+    // PUT: Actualizo un recurso concreto (200 OK, 400 Bad Request, 404 Not Found)
     app.put(`${BASE_API_URL}/:flag/:year`, (req, res) => {
         const flag = req.params.flag;
         const year = parseInt(req.params.year);
         const cuerpo = req.body;
 
-        // Comprobar que los datos de la URL coinciden con los del cuerpo (400 Bad Request)
+        // Compruebo que los datos de la URL coinciden con los del cuerpo (400 Bad Request)
         if (cuerpo.flag_of_registration_label !== flag || cuerpo.year !== year) {
             return res.status(400).send("Bad Request: Los identificadores de la URL no coinciden con los del cuerpo");
         }
 
-        // Buscar el índice del recurso (asumimos que actualizamos el primero que coincida por país, año y ownership)
+        // Busco el índice del recurso (asumo que actualizamos el primero que coincida por país, año y ownership)
         const index = datos_ajm.findIndex(d => d.flag_of_registration_label === flag && d.year === year && d.beneficial_ownership_label === cuerpo.beneficial_ownership_label);
         
         if (index !== -1) {
@@ -110,7 +108,7 @@ export default function (app) {
         }
     });
 
-    // DELETE: Borrar recurso concreto (200 OK, 404 Not Found)
+    // DELETE: Borro un recurso concreto (200 OK, 404 Not Found)
     app.delete(`${BASE_API_URL}/:flag/:year`, (req, res) => {
         const flag = req.params.flag;
         const year = parseInt(req.params.year);
