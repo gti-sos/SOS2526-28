@@ -1,5 +1,6 @@
 //IMPORTACIONES
 import apiAJM from "./api-AJM.js";
+import apiJDD from "./api-JDD.js";
 import express from 'express';
 import cool from 'cool-ascii-faces';
 import path from 'path'; // <-- Cambiado de require a import
@@ -30,6 +31,7 @@ app.get('/cool', (req, res) => {
 
 //NUESTRAS APIs
 apiAJM(app);
+apiJDD(app);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
