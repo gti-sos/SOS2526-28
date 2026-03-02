@@ -1,5 +1,6 @@
 //IMPORTACIONES
 import apiAJM from "./api-AJM.js";
+import apiMZA from "./api-MZA.js";
 import apiJDD from "./api-JDD.js";
 import express from 'express';
 import cool from 'cool-ascii-faces';
@@ -31,6 +32,7 @@ app.get('/cool', (req, res) => {
 
 //NUESTRAS APIs
 apiAJM(app);
+apiMZA(app);
 apiJDD(app);
 
 app.listen(port, () => {
