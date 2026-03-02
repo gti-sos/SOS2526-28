@@ -4,7 +4,7 @@ const BASE_API_URL = "/api/v1/deliberate-violence-against-civilians-events-world
 export default function (app) {
     let datos_jdd = []; 
 
-    const datos = [
+    const datosIniciales = [
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 6, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "Jowzjan", district: "Mangajek", locality: "Chahar Shanghoy village", degree: 36, minute: 56, second: 3, direction: "N" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 17, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "Nangarhar", district: "", locality: "Jalalabad", degree: 34, minute: 26, second: 3, direction: "N" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 20, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "", district: "", locality: "Kabul", degree: 34, minute: 32, second: 0, direction: "N" },
