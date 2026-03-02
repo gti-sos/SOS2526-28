@@ -18,6 +18,11 @@ const port = process.env.PORT || 3000;
 //Para utilizar los archivos estáticos desde la carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get("/", (req, res) => {
+    res.send("hello world");
+    console.log("New request to /");
+});
+
 app.get("/about", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'about', 'index.html'));
     console.log("New request to /about");
