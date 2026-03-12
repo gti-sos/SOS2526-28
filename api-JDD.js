@@ -1,10 +1,85 @@
 // api-JDD.js
+
+import Datastore from "nedb";
+
 const BASE_API_URL = "/api/v1/deliberate-violence-against-civilians-events-worldwide";
 
-export default function (app) {
-    let datos_jdd = []; 
+const db = new Datastore({
+    filename: "./data/violence-events.db",
+    autoload: true
+});
 
-    const datosIniciales = [
+export default function(app){
+
+// ==============================
+// DOCUMENTACION
+// ==============================
+    app.get(`${BASE_API_URL}/docs`,(req,res)=>{
+
+    res.redirect("https://documenter.getpostman.com/view/52833055/2sBXieta1m");
+
+});
+
+// ==============================
+// CAMPOS ESPERADOS
+// ==============================
+
+const campos = [
+"event_type",
+"campaign_identifier",
+"event_reporting",
+"start_day",
+"start_month",
+"start_year",
+"end_day",
+"end_month",
+"end_year",
+"country",
+"region",
+"district",
+"locality",
+"degree",
+"minute",
+"second",
+"direction"
+];
+
+// ==============================
+// ELIMINAR _id
+// ==============================
+
+function quitarID(datos){
+
+    if(Array.isArray(datos)){
+
+        return datos.map(d=>{
+            const {_id,...rest}=d;
+            return rest;
+        });
+
+    }
+
+    const {_id,...rest}=datos;
+    return rest;
+}
+
+// ==============================
+// VALIDAR ESTRUCTURA
+// ==============================
+
+function estructuraValida(obj){
+
+    const claves = Object.keys(obj);
+
+    return campos.every(c=>claves.includes(c)) &&
+           claves.length === campos.length;
+}
+
+// ==============================
+// DATOS INICIALES
+// ==============================
+
+ const datosIniciales = [
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 6, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "Jowzjan", district: "Mangajek", locality: "Chahar Shanghoy village", degree: 36, minute: 56, second: 3, direction: "N" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 17, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "Nangarhar", district: "", locality: "Jalalabad", degree: 34, minute: 26, second: 3, direction: "N" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 20, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "AFG", region: "", district: "", locality: "Kabul", degree: 34, minute: 32, second: 0, direction: "N" },
@@ -17,196 +92,239 @@ export default function (app) {
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 28, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "ETH", region: "Gambela Regional State", district: "", locality: "", degree: 7, minute: 50, second: 0, direction: "N" }
 ];
 
-    // ==============================
-    // CARGA INICIAL
-    // ==============================
+// ==============================
+// LOAD INITIAL DATA
+// ==============================
 
-    app.get(`${BASE_API_URL}/loadInitialData`, (req, res) => {
+app.get(`${BASE_API_URL}/loadInitialData`,(req,res)=>{
 
-        if (datos_jdd.length === 0) {
-            datos_jdd = [...datosIniciales];
-            res.status(201).json(datos_jdd);
-        } else {
-            res.status(200).json(datos_jdd);
+    db.count({},(err,count)=>{
+
+        if(count===0){
+
+            db.insert(datosIniciales,(err,newDocs)=>{
+
+                res.status(201).json(quitarID(newDocs));
+
+            });
+
+        }else{
+
+            db.find({},(err,docs)=>{
+
+                res.status(200).json(quitarID(docs));
+
+            });
+
         }
+
     });
 
+});
 
-    // ==============================
-    // GET COLECCIÓN + FILTROS
-    // ==============================
+// ==============================
+// GET COLECCIÓN + FILTROS + PAGINACIÓN
+// ==============================
 
-    app.get(BASE_API_URL, (req, res) => {
+app.get(BASE_API_URL,(req,res)=>{
 
-        let resultados = datos_jdd;
+    let query = {};
 
-        if (req.query.country) {
-            resultados = resultados.filter(d => d.country === req.query.country);
+    Object.keys(req.query).forEach(key=>{
+
+        if(key!=="limit" && key!=="offset"){
+
+            if(!isNaN(req.query[key])){
+                query[key]=parseInt(req.query[key]);
+            }else{
+                query[key]=req.query[key];
+            }
+
         }
 
-        if (req.query.start_year) {
-            resultados = resultados.filter(d => 
-                d.start_year === parseInt(req.query.start_year)
-            );
-        }
-
-        if (req.query.from) {
-            resultados = resultados.filter(d => 
-                d.start_year >= parseInt(req.query.from)
-            );
-        }
-
-        if (req.query.to) {
-            resultados = resultados.filter(d => 
-                d.start_year <= parseInt(req.query.to)
-            );
-        }
-
-        // SIEMPRE devuelve ARRAY (aunque vacío)
-        res.status(200).json(resultados);
     });
 
+    let limit=parseInt(req.query.limit)||0;
+    let offset=parseInt(req.query.offset)||0;
 
-    // ==============================
-    // GET RECURSO CONCRETO (OBJECT)
-    // ==============================
+    db.find(query)
+      .skip(offset)
+      .limit(limit)
+      .exec((err,docs)=>{
 
-    app.get(`${BASE_API_URL}/:country/:year/:month/:day`, (req, res) => {
+        res.status(200).json(quitarID(docs));
 
-        const country = req.params.country;
-        const year = parseInt(req.params.year);
-        const month = parseInt(req.params.month);
-        const day = parseInt(req.params.day);
-
-        const recurso = datos_jdd.find(d =>
-            d.country === country &&
-            d.start_year === year &&
-            d.start_month === month &&
-            d.start_day === day
-        );
-
-        if (recurso) {
-            res.status(200).json(recurso);
-        } else {
-            res.status(404).send("Not Found");
-        }
     });
 
+});
 
-    // ==============================
-    // POST COLECCIÓN
-    // ==============================
+// ==============================
+// GET RECURSO
+// ==============================
 
-    app.post(BASE_API_URL, (req, res) => {
+app.get(`${BASE_API_URL}/:country/:year/:month/:day`,(req,res)=>{
 
-        const nuevo = req.body;
+    db.findOne({
 
-        if (!nuevo.country || 
-            !nuevo.start_year || 
-            !nuevo.start_month || 
-            !nuevo.start_day) {
-            return res.status(400).send("Bad Request");
+        country:req.params.country,
+        start_year:parseInt(req.params.year),
+        start_month:parseInt(req.params.month),
+        start_day:parseInt(req.params.day)
+
+    },(err,doc)=>{
+
+        if(doc){
+
+            res.status(200).json(quitarID(doc));
+
+        }else{
+
+            res.sendStatus(404);
+
         }
 
-        const existe = datos_jdd.find(d =>
-            d.country === nuevo.country &&
-            d.start_year === nuevo.start_year &&
-            d.start_month === nuevo.start_month &&
-            d.start_day === nuevo.start_day
-        );
+    });
 
-        if (existe) {
-            return res.status(409).send("Conflict");
+});
+
+// ==============================
+// POST
+// ==============================
+
+app.post(BASE_API_URL,(req,res)=>{
+
+    if(!estructuraValida(req.body)){
+
+        return res.sendStatus(400);
+
+    }
+
+    const nuevo=req.body;
+
+    db.findOne({
+
+        country:nuevo.country,
+        start_year:nuevo.start_year,
+        start_month:nuevo.start_month,
+        start_day:nuevo.start_day
+
+    },(err,doc)=>{
+
+        if(doc){
+
+            return res.sendStatus(409);
+
         }
 
-        datos_jdd.push(nuevo);
-        res.status(201).send();
+        db.insert(nuevo,(err,newDoc)=>{
+
+            res.status(201).json(quitarID(newDoc));
+
+        });
+
     });
 
+});
 
-    // ==============================
-    // PUT COLECCIÓN (NO PERMITIDO)
-    // ==============================
+// ==============================
+// PUT COLECCIÓN (NO PERMITIDO)
+// ==============================
 
-    app.put(BASE_API_URL, (req, res) => {
-        res.status(405).send();
+app.put(BASE_API_URL,(req,res)=>{
+
+    res.sendStatus(405);
+
+});
+
+// ==============================
+// DELETE COLECCIÓN
+// ==============================
+
+app.delete(BASE_API_URL,(req,res)=>{
+
+    db.remove({}, {multi:true},()=>{
+
+        res.sendStatus(200);
+
     });
 
+});
 
-    // ==============================
-    // DELETE COLECCIÓN
-    // ==============================
+// ==============================
+// PUT RECURSO
+// ==============================
 
-    app.delete(BASE_API_URL, (req, res) => {
-        datos_jdd = [];
-        res.status(200).send();
-    });
+app.put(`${BASE_API_URL}/:country/:year/:month/:day`,(req,res)=>{
 
+    if(!estructuraValida(req.body)){
 
-    // ==============================
-    // PUT RECURSO CONCRETO
-    // ==============================
+        return res.sendStatus(400);
 
-    app.put(`${BASE_API_URL}/:country/:year/:month/:day`, (req, res) => {
+    }
 
-        const country = req.params.country;
-        const year = parseInt(req.params.year);
-        const month = parseInt(req.params.month);
-        const day = parseInt(req.params.day);
+    const body=req.body;
 
-        const cuerpo = req.body;
+    if(
+        body.country!==req.params.country ||
+        body.start_year!==parseInt(req.params.year) ||
+        body.start_month!==parseInt(req.params.month) ||
+        body.start_day!==parseInt(req.params.day)
+    ){
 
-        if (
-            cuerpo.country !== country ||
-            cuerpo.start_year !== year ||
-            cuerpo.start_month !== month ||
-            cuerpo.start_day !== day
-        ) {
-            return res.status(400).send("Bad Request");
+        return res.sendStatus(400);
+
+    }
+
+    db.update({
+
+        country:req.params.country,
+        start_year:parseInt(req.params.year),
+        start_month:parseInt(req.params.month),
+        start_day:parseInt(req.params.day)
+
+    },body,{},(err,num)=>{
+
+        if(num===0){
+
+            res.sendStatus(404);
+
+        }else{
+
+            res.sendStatus(200);
+
         }
 
-        const index = datos_jdd.findIndex(d =>
-            d.country === country &&
-            d.start_year === year &&
-            d.start_month === month &&
-            d.start_day === day
-        );
-
-        if (index !== -1) {
-            datos_jdd[index] = cuerpo;
-            res.status(200).send();
-        } else {
-            res.status(404).send("Not Found");
-        }
     });
 
+});
 
-    // ==============================
-    // DELETE RECURSO CONCRETO
-    // ==============================
+// ==============================
+// DELETE RECURSO
+// ==============================
 
-    app.delete(`${BASE_API_URL}/:country/:year/:month/:day`, (req, res) => {
+app.delete(`${BASE_API_URL}/:country/:year/:month/:day`,(req,res)=>{
 
-        const country = req.params.country;
-        const year = parseInt(req.params.year);
-        const month = parseInt(req.params.month);
-        const day = parseInt(req.params.day);
+    db.remove({
 
-        const longitudInicial = datos_jdd.length;
+        country:req.params.country,
+        start_year:parseInt(req.params.year),
+        start_month:parseInt(req.params.month),
+        start_day:parseInt(req.params.day)
 
-        datos_jdd = datos_jdd.filter(d =>
-            !(d.country === country &&
-              d.start_year === year &&
-              d.start_month === month &&
-              d.start_day === day)
-        );
+    },{},(err,num)=>{
 
-        if (datos_jdd.length < longitudInicial) {
-            res.status(200).send();
-        } else {
-            res.status(404).send("Not Found");
+        if(num===0){
+
+            res.sendStatus(404);
+
+        }else{
+
+            res.sendStatus(200);
+
         }
+
     });
 
+});
 
 }
