@@ -1,0 +1,793 @@
+{
+  "info": {
+    "_postman_id": "16dfcc2d-09d4-4b56-9c27-ad170a3d730f",
+    "name": "SOS2526-28-AJM-RENDER",
+    "description": "Este es el conjunto de pruebas diseñado por Alberto Jiménez para su API en render.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52406665",
+    "_collection_link": "https://go.postman.co/collection/52406665-16dfcc2d-09d4-4b56-9c27-ad170a3d730f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "DELETE /beneficial-ownership-merchant-fleets - (200 Ok)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /beneficial-ownership-merchant-fleets/loadInitialData   (201 Created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/loadInitialData",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "loadInitialData"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /beneficial-ownership-merchant-fleets (200 Ok)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /beneficial-ownership-merchant-fleets (200 Ok) PARAMETROS",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets?year=2014&limit=4",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ],
+          "query": [
+            {
+              "key": "year",
+              "value": "2014"
+            },
+            {
+              "key": "limit",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets  - New rec - ...Lituania (201 Created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Lithuania\", \r\n    \"dead_weight_tons\": 18.061, \r\n    \"percentage_of_total_fleet\": 0.13953, \r\n    \"number_of_ships\": 5 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets - New rec2 - Bahamas - (201 Created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Bahamas\", \r\n    \"beneficial_ownership_label\": \"Spain\", \r\n    \"dead_weight_tons\": 421.037, \r\n    \"percentage_of_total_fleet\": 0.57655, \r\n    \"number_of_ships\": 4 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET //beneficial-ownership-merchant-fleets/2014/Bahamas/Spain DEVUELVE OBJETO (200 Ok)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Bahamas/Spain",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Bahamas",
+            "Spain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia - (200 Ok)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Antigua and Barbuda",
+            "Australia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia - (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Australia\", \r\n    \"dead_weight_tons\": 99.9, \r\n    \"percentage_of_total_fleet\": 9.796, \r\n    \"number_of_ships\": 1 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Antigua and Barbuda",
+            "Australia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /beneficial-ownership-merchant-fleets/2014/Bahamas/Spain - Borro Bahamas - (200 Ok)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Bahamas/Spain",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Bahamas",
+            "Spain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /beneficial-ownership-merchant-fleets/2099/Antigua and Barbuda/Australia - (404 Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2099/Antigua and Barbuda/Australia",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2099",
+            "Antigua and Barbuda",
+            "Australia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets2 - (404 Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Bahamas\", \r\n    \"beneficial_ownership_label\": \"Spain\", \r\n    \"dead_weight_tons\": 421.037, \r\n    \"percentage_of_total_fleet\": 0.57655, \r\n    \"number_of_ships\": 4 \r\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets2",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets  - New rec - Ya existe (409 Conflict)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 409 Conflict\", function () {\r",
+              "    pm.response.to.have.status(409);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Australia\", \r\n    \"dead_weight_tons\": 12.6, \r\n    \"percentage_of_total_fleet\": 9.796, \r\n    \"number_of_ships\": 1 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets  - New rec - Faltan campos (400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Lithuania\", \r\n    \"dead_weight_tons\": 18.061, \r\n    \"percentage_of_total_fleet\": 0.13953\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia - (405 Method not Allowed)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 405 Method Not Allowed\", function () {\r",
+              "    pm.response.to.have.status(405);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Antigua and Barbuda",
+            "Australia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /beneficial-ownership-merchant-fleets - (405 Method Not Allowed)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 405 Method Not Allowed\", function () {\r",
+              "    pm.response.to.have.status(405);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Lituania -  (404 Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2014, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Lituania\", \r\n    \"dead_weight_tons\": 99.9, \r\n    \"percentage_of_total_fleet\": 9.796, \r\n    \"number_of_ships\": 1 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Lituania",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Antigua and Barbuda",
+            "Lituania"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT /beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia  - IDs no coinciden (400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 Bad Request\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"year\": 2020, \r\n    \"flag_of_registration_label\": \"Antigua and Barbuda\", \r\n    \"beneficial_ownership_label\": \"Australia\", \r\n    \"dead_weight_tons\": 12.6, \r\n    \"percentage_of_total_fleet\": 9.796, \r\n    \"number_of_ships\": 1 \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Antigua and Barbuda/Australia",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Antigua and Barbuda",
+            "Australia"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /beneficial-ownership-merchant-fleets/2014/Narnia/Spain - No existe este rec - (404 Not Found)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 Not Found\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/beneficial-ownership-merchant-fleets/2014/Narnia/Spain",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "beneficial-ownership-merchant-fleets",
+            "2014",
+            "Narnia",
+            "Spain"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": ""
+    }
+  ]
+}
