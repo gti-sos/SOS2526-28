@@ -12,7 +12,12 @@ const Datastore = require('nedb');
 const BASE_API_URL = "/api/v1/beneficial-ownership-merchant-fleets";
 
 export default function (app) {
-    // 1. Inicializamos la base de datos
+    // Redirección a la documentación de Postman 
+    app.get(`${BASE_API_URL}/docs`, (req, res) => {
+        res.redirect("https://documenter.getpostman.com/view/52406665/2sBXigLsxq");
+    });
+
+    // Inicializo la base de datos
     const db = new Datastore({ filename: './ajm.db', autoload: true });
 
     const datosIniciales = [
@@ -29,19 +34,18 @@ export default function (app) {
     ];
 
     // CARGA INICIAL ////////////////////////////////////////////////////////////////////
-    // CARGA INICIAL ////////////////////////////////////////////////////////////////////
     app.get(`${BASE_API_URL}/loadInitialData`, (req, res) => {
         db.find({}, (err, docs) => {
             if (err) {
                 console.log("Fallo en db.find:", err);
-                return res.status(500).send("ERROR REAL EN FIND: " + err.message); // <--- AHORA ENVIARÁ EL ERROR A POSTMAN
+                return res.status(500).send("ERROR REAL EN FIND: " + err.message); // ERROR A POSTMAN
             } 
             
             if (docs.length === 0) {
                 db.insert(datosIniciales, (err, newDocs) => {
                     if (err) {
                         console.log("Fallo en db.insert:", err);
-                        return res.status(500).send("ERROR REAL EN INSERT: " + err.message); // <--- AHORA ENVIARÁ EL ERROR A POSTMAN
+                        return res.status(500).send("ERROR REAL EN INSERT: " + err.message); // ERROR A POSTMAN
                     } 
                     
                     const datosSinId = newDocs.map(doc => {
@@ -60,32 +64,28 @@ export default function (app) {
         });
     });
 
-
     // OPERACIONES SOBRE LA COLECCIÓN   ///////////////////////////////////////////////////
 
-    // OPERACIONES SOBRE LA COLECCIÓN   ///////////////////////////////////////////////////
-
-    // GET: Obtengo lista (200 OK)
-    // GET: Obtengo lista con BÚSQUEDAS y PAGINACIÓN (Tareas 6 y 7)
+    // GET: Obtengo lista (200 OK)  GET: Obtengo lista con BÚSQUEDAS y PAGINACIÓN
     app.get(BASE_API_URL, (req, res) => {
-        // 1. Obtenemos todos los parámetros de la URL (?year=2014&limit=5...)
+        // Obtengo todos los parámetros de la URL (?year=2014&limit=5...)
         const query = req.query;
 
-        // 2. Extraemos la paginación (limit y offset)
-        const limit = query.limit ? parseInt(query.limit) : 0; // Si no hay limit, es 0 (te da todos)
+        // Extraigo la paginación (limit y offset)
+        const limit = query.limit ? parseInt(query.limit) : 0; // Si no hay limit, es 0 (da todos)
         const offset = query.offset ? parseInt(query.offset) : 0; // Si no hay offset, es 0 (no salta ninguno)
 
-        // Los borramos de la query para que NeDB no intente buscar un barco que se llame "limit"
+        // Los borro de la query para que NeDB no intente buscar un barco que se llame "limit"
         delete query.limit;
         delete query.offset;
 
-        // 3. Convertimos a número los campos numéricos (porque por la URL llegan como texto)
+        // Convierto a número los campos numéricos (porque por la URL llegan como texto)
         if (query.year) query.year = parseInt(query.year);
         if (query.dead_weight_tons) query.dead_weight_tons = parseFloat(query.dead_weight_tons);
         if (query.percentage_of_total_fleet) query.percentage_of_total_fleet = parseFloat(query.percentage_of_total_fleet);
         if (query.number_of_ships) query.number_of_ships = parseInt(query.number_of_ships);
 
-        // 4. Hacemos la búsqueda en NeDB aplicando el filtro, el salto y el límite
+        // Hago la búsqueda en NeDB aplicando el filtro, el salto y el límite
         db.find(query).skip(offset).limit(limit).exec((err, docs) => {
             if (err) {
                 return res.status(500).send("Error interno del servidor");
@@ -98,38 +98,18 @@ export default function (app) {
             }
         });
     });
-
-
-    // 
-    /**
-    app.get(BASE_API_URL, (req, res) => {
-        db.find({}, (err, docs) => {
-            if (err) {
-                res.status(500).send("Error interno del servidor");
-            } else {
-                const datosSinId = docs.map(doc => {
-                    delete doc._id;
-                    return doc;
-                });
-                res.status(200).json(datosSinId);
-            }
-        });
-    });
-    // */
-    
-
     
 
     // POST: Creo un nuevo recurso (201 Created, 400 Bad Request, 409 Conflict)
     app.post(BASE_API_URL, (req, res) => {
         const nuevoDato = req.body;
 
-        // Valido que vengan todos los campos (Tarea 12)
+        // Valído que vengan todos los campos (Tarea 12)
         if (!nuevoDato.year || !nuevoDato.flag_of_registration_label || !nuevoDato.beneficial_ownership_label || !nuevoDato.dead_weight_tons || !nuevoDato.percentage_of_total_fleet || !nuevoDato.number_of_ships) {
             return res.status(400).send("Bad Request: Faltan campos obligatorios");
         }
 
-        // Valido que no exista en la base de datos
+        // Valído que no exista en la base de datos
         db.find({ year: nuevoDato.year, flag_of_registration_label: nuevoDato.flag_of_registration_label, beneficial_ownership_label: nuevoDato.beneficial_ownership_label }, (err, docs) => {
             if (err) {
                 return res.status(500).send("Error interno del servidor");
@@ -165,7 +145,6 @@ export default function (app) {
 
 
     // OPERACIONES SOBRE UN RECURSO CONCRETO (/pais/año)    //////////////////////////////////////////////
-
     // GET: Obtengo un recurso concreto (200 OK, 404 Not Found)
     app.get(`${BASE_API_URL}/:year/:flag/:owner`, (req, res) => {
         const year = parseInt(req.params.year);

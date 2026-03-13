@@ -1,13 +1,36 @@
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Estonia","dead_weight_tons":27.789,"percentage_of_total_fleet":21.469,"number_of_ships":7,"_id":"NpLOqhtMw4KIjG8y"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Australia","dead_weight_tons":99.9,"percentage_of_total_fleet":9.796,"number_of_ships":1,"_id":"PBhwjoWnLkTUzIzu"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Greece","dead_weight_tons":7.496,"percentage_of_total_fleet":5.791,"number_of_ships":2,"_id":"QJS7gXSkuAlslEjy"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Colombia","dead_weight_tons":3.6,"percentage_of_total_fleet":2.781,"number_of_ships":1,"_id":"RA3JGdrDNpXCE0DR"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Iceland","dead_weight_tons":58.93,"percentage_of_total_fleet":45.53,"number_of_ships":7,"_id":"ajeh6okMqC1pjFXH"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"China, Hong Kong SAR","dead_weight_tons":79.56,"percentage_of_total_fleet":61.472,"number_of_ships":8,"_id":"cBy5Y0soQZG2GSwU"}
-{"year":2014,"flag_of_registration_label":"Bahamas","beneficial_ownership_label":"Spain","dead_weight_tons":421.037,"percentage_of_total_fleet":0.57655,"number_of_ships":4,"_id":"lDJTcJbQr1UYFjaO"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Latvia","dead_weight_tons":36.465,"percentage_of_total_fleet":28.172,"number_of_ships":10,"_id":"loIDONZEnlTzLA96"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Denmark","dead_weight_tons":35.395,"percentage_of_total_fleet":27.345,"number_of_ships":4,"_id":"tOfpqi6z3M5aWu7h"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Cyprus","dead_weight_tons":16.278,"percentage_of_total_fleet":12.576,"number_of_ships":2,"_id":"uFnxt5LUALZvxUAQ"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Germany","dead_weight_tons":12232.14,"percentage_of_total_fleet":9450.155,"number_of_ships":1056,"_id":"yztZS9QAE1kMQRf9"}
-{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Australia","dead_weight_tons":99.9,"percentage_of_total_fleet":9.796,"number_of_ships":1,"_id":"PBhwjoWnLkTUzIzu"}
-{"$$deleted":true,"_id":"PBhwjoWnLkTUzIzu"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Australia","dead_weight_tons":99.9,"percentage_of_total_fleet":9.796,"number_of_ships":1,"_id":"0ZeFj9IHPPhgeCoN"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Greece","dead_weight_tons":7.496,"percentage_of_total_fleet":5.791,"number_of_ships":2,"_id":"2DP8bMq6HPlng3GG"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Cyprus","dead_weight_tons":16.278,"percentage_of_total_fleet":12.576,"number_of_ships":2,"_id":"8t0lzU5h2jaIu3C1"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Latvia","dead_weight_tons":36.465,"percentage_of_total_fleet":28.172,"number_of_ships":10,"_id":"DTsWP90bce417Kal"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Colombia","dead_weight_tons":3.6,"percentage_of_total_fleet":2.781,"number_of_ships":1,"_id":"HteGaal074IlbQ6L"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Iceland","dead_weight_tons":58.93,"percentage_of_total_fleet":45.53,"number_of_ships":7,"_id":"I5aYdJzZ0HIBM7ZS"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Lithuania","dead_weight_tons":18.061,"percentage_of_total_fleet":0.13953,"number_of_ships":5,"_id":"RqGkVrC7tus0tkZI"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Denmark","dead_weight_tons":35.395,"percentage_of_total_fleet":27.345,"number_of_ships":4,"_id":"SmVIbm5Llir1tK7H"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Germany","dead_weight_tons":12232.14,"percentage_of_total_fleet":9450.155,"number_of_ships":1056,"_id":"T1yNansVb1AR73gI"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Estonia","dead_weight_tons":27.789,"percentage_of_total_fleet":21.469,"number_of_ships":7,"_id":"it6rJbZzUkzk6FPp"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"China, Hong Kong SAR","dead_weight_tons":79.56,"percentage_of_total_fleet":61.472,"number_of_ships":8,"_id":"nSSEv7j8HHC4PvIY"}
+{"$$deleted":true,"_id":"0ZeFj9IHPPhgeCoN"}
+{"$$deleted":true,"_id":"2DP8bMq6HPlng3GG"}
+{"$$deleted":true,"_id":"8t0lzU5h2jaIu3C1"}
+{"$$deleted":true,"_id":"DTsWP90bce417Kal"}
+{"$$deleted":true,"_id":"HteGaal074IlbQ6L"}
+{"$$deleted":true,"_id":"I5aYdJzZ0HIBM7ZS"}
+{"$$deleted":true,"_id":"RqGkVrC7tus0tkZI"}
+{"$$deleted":true,"_id":"SmVIbm5Llir1tK7H"}
+{"$$deleted":true,"_id":"T1yNansVb1AR73gI"}
+{"$$deleted":true,"_id":"it6rJbZzUkzk6FPp"}
+{"$$deleted":true,"_id":"nSSEv7j8HHC4PvIY"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Australia","dead_weight_tons":12.6,"percentage_of_total_fleet":9.796,"number_of_ships":1,"_id":"V3zymLnPusPqPAa4"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"China, Hong Kong SAR","dead_weight_tons":79.56,"percentage_of_total_fleet":61.472,"number_of_ships":8,"_id":"VG2HdIQPrj5JJhFN"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Colombia","dead_weight_tons":3.6,"percentage_of_total_fleet":2.781,"number_of_ships":1,"_id":"ue8GyO0gVMgy3Epp"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Cyprus","dead_weight_tons":16.278,"percentage_of_total_fleet":12.576,"number_of_ships":2,"_id":"F5rcTxuAbDelvjGu"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Denmark","dead_weight_tons":35.395,"percentage_of_total_fleet":27.345,"number_of_ships":4,"_id":"WuKux3fZflfTBQmJ"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Estonia","dead_weight_tons":27.789,"percentage_of_total_fleet":21.469,"number_of_ships":7,"_id":"onK2rzPiebLQbHWs"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Germany","dead_weight_tons":12232.14,"percentage_of_total_fleet":9450.155,"number_of_ships":1056,"_id":"bGimbrLE1qSu2ach"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Greece","dead_weight_tons":7.496,"percentage_of_total_fleet":5.791,"number_of_ships":2,"_id":"tWX1QZWoEH7r1Djj"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Iceland","dead_weight_tons":58.93,"percentage_of_total_fleet":45.53,"number_of_ships":7,"_id":"TVyZMNKXWtRfJrhz"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Latvia","dead_weight_tons":36.465,"percentage_of_total_fleet":28.172,"number_of_ships":10,"_id":"rZzJVSe2ueeB9Hks"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Lithuania","dead_weight_tons":18.061,"percentage_of_total_fleet":0.13953,"number_of_ships":5,"_id":"lRz7Tab3CFVzysq3"}
+{"year":2014,"flag_of_registration_label":"Bahamas","beneficial_ownership_label":"Spain","dead_weight_tons":421.037,"percentage_of_total_fleet":0.57655,"number_of_ships":4,"_id":"tg4prgyo6XpL3xmK"}
+{"year":2014,"flag_of_registration_label":"Antigua and Barbuda","beneficial_ownership_label":"Australia","dead_weight_tons":99.9,"percentage_of_total_fleet":9.796,"number_of_ships":1,"_id":"V3zymLnPusPqPAa4"}
+{"$$deleted":true,"_id":"tg4prgyo6XpL3xmK"}
