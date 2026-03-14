@@ -4,6 +4,7 @@ import util from 'util';
 // PARCHE PARA NEDB EN VERSIONES MODERNAS DE NODE
 util.isDate = util.types.isDate;
 util.isRegExp = util.types.isRegExp;
+util.isArray = Array.isArray;
 
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -18,7 +19,7 @@ export default function (app) {
     });
 
     // Inicializo la base de datos
-    const db = new Datastore({ filename: './ajm.db', autoload: true });
+    const db = new Datastore({ filename: './data/ajm.db', autoload: true });
 
     const datosIniciales = [
         { year: 2014, flag_of_registration_label: "Antigua and Barbuda", beneficial_ownership_label: "Australia", dead_weight_tons: 12.6, percentage_of_total_fleet: 9.796, number_of_ships: 1 },
