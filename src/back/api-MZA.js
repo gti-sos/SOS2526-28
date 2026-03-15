@@ -53,7 +53,7 @@ export default function (app) {
     // TODO: Replace the URL below with your real Postman documentation URL
     // after you publish your collection (e.g. https://documenter.getpostman.com/view/XXXXXXXX/YYYY)
     app.get(`${BASE_API_URL}/docs`, (req, res) => {
-        res.redirect("https://documenter.getpostman.com/view/YOUR_POSTMAN_DOCS_URL");
+        res.redirect("https://documenter.getpostman.com/view/52377542/2sBXigMZP8");
     });
 
     // CARGA INICIAL
