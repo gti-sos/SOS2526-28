@@ -1,8 +1,14 @@
 // api-MZA.js
+import Datastore from "nedb";
+
 const BASE_API_URL = "/api/v1/company-esg-scores-financial-performances";
 
 export default function (app) {
-    let datos_mza = []; 
+
+    const db = new Datastore({
+        filename: "./data/mza.db",
+        autoload: true
+    });
 
     const datosIniciales = [
         { company_id: 1, company_name: "Company_1", industry: "Retail", region: "Latin America", year: 2015, revenue: 459.2, profit_margin: 6.0, market_cap: 337.5, growth_rate: null, esg_overall: 57.0, esg_environmental: 60.7, esg_social: 33.5, esg_governance: 76.8, carbon_emission: 35577.4, water_usage: 17788.7, energy_consumption: 71154.7 },
@@ -17,149 +23,206 @@ export default function (app) {
         { company_id: 1, company_name: "Company_1", industry: "Retail", region: "Latin America", year: 2024, revenue: 687.0, profit_margin: 4.6, market_cap: 460.1, growth_rate: 7.9, esg_overall: 58.5, esg_environmental: 68.9, esg_social: 29.9, esg_governance: 76.8, carbon_emission: 49289.1, water_usage: 24644.5, energy_consumption: 98578.1 }
     ];
 
-    
-    // CARGA INICIAL    ////////////////////////////////////////////////////////////////////
-    
+    const campos = [
+        'company_id', 'company_name', 'industry', 'region', 'year',
+        'revenue', 'profit_margin', 'market_cap', 'growth_rate', 'esg_overall',
+        'esg_environmental', 'esg_social', 'esg_governance', 'carbon_emission',
+        'water_usage', 'energy_consumption'
+    ];
+
+    // Helper to remove _id from NeDB documents
+    function quitarID(datos) {
+        if (Array.isArray(datos)) {
+            return datos.map(d => {
+                const { _id, ...rest } = d;
+                return rest;
+            });
+        }
+        const { _id, ...rest } = datos;
+        return rest;
+    }
+
+    // Helper to validate the exact structure of the request body
+    function estructuraValida(obj) {
+        const claves = Object.keys(obj);
+        return campos.every(c => claves.includes(c)) &&
+               claves.length === campos.length;
+    }
+
+    // FIX #3: /docs redirect — Req 13
+    // TODO: Replace the URL below with your real Postman documentation URL
+    // after you publish your collection (e.g. https://documenter.getpostman.com/view/XXXXXXXX/YYYY)
+    app.get(`${BASE_API_URL}/docs`, (req, res) => {
+        res.redirect("https://documenter.getpostman.com/view/YOUR_POSTMAN_DOCS_URL");
+    });
+
+    // CARGA INICIAL
     app.get(`${BASE_API_URL}/loadInitialData`, (req, res) => {
-        if (datos_mza.length === 0) {
-            datos_mza = [...datosIniciales];
-            res.status(201).json(datos_mza); // 201 Created
-        } else {
-            res.status(200).json(datos_mza); // 200 OK
-        }
-    });
-
-
-    // OPERACIONES SOBRE LA COLECCIÓN   ///////////////////////////////////////////////////
-
-    // GET: Obtengo lista (200 OK)
-    // Búsqueda y paginación
-    app.get(BASE_API_URL, (req, res) => {
-        let query = req.query;
-        let filteredData = [...datos_mza];
-
-        const fromYear = query.from ? parseInt(query.from) : null;
-        const toYear = query.to ? parseInt(query.to) : null;
-
-        // Elimino 'from' y 'to' de la query para que no interfieran con la búsqueda por campos
-        delete query.from;
-        delete query.to;
-
-        // Búsqueda por campos
-        for (const key in query) {
-            // Campos numéricos para comparación exacta
-            const numericFields = ['company_id', 'year', 'revenue', 'profit_margin', 'market_cap', 'growth_rate', 'esg_overall', 'esg_environmental', 'esg_social', 'esg_governance', 'carbon_emission', 'water_usage', 'energy_consumption'];
-            if (numericFields.includes(key)) {
-                filteredData = filteredData.filter(d => d[key] == query[key]);
-            } else {
-                // Búsqueda insensible a mayúsculas para campos de texto
-                filteredData = filteredData.filter(d => d[key] && d[key].toLowerCase().includes(query[key].toLowerCase()));
+        db.count({}, (err, count) => {
+            if (err) {
+                return res.sendStatus(500);
             }
-        }
-
-        // Búsqueda por rango de años
-        if (fromYear) {
-            filteredData = filteredData.filter(d => d.year >= fromYear);
-        }
-        if (toYear) {
-            filteredData = filteredData.filter(d => d.year <= toYear);
-        }
-
-        // Si no hay resultados, se devuelve un array vacío [] y código 200
-        res.status(200).json(filteredData);
+            if (count === 0) {
+                db.insert(datosIniciales, (err, newDocs) => {
+                    if (err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(201).json(quitarID(newDocs));
+                });
+            } else {
+                db.find({}, (err, docs) => {
+                    if (err) {
+                        return res.sendStatus(500);
+                    }
+                    res.status(200).json(quitarID(docs));
+                });
+            }
+        });
     });
 
-    // POST: Creo un nuevo recurso (201 Created, 400 Bad Request, 409 Conflict)
+    // OPERACIONES SOBRE LA COLECCIÓN
+
+    // GET: Obtener lista con búsqueda y paginación
+    app.get(BASE_API_URL, (req, res) => {
+        let query = {};
+        const { from, to, limit, offset, ...filters } = req.query;
+
+        const fromYear = from ? parseInt(from) : null;
+        const toYear = to ? parseInt(to) : null;
+
+        if (fromYear || toYear) {
+            query.year = {};
+            if (fromYear) query.year.$gte = fromYear;
+            if (toYear) query.year.$lte = toYear;
+        }
+
+        const numericFields = ['company_id', 'year', 'revenue', 'profit_margin', 'market_cap', 'growth_rate', 'esg_overall', 'esg_environmental', 'esg_social', 'esg_governance', 'carbon_emission', 'water_usage', 'energy_consumption'];
+
+        Object.keys(filters).forEach(key => {
+            if (campos.includes(key)) {
+                if (numericFields.includes(key)) {
+                    query[key] = parseFloat(filters[key]);
+                } else {
+                    query[key] = new RegExp(filters[key], "i");
+                }
+            }
+        });
+
+        db.find(query)
+          .skip(parseInt(offset) || 0)
+          .limit(parseInt(limit) || 0)
+          .exec((err, docs) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            res.status(200).json(quitarID(docs));
+        });
+    });
+
+    // POST: Crear un nuevo recurso
     app.post(BASE_API_URL, (req, res) => {
         const nuevoDato = req.body;
-        // Valido que vengan todos los campos (excepto growth_rate que puede ser null)
-        const camposObligatorios = [
-            'company_id', 'company_name', 'industry', 'region', 'year', 
-            'revenue', 'profit_margin', 'market_cap', 'esg_overall', 'esg_environmental', 
-            'esg_social', 'esg_governance', 'carbon_emission', 'water_usage', 'energy_consumption'
-        ];
-        const camposFaltantes = camposObligatorios.filter(campo => !nuevoDato.hasOwnProperty(campo));
 
-        if (camposFaltantes.length > 0) {
-            return res.status(400).send(`Bad Request: Faltan campos obligatorios: ${camposFaltantes.join(', ')}`);
+        if (!estructuraValida(nuevoDato)) {
+            return res.sendStatus(400);
         }
-        // Valido que no exista (uso company_id y year como identificador único)
-        const existe = datos_mza.find(d => d.company_id === nuevoDato.company_id && d.year === nuevoDato.year);
-        if (existe) {
-            return res.status(409).send("Conflict: El recurso ya existe.");
-        }
-        datos_mza.push(nuevoDato);
-        res.status(201).send("Created: Recurso creado correctamente.");
+
+        db.findOne({ company_id: nuevoDato.company_id, year: nuevoDato.year }, (err, doc) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            if (doc) {
+                return res.sendStatus(409);
+            }
+            db.insert(nuevoDato, (err, newDoc) => {
+                if (err) {
+                    return res.sendStatus(500);
+                }
+                res.status(201).json(quitarID(newDoc));
+            });
+        });
     });
 
-    // PUT: Intento actualizar la lista completa (405 Method Not Allowed)
+    // PUT: Actualizar la colección completa (No permitido)
     app.put(BASE_API_URL, (req, res) => {
-        res.status(405).send("Method Not Allowed: No se puede actualizar la colección completa");
+        res.sendStatus(405);
     });
 
-    // DELETE: Borro la lista completa (200 OK)
+    // DELETE: Borrar la colección completa
     app.delete(BASE_API_URL, (req, res) => {
-        datos_mza = [];
-        res.status(200).send("OK: Lista de recursos borrada");
+        db.remove({}, { multi: true }, (err, numRemoved) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        });
     });
 
+    // OPERACIONES SOBRE UN RECURSO CONCRETO
+    // FIX #1: Composite key changed from /:region/:year to /:company_id/:year — Req 7
 
-    // OPERACIONES SOBRE UN RECURSO CONCRETO (/region/año)    //////////////////////////////////////////////
-
-    // GET: Obtengo un recurso concreto (200 OK, 404 Not Found)
-    app.get(`${BASE_API_URL}/:region/:year`, (req, res) => {
-        const region = req.params.region;
+    // GET: Obtener un recurso concreto
+    app.get(`${BASE_API_URL}/:company_id/:year`, (req, res) => {
+        const company_id = parseInt(req.params.company_id);
         const year = parseInt(req.params.year);
-        
-        // Busco un único registro para esa región y año
-        const resultado = datos_mza.find(d => d.region === region && d.year === year);
-        
-        if (resultado) {
-            res.status(200).json(resultado); // Devuelve un único objeto
-        } else {
-            res.status(404).send("Not Found: Recurso no encontrado");
-        }
+
+        db.findOne({ company_id: company_id, year: year }, (err, doc) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            if (doc) {
+                res.status(200).json(quitarID(doc));
+            } else {
+                res.sendStatus(404);
+            }
+        });
     });
 
-    // POST: Intento crear un recurso concreto (405 Method Not Allowed)
-    app.post(`${BASE_API_URL}/:region/:year`, (req, res) => {
-        res.status(405).send("Method Not Allowed: No se puede hacer POST a un recurso concreto");
+    // POST: Crear un recurso concreto (No permitido)
+    app.post(`${BASE_API_URL}/:company_id/:year`, (req, res) => {
+        res.sendStatus(405);
     });
 
-    // PUT: Actualizo un recurso concreto (200 OK, 400 Bad Request, 404 Not Found)
-    app.put(`${BASE_API_URL}/:region/:year`, (req, res) => {
-        const region = req.params.region;
+    // PUT: Actualizar un recurso concreto
+    app.put(`${BASE_API_URL}/:company_id/:year`, (req, res) => {
+        const company_id = parseInt(req.params.company_id);
         const year = parseInt(req.params.year);
         const cuerpo = req.body;
 
-        // Compruebo que los datos de la URL coinciden con los del cuerpo (400 Bad Request)
-        if (cuerpo.region !== region || cuerpo.year !== year) {
-            return res.status(400).send("Bad Request: Los identificadores de la URL no coinciden con los del cuerpo");
+        if (!estructuraValida(cuerpo)) {
+            return res.sendStatus(400);
         }
 
-        // Busco el índice del recurso (asumo que actualizamos por company_id, que es único para un año)
-        const index = datos_mza.findIndex(d => d.region === region && d.year === year && d.company_id === cuerpo.company_id);
-        
-        if (index !== -1) {
-            datos_mza[index] = cuerpo;
-            res.status(200).send("OK: Recurso actualizado");
-        } else {
-            res.status(404).send("Not Found: Recurso a actualizar no encontrado");
+        if (cuerpo.company_id !== company_id || cuerpo.year !== year) {
+            return res.sendStatus(400);
         }
+
+        db.update({ company_id: company_id, year: year }, cuerpo, {}, (err, numReplaced) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            if (numReplaced > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        });
     });
 
-    // DELETE: Borro un recurso concreto (200 OK, 404 Not Found)
-    app.delete(`${BASE_API_URL}/:region/:year`, (req, res) => {
-        const region = req.params.region;
+    // DELETE: Borrar un recurso concreto
+    app.delete(`${BASE_API_URL}/:company_id/:year`, (req, res) => {
+        const company_id = parseInt(req.params.company_id);
         const year = parseInt(req.params.year);
 
-        const longitudInicial = datos_mza.length;
-        datos_mza = datos_mza.filter(d => !(d.region === region && d.year === year));
-
-        if (datos_mza.length < longitudInicial) {
-            res.status(200).send("OK: Recurso(s) borrado(s)");
-        } else {
-            res.status(404).send("Not Found: Recurso a borrar no encontrado");
-        }
+        db.remove({ company_id: company_id, year: year }, {}, (err, numRemoved) => {
+            if (err) {
+                return res.sendStatus(500);
+            }
+            if (numRemoved > 0) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        });
     });
 }
