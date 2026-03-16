@@ -1,0 +1,675 @@
+{
+  "info": {
+    "_postman_id": "mza-collection-sos2526-28",
+    "name": "SOS2526-28-MZA",
+    "description": "Colección de tests para la API Company ESG Scores Financial Performances (MZA). Usa la variable {{url}} para cambiar entre entorno local (http://localhost:3000) y Render (https://sos2526-28.onrender.com).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. DELETE / - Setup: Clean DB (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - Collection deleted (clean slate for idempotency)', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "2. GET /loadInitialData - Load 10 records (201 Created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201 - Initial data created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test('Response is an array of 10 items', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body).to.have.lengthOf(10);",
+              "});",
+              "pm.test('Items contain required ESG fields and no _id', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body[0]).to.have.property('company_id');",
+              "    pm.expect(body[0]).to.have.property('esg_overall');",
+              "    pm.expect(body[0]).to.have.property('year');",
+              "    pm.expect(body[0]).to.not.have.property('_id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/loadInitialData",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "loadInitialData"]
+        }
+      }
+    },
+    {
+      "name": "3. GET / - Get All (200 OK, array of 10)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is an array with 10 items', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body).to.have.lengthOf(10);",
+              "});",
+              "pm.test('No _id field exposed in any item', function () {",
+              "    const body = pm.response.json();",
+              "    body.forEach(function(item) {",
+              "        pm.expect(item).to.not.have.property('_id');",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "4. GET ?industry=Retail - Filter by field (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is a non-empty array', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body.length).to.be.above(0);",
+              "});",
+              "pm.test('All results have industry = Retail', function () {",
+              "    const body = pm.response.json();",
+              "    body.forEach(function(item) {",
+              "        pm.expect(item.industry).to.eql('Retail');",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances?industry=Retail",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"],
+          "query": [
+            { "key": "industry", "value": "Retail" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. GET ?limit=3&offset=0 - Pagination (200 OK, exactly 3 items)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is an array of exactly 3 items (limit respected)', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body).to.have.lengthOf(3);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances?limit=3&offset=0",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"],
+          "query": [
+            { "key": "limit", "value": "3" },
+            { "key": "offset", "value": "0" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. GET ?from=2018&to=2020 - Year range filter (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is a non-empty array', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body.length).to.be.above(0);",
+              "});",
+              "pm.test('All results have year between 2018 and 2020 inclusive', function () {",
+              "    const body = pm.response.json();",
+              "    body.forEach(function(item) {",
+              "        pm.expect(item.year).to.be.at.least(2018);",
+              "        pm.expect(item.year).to.be.at.most(2020);",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances?from=2018&to=2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"],
+          "query": [
+            { "key": "from", "value": "2018" },
+            { "key": "to", "value": "2020" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. GET ?region=Latin America&limit=2&offset=1 - Combined filter + pagination (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is an array of max 2 items', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body.length).to.be.at.most(2);",
+              "});",
+              "pm.test('All results have region = Latin America', function () {",
+              "    const body = pm.response.json();",
+              "    body.forEach(function(item) {",
+              "        pm.expect(item.region).to.eql('Latin America');",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances?region=Latin America&limit=2&offset=1",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"],
+          "query": [
+            { "key": "region", "value": "Latin America" },
+            { "key": "limit", "value": "2" },
+            { "key": "offset", "value": "1" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. GET /1/2020 - Get Specific Resource (200 OK, object)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response is a single object, not an array', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('object');",
+              "    pm.expect(Array.isArray(body)).to.be.false;",
+              "});",
+              "pm.test('Object has correct company_id=1 and year=2020', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body.company_id).to.eql(1);",
+              "    pm.expect(body.year).to.eql(2020);",
+              "});",
+              "pm.test('Object does not expose _id', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.not.have.property('_id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/1/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "1", "2020"]
+        }
+      }
+    },
+    {
+      "name": "9. GET /1/9999 - Resource Not Found (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 404 - Not Found', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/1/9999",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "1", "9999"]
+        }
+      }
+    },
+    {
+      "name": "10. POST / - Create New Resource (201 Created)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201 - Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test('Response is an object with company_id=99 and year=2020', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('object');",
+              "    pm.expect(body.company_id).to.eql(99);",
+              "    pm.expect(body.year).to.eql(2020);",
+              "    pm.expect(body.industry).to.eql('Technology');",
+              "});",
+              "pm.test('No _id field in created response', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.not.have.property('_id');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 99,\n    \"company_name\": \"Test_Company\",\n    \"industry\": \"Technology\",\n    \"region\": \"Europe\",\n    \"year\": 2020,\n    \"revenue\": 100.0,\n    \"profit_margin\": 5.0,\n    \"market_cap\": 200.0,\n    \"growth_rate\": 3.0,\n    \"esg_overall\": 60.0,\n    \"esg_environmental\": 65.0,\n    \"esg_social\": 55.0,\n    \"esg_governance\": 60.0,\n    \"carbon_emission\": 1000.0,\n    \"water_usage\": 500.0,\n    \"energy_consumption\": 2000.0\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "11. POST / - Duplicate Resource (409 Conflict)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 409 - Conflict (duplicate company_id + year)', function () {",
+              "    pm.response.to.have.status(409);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 99,\n    \"company_name\": \"Test_Company\",\n    \"industry\": \"Technology\",\n    \"region\": \"Europe\",\n    \"year\": 2020,\n    \"revenue\": 100.0,\n    \"profit_margin\": 5.0,\n    \"market_cap\": 200.0,\n    \"growth_rate\": 3.0,\n    \"esg_overall\": 60.0,\n    \"esg_environmental\": 65.0,\n    \"esg_social\": 55.0,\n    \"esg_governance\": 60.0,\n    \"carbon_emission\": 1000.0,\n    \"water_usage\": 500.0,\n    \"energy_consumption\": 2000.0\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "12. POST / - Missing Fields (400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400 - Bad Request (incomplete body)', function () {",
+              "    pm.response.to.have.status(400);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 99,\n    \"company_name\": \"Incomplete_Company\"\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "13. POST /99/2020 - Method Not Allowed on Resource (405)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 405 - Method Not Allowed (POST on specific resource)', function () {",
+              "    pm.response.to.have.status(405);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{}" },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "2020"]
+        }
+      }
+    },
+    {
+      "name": "14. PUT / - Method Not Allowed on Collection (405)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 405 - Method Not Allowed (PUT on collection)', function () {",
+              "    pm.response.to.have.status(405);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{}" },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    },
+    {
+      "name": "15. PUT /99/2020 - Update Resource (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - Updated successfully', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 99,\n    \"company_name\": \"Test_Company_Updated\",\n    \"industry\": \"Technology\",\n    \"region\": \"Europe\",\n    \"year\": 2020,\n    \"revenue\": 150.0,\n    \"profit_margin\": 7.0,\n    \"market_cap\": 250.0,\n    \"growth_rate\": 5.0,\n    \"esg_overall\": 65.0,\n    \"esg_environmental\": 70.0,\n    \"esg_social\": 60.0,\n    \"esg_governance\": 65.0,\n    \"carbon_emission\": 900.0,\n    \"water_usage\": 450.0,\n    \"energy_consumption\": 1800.0\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "2020"]
+        }
+      }
+    },
+    {
+      "name": "16. PUT /99/2020 - Mismatched IDs in body (400 Bad Request)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400 - Bad Request (company_id in body does not match URL)', function () {",
+              "    pm.response.to.have.status(400);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 1,\n    \"company_name\": \"Wrong_Company\",\n    \"industry\": \"Technology\",\n    \"region\": \"Europe\",\n    \"year\": 2020,\n    \"revenue\": 150.0,\n    \"profit_margin\": 7.0,\n    \"market_cap\": 250.0,\n    \"growth_rate\": 5.0,\n    \"esg_overall\": 65.0,\n    \"esg_environmental\": 70.0,\n    \"esg_social\": 60.0,\n    \"esg_governance\": 65.0,\n    \"carbon_emission\": 900.0,\n    \"water_usage\": 450.0,\n    \"energy_consumption\": 1800.0\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "2020"]
+        }
+      }
+    },
+    {
+      "name": "17. PUT /99/9999 - Resource Not Found (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 404 - Not Found (no record to update)', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"company_id\": 99,\n    \"company_name\": \"Test_Company\",\n    \"industry\": \"Technology\",\n    \"region\": \"Europe\",\n    \"year\": 9999,\n    \"revenue\": 100.0,\n    \"profit_margin\": 5.0,\n    \"market_cap\": 200.0,\n    \"growth_rate\": 3.0,\n    \"esg_overall\": 60.0,\n    \"esg_environmental\": 65.0,\n    \"esg_social\": 55.0,\n    \"esg_governance\": 60.0,\n    \"carbon_emission\": 1000.0,\n    \"water_usage\": 500.0,\n    \"energy_consumption\": 2000.0\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/9999",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "9999"]
+        }
+      }
+    },
+    {
+      "name": "18. DELETE /99/2020 - Delete Specific Resource (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - Specific resource deleted', function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "2020"]
+        }
+      }
+    },
+    {
+      "name": "19. GET /99/2020 - Confirm Deletion (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 404 - Confirms resource was successfully deleted', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/2020",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "2020"]
+        }
+      }
+    },
+    {
+      "name": "20. DELETE /99/9999 - Delete Non-Existent Resource (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 404 - Not Found (nothing to delete)', function () {",
+              "    pm.response.to.have.status(404);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances/99/9999",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances", "99", "9999"]
+        }
+      }
+    },
+    {
+      "name": "21. GET / - Verify Idempotency: DB back to 10 items (200 OK)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 - OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test('DB restored to 10 items - collection is idempotent', function () {",
+              "    const body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "    pm.expect(body).to.have.lengthOf(10);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/company-esg-scores-financial-performances",
+          "host": ["{{url}}"],
+          "path": ["api", "v1", "company-esg-scores-financial-performances"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "url",
+      "value": "https://sos2526-28.onrender.com"
+    }
+  ]
+}
