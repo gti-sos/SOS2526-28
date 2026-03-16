@@ -16,10 +16,10 @@
   "main": "index-AJM.js",
   "scripts": {
     "start": "node src/back/index.js",
-    "test-AJM": "newman run tests/AJM-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
-    "test-MZA": "newman run tests/MZA-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
-    "test-JDD": "newman run tests/JDD-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
-    "test-all": "npm run test-AJM && npm run test-JDD && npm run test-MZA",
+    "test-beneficial-ownership-merchant-fleets": "newman run tests/AJM-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
+    "test-company-esg-scores-financial-performances": "newman run tests/MZA-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
+    "test-deliberate-violence-against-civilians-events-worldwide": "newman run tests/JDD-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
+    "test-all": "npm run test-beneficial-ownership-merchant-fleets && npm run test-deliberate-violence-against-civilians-events-worldwide && npm run test-company-esg-scores-financial-performances",
     "test": "start-server-and-test start http://localhost:3000 test-all"
   },
   "dependencies": {
