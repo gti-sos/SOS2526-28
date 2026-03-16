@@ -16,7 +16,8 @@ export default function(app){
 // ==============================
     app.get(`${BASE_API_URL}/docs`,(req,res)=>{
 
-    res.redirect("https://documenter.getpostman.com/view/52833055/2sBXieta1m");
+    res.redirect("https://documenter.getpostman.com/view/52833055/2sBXigMZ14");
+    
 
 });
 

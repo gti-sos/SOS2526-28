@@ -17,8 +17,8 @@
   "scripts": {
     "start": "node src/back/index.js",
     "test-AJM": "newman run tests/AJM-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
-    "test-JDD": "echo \"Test de Jorge pendiente de subir\"",
     "test-MZA": "newman run tests/MZA-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
+    "test-JDD": "newman run tests/JDD-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
     "test-all": "npm run test-AJM && npm run test-JDD && npm run test-MZA",
     "test": "start-server-and-test start http://localhost:3000 test-all"
   },
