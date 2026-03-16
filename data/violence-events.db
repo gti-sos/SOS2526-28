@@ -1,23 +1,23 @@
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":6,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"Jowzjan","district":"Mangajek","locality":"Chahar Shanghoy village","degree":36,"minute":56,"second":3,"direction":"N","_id":"FX8am4QNc3Ifsk7T"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":17,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"Nangarhar","district":"","locality":"Jalalabad","degree":34,"minute":26,"second":3,"direction":"N","_id":"TI3gRtRuF4LQNPqt"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":20,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"","district":"","locality":"Kabul","degree":34,"minute":32,"second":0,"direction":"N","_id":"cSHPq47qkwf9dvzM"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":3,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"BDI","region":"Bujumbura Mairie","district":"Musaga","locality":"","degree":3,"minute":24,"second":43,"direction":"S","_id":"m7VvE8w6rxWT1SMs"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":15,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"BFA","region":"","district":"","locality":"Ouagadougou","degree":12,"minute":21,"second":26,"direction":"N","_id":"DoTKgtgmM0uM7ZN2"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":13,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"CMR","region":"Far North","district":"Kolofata","locality":"Kouyape","degree":11,"minute":1,"second":15,"direction":"N","_id":"oxFI8dvFBZXoAfnk"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":25,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"CMR","region":"Far North","district":"","locality":"Bodo","degree":12,"minute":21,"second":35,"direction":"N","_id":"6CKHovdwmo6RPEtu"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":7,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"COD","region":"Nord Kivu","district":"","locality":"Miriki","degree":0,"minute":42,"second":43,"direction":"S","_id":"EnoPOUKHbEGjiLSL"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":1,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"ELS","region":"","district":"","locality":"Los Cerritos","degree":13,"minute":46,"second":55,"direction":"N","_id":"H7kLd3yPUdH2vpgD"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":28,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"ETH","region":"Gambela Regional State","district":"","locality":"","degree":7,"minute":50,"second":0,"direction":"N","_id":"Lv94XSg2kMDFXdc6"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":10,"start_month":5,"start_year":2017,"end_day":99,"end_month":99,"end_year":9999,"country":"ESP","region":"Sevilla","district":"","locality":"Sevilla","degree":37,"minute":23,"second":0,"direction":"N","_id":"A5nOuEPwiTAn8Cyq"}
-{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":10,"start_month":5,"start_year":2017,"end_day":99,"end_month":99,"end_year":9999,"country":"ESP","region":"Sevilla","district":"","locality":"Sevilla","degree":37,"minute":23,"second":0,"direction":"N","_id":"A5nOuEPwiTAn8Cyq"}
-{"$$deleted":true,"_id":"A5nOuEPwiTAn8Cyq"}
-{"$$deleted":true,"_id":"6CKHovdwmo6RPEtu"}
-{"$$deleted":true,"_id":"DoTKgtgmM0uM7ZN2"}
-{"$$deleted":true,"_id":"EnoPOUKHbEGjiLSL"}
-{"$$deleted":true,"_id":"FX8am4QNc3Ifsk7T"}
-{"$$deleted":true,"_id":"H7kLd3yPUdH2vpgD"}
-{"$$deleted":true,"_id":"Lv94XSg2kMDFXdc6"}
-{"$$deleted":true,"_id":"TI3gRtRuF4LQNPqt"}
-{"$$deleted":true,"_id":"cSHPq47qkwf9dvzM"}
-{"$$deleted":true,"_id":"m7VvE8w6rxWT1SMs"}
-{"$$deleted":true,"_id":"oxFI8dvFBZXoAfnk"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":6,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"Jowzjan","district":"Mangajek","locality":"Chahar Shanghoy village","degree":36,"minute":56,"second":3,"direction":"N","_id":"D82HsMSYVMCBQlvi"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":17,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"Nangarhar","district":"","locality":"Jalalabad","degree":34,"minute":26,"second":3,"direction":"N","_id":"HKuDKw0CQgYpAjLC"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":20,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"AFG","region":"","district":"","locality":"Kabul","degree":34,"minute":32,"second":0,"direction":"N","_id":"NHudNoDypjNNoAzX"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":3,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"BDI","region":"Bujumbura Mairie","district":"Musaga","locality":"","degree":3,"minute":24,"second":43,"direction":"S","_id":"Kqf5dPUOwKjRZQiN"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":15,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"BFA","region":"","district":"","locality":"Ouagadougou","degree":12,"minute":21,"second":26,"direction":"N","_id":"d3wfnMHh8iEeiLAL"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":13,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"CMR","region":"Far North","district":"Kolofata","locality":"Kouyape","degree":11,"minute":1,"second":15,"direction":"N","_id":"QQ9ppjpmQaoDabUx"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":25,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"CMR","region":"Far North","district":"","locality":"Bodo","degree":12,"minute":21,"second":35,"direction":"N","_id":"W1hAKUgdjTLX4ouh"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":7,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"COD","region":"Nord Kivu","district":"","locality":"Miriki","degree":0,"minute":42,"second":43,"direction":"S","_id":"kJLnlTyApSkcSn8K"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":1,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"ELS","region":"","district":"","locality":"Los Cerritos","degree":13,"minute":46,"second":55,"direction":"N","_id":"wtQh7uUICOnsRRdA"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":28,"start_month":1,"start_year":2016,"end_day":99,"end_month":99,"end_year":9999,"country":"ETH","region":"Gambela Regional State","district":"","locality":"","degree":7,"minute":50,"second":0,"direction":"N","_id":"Y71K6HrQvkNJPKhf"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":10,"start_month":5,"start_year":2017,"end_day":99,"end_month":99,"end_year":9999,"country":"ESP","region":"Sevilla","district":"","locality":"Sevilla","degree":37,"minute":23,"second":0,"direction":"N","_id":"gIKRUvMuHCRlydCe"}
+{"event_type":"Incident","campaign_identifier":"","event_reporting":"Eyewitness Account","start_day":10,"start_month":5,"start_year":2017,"end_day":99,"end_month":99,"end_year":9999,"country":"ESP","region":"Sevilla","district":"","locality":"Sevilla","degree":37,"minute":23,"second":0,"direction":"N","_id":"gIKRUvMuHCRlydCe"}
+{"$$deleted":true,"_id":"gIKRUvMuHCRlydCe"}
+{"$$deleted":true,"_id":"D82HsMSYVMCBQlvi"}
+{"$$deleted":true,"_id":"HKuDKw0CQgYpAjLC"}
+{"$$deleted":true,"_id":"Kqf5dPUOwKjRZQiN"}
+{"$$deleted":true,"_id":"NHudNoDypjNNoAzX"}
+{"$$deleted":true,"_id":"QQ9ppjpmQaoDabUx"}
+{"$$deleted":true,"_id":"W1hAKUgdjTLX4ouh"}
+{"$$deleted":true,"_id":"Y71K6HrQvkNJPKhf"}
+{"$$deleted":true,"_id":"d3wfnMHh8iEeiLAL"}
+{"$$deleted":true,"_id":"kJLnlTyApSkcSn8K"}
+{"$$deleted":true,"_id":"wtQh7uUICOnsRRdA"}
