@@ -17,6 +17,10 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve mensaje de éxito\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OK: Lista de recursos borrada\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -51,6 +55,12 @@
             "exec": [
               "pm.test(\"Status code is 201 Created\", function () {\r",
               "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve un ARRAY con los datos iniciales\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.be.an(\"array\");\r",
+              "    pm.expect(jsonData).to.have.lengthOf(10);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -86,6 +96,12 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve un ARRAY con los datos iniciales\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.be.an(\"array\");\r",
+              "    pm.expect(jsonData).to.have.lengthOf(10);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -120,6 +136,12 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Es un ARRAY y respeta el límite de 4 elementos\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.be.an(\"array\");\r",
+              "    pm.expect(jsonData.length).to.be.at.most(4);\r",
               "});"
             ],
             "type": "text/javascript",
@@ -164,6 +186,10 @@
             "exec": [
               "pm.test(\"Status code is 201 Created\", function () {\r",
               "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve mensaje de creación exitosa\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"Created: Recurso creado correctamente.\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -207,6 +233,10 @@
             "exec": [
               "pm.test(\"Status code is 201 Created\", function () {\r",
               "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve mensaje de creación exitosa\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"Created: Recurso creado correctamente.\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -250,6 +280,15 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: El dato devuelto es un OBJETO con los campos correctos (Bahamas y Spain)\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.have.property(\"year\");\r",
+              "    pm.expect(jsonData).to.have.property(\"flag_of_registration_label\");\r",
+              "    pm.expect(jsonData).to.have.property(\"beneficial_ownership_label\");\r",
+              "    pm.expect(jsonData.year).to.eql(2014);\r",
+              "    pm.expect(jsonData.flag_of_registration_label).to.eql(\"Bahamas\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -287,6 +326,12 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: El dato devuelto es un OBJETO y tiene el campo 'dead_weight_tons'\", function () {\r",
+              "    var jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData).to.have.property(\"dead_weight_tons\");\r",
+              "    pm.expect(jsonData.flag_of_registration_label).to.eql(\"Antigua and Barbuda\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -324,6 +369,10 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: Devuelve mensaje de actualización exitosa\", function () {\r",
+              "    pm.expect(pm.response.text()).to.include(\"OK: Recurso actualizado\");\r",
               "});"
             ],
             "type": "text/javascript",
@@ -370,6 +419,10 @@
             "exec": [
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Comprobación: El servidor ha respondido rápidamente a la orden de borrado\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
               "});"
             ],
             "type": "text/javascript",
