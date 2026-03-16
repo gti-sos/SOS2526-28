@@ -228,6 +228,16 @@ app.post(BASE_API_URL,(req,res)=>{
 });
 
 // ==============================
+// POST RECURSO (PROHIBIDO)
+// ==============================
+
+app.post(`${BASE_API_URL}/:country/:year/:month/:day`,(req,res)=>{
+
+    res.sendStatus(405);
+
+});
+
+// ==============================
 // PUT COLECCIÓN (NO PERMITIDO)
 // ==============================
 

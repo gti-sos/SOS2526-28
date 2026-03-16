@@ -2,10 +2,49 @@
   "info": {
     "_postman_id": "d3467ad2-1865-40c3-9698-24542ec96188",
     "name": "JDD",
+    "description": "Documentación API jordayday del trabajo SOS2526-28",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "52833055"
   },
   "item": [
+    {
+      "name": "Delete COLECCION INICIAL",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"country\": \"USA\",\r\n  \"start_year\": 2022,\r\n  \"start_month\": 1,\r\n  \"start_day\": 1\r\n}"
+        },
+        "url": {
+          "raw": "{{url}}/api/v1/deliberate-violence-against-civilians-events-worldwide",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "deliberate-violence-against-civilians-events-worldwide"
+          ]
+        }
+      },
+      "response": []
+    },
     {
       "name": "LoadInitialData",
       "event": [
@@ -214,7 +253,7 @@
       "response": []
     },
     {
-      "name": "Post CREAR RECURSO",
+      "name": "Post COLECCION",
       "event": [
         {
           "listen": "test",
@@ -300,6 +339,29 @@
             "v1",
             "deliberate-violence-against-civilians-events-worldwide",
             ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post RECURSO CONCRETO",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/api/v1/deliberate-violence-against-civilians-events-worldwide/AFG/2016/1/17",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "deliberate-violence-against-civilians-events-worldwide",
+            "AFG",
+            "2016",
+            "1",
+            "17"
           ]
         }
       },
