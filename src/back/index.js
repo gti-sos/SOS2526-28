@@ -3,6 +3,10 @@ import apiAJM from "./api-AJM.js";
 import apiMZA from "./api-MZA.js";
 import apiJDD from "./api-JDD.js";
 import express from 'express';
+
+import cors from 'cors';
+import {handler} from '../front/build/handler.js';
+
 import path, { dirname } from 'path'; // <-- Cambiado de require a import
 import { fileURLToPath } from 'url'; // <-- Necesario para fabricar __dirname
 
@@ -12,6 +16,10 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
+
+app.use(cors());
+
+
 const port = process.env.PORT || 3000;
 
 //Para utilizar los archivos estáticos desde la carpeta "public"
@@ -38,6 +46,8 @@ app.get("/about", (req, res) => {
 apiAJM(app);
 apiMZA(app);
 apiJDD(app);
+
+app.use(handler);   //Obligatoriamente detrás de las API
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
