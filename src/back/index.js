@@ -10,6 +10,8 @@ import {handler} from '../front/build/handler.js';
 import path, { dirname } from 'path'; // <-- Cambiado de require a import
 import { fileURLToPath } from 'url'; // <-- Necesario para fabricar __dirname
 
+const port = process.env.PORT || 3000;
+
 //Módulos ES para poder usar __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,26 +22,26 @@ app.use(express.json());
 app.use(cors());
 
 
-const port = process.env.PORT || 3000;
+
 
 //Para utilizar los archivos estáticos desde la carpeta "public"
-const frontPath = path.join(__dirname, '../front');
-const publicPath = path.join(__dirname, '../../public');
+//const frontPath = path.join(__dirname, '../front');
+//const publicPath = path.join(__dirname, '../../public');
 
-app.use(express.static(frontPath));
-app.use(express.static(publicPath));
+//app.use(express.static(frontPath));
+//app.use(express.static(publicPath));
 
 // Rutas para el Front-end
-app.get("/", (req, res) => {
-    res.sendFile(path.join(frontPath, 'index.html'));
-    console.log("New request to /");
-});
+//app.get("/", (req, res) => {
+  //  res.sendFile(path.join(frontPath, 'index.html'));
+    //console.log("New request to /");
+//});
 
 //Para el about
-app.get("/about", (req, res) => {
-    res.sendFile(path.join(publicPath, 'about', 'index.html'));
-    console.log("New request to /about");
-});
+//app.get("/about", (req, res) => {
+  //  res.sendFile(path.join(publicPath, 'about', 'index.html'));
+    //console.log("New request to /about");
+//});
 
 
 //NUESTRAS APIs

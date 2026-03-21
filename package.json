@@ -29,6 +29,7 @@
     "nedb": "^1.8.0"
   },
   "devDependencies": {
+    "@sveltejs/adapter-node": "^5.5.4",
     "newman": "^6.2.2",
     "start-server-and-test": "^2.1.5"
   }
