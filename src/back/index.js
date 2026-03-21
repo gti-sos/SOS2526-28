@@ -49,6 +49,10 @@ apiAJM(app);
 apiMZA(app);
 apiJDD(app);
 
+app.use('/api', (req, res) => {
+    res.status(404).send("Not Found");
+});
+
 app.use(handler);   //Obligatoriamente detrás de las API
 
 app.listen(port, () => {
