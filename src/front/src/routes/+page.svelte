@@ -8,19 +8,19 @@
         {
             nombre: "Alberto Jiménez Mateos",
             recurso: "beneficial-ownership-merchant-fleets",
-            titulo: "BENEFICIAL OWNERSHIP MERCHANT FLEETS",
-            postman: "#"
+            titulo: "FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO",
+            postman: "/beneficial-ownership-merchant-fleets/postman"
         },
         {
             nombre: "Jorge Dayoub Dayoub",
             recurso: "deliberate-violence-against-civilians-events-worldwide",
-            titulo: "DELIBERATE VIOLENCE AGAINST CIVILIANS EVENTS WORLDWIDE",
+            titulo: "GRUPO DE TRABAJO SOBRE INESTABILIDAD POLÍTICA ATROCIDADES EN TODO EL MUNDO",
             postman: "URL_DEL_POSTMAN_DE_JORGE" // <-- Sustituye esto
         },
         {
             nombre: "Muhammad Zhillan Averous",
             recurso: "company-esg-scores-financial-performances",
-            titulo: "COMPANY ESG SCORES FINANCIAL PERFORMANCES",
+            titulo: "CONJUNTO DE DATOS SOBRE ESG Y DESEMPEÑO FINANCIERO",
             postman: "URL_DEL_POSTMAN_DE_MUHAMMAD" // <-- Sustituye esto
         }
     ];
@@ -44,7 +44,7 @@
                     <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
                         
                         <a href="/{api.recurso}" style="text-decoration: none; padding: 10px 15px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
-                            💻 FRONT-END (Svelte)
+                            💻 ACCEDER A LOS DATOS
                         </a>
                         
                         <a href="/api/v1/{api.recurso}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 10px 15px; background-color: #10b981; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
@@ -53,7 +53,7 @@
                         
                         {#if api.postman}
                             <a href={api.postman} style="text-decoration: none; padding: 10px 15px; background-color: #ff6c37; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
-                                📙 POSTMAN
+                                📙 DOCUMENTACIÓN
                             </a>
                         {/if}
 
