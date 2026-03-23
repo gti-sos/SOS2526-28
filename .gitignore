@@ -140,5 +140,7 @@ vite.config.ts.timestamp-*
 
 # Bases de datos locales
 *.db
-data/
+data/*.db
 data/violence-events.db
+
+.node_modules
