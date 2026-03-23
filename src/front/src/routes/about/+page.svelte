@@ -23,7 +23,7 @@
 
         { name: "API JORGE  ", // <--(deliberate-violence-against-civilians-events-worldwide)
         url: "/api/v1/deliberate-violence-against-civilians-events-worldwide", 
-        fuente: " (GRUPO DE TRABAJO SOBRE INESTABILIDAD POLÍTICA ATROCIDADES EN TODO EL MUNDO)", 
+        fuente: " (ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO)", 
         urlFuente: "https://parusanalytics.com/eventdata/data.dir/atrocities.html"},
 
         { name: "API ZHILLAN  ", // <--(company-esg-scores-financial-performances)
