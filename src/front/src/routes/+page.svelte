@@ -14,8 +14,8 @@
         {
             nombre: "Jorge Dayoub Dayoub",
             recurso: "deliberate-violence-against-civilians-events-worldwide",
-            titulo: "GRUPO DE TRABAJO SOBRE INESTABILIDAD POLÍTICA ATROCIDADES EN TODO EL MUNDO",
-            postman: "URL_DEL_POSTMAN_DE_JORGE" // <-- Sustituye esto
+            titulo: "ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO",
+            postman: "https://documenter.getpostman.com/view/52833055/2sBXigMZ14"
         },
         {
             nombre: "Muhammad Zhillan Averous",
