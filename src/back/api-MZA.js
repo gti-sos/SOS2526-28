@@ -121,7 +121,17 @@ export default function (app) {
 
     // POST: Crear un nuevo recurso
     app.post(BASE_API_URL, (req, res) => {
-        const nuevoDato = req.body;
+        const nuevoDato = { ...req.body };
+
+        // Auto-calcular esg_overall como media de los tres componentes si no se proporciona
+        if (nuevoDato.esg_overall === undefined &&
+            nuevoDato.esg_environmental !== undefined &&
+            nuevoDato.esg_social !== undefined &&
+            nuevoDato.esg_governance !== undefined) {
+            nuevoDato.esg_overall = parseFloat(
+                ((nuevoDato.esg_environmental + nuevoDato.esg_social + nuevoDato.esg_governance) / 3).toFixed(2)
+            );
+        }
 
         if (!estructuraValida(nuevoDato)) {
             return res.sendStatus(400);

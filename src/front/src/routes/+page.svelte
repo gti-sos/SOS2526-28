@@ -21,7 +21,7 @@
             nombre: "Muhammad Zhillan Averous",
             recurso: "company-esg-scores-financial-performances",
             titulo: "CONJUNTO DE DATOS SOBRE ESG Y DESEMPEÑO FINANCIERO",
-            postman: "URL_DEL_POSTMAN_DE_MUHAMMAD" // <-- Sustituye esto
+            postman: "https://documenter.getpostman.com/view/52377542/2sBXigMZP8"
         }
     ];
 </script>
