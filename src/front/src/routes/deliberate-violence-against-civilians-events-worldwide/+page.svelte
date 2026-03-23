@@ -173,7 +173,7 @@
 </script>
 
 <div class="container" style="max-width: 1100px;">
-	<h1>⚠️ Deliberate Violence Against Civilians Events Worldwide</h1>
+	<h1>⚠️ ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO</h1>
 
 	{#if errorMsg}
 		<div style="color:#b91c1c; margin-bottom:15px; background:#fee2e2; padding:10px; border-radius:6px; font-weight:bold;">
