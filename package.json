@@ -16,6 +16,7 @@
   "main": "index-AJM.js",
   "scripts": {
     "start": "node src/back/index.js",
+    "build": "cd src/front && npm run build",
     "test-beneficial-ownership-merchant-fleets": "newman run tests/AJM-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
     "test-company-esg-scores-financial-performances": "newman run tests/MZA-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
     "test-deliberate-violence-against-civilians-events-worldwide": "newman run tests/JDD-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
