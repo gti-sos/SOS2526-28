@@ -62,11 +62,4 @@
             {/each}
         </ul>
     </div>
-
-    <div class="endpoint-group">
-        <h3>📁 Repositorio del Equipo</h3>
-        <a href={githubRepo} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 10px 15px; background-color: #1e293b; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
-            🐙 gti-sos/SOS2526-28 en GitHub
-        </a>
-    </div>
 </div>
