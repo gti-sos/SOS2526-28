@@ -17,6 +17,9 @@
 	let newMinute = $state('');
 	let newSecond = $state('');
 	let newDirection = $state('');
+	let searchCountry = $state('');
+	let searchRegion = $state('');
+	let searchYear = $state('');
 
 	// API
 	const API_URL = '/api/v1/deliberate-violence-against-civilians-events-worldwide';
@@ -92,9 +95,9 @@
 		}
 
 		const newEvent = {
-			event_type: "Incident",
-			campaign_identifier: "",
-			event_reporting: "Eyewitness Account",
+			event_type: 'Incident',
+			campaign_identifier: '',
+			event_reporting: 'Eyewitness Account',
 			start_day: parseInt(newStartDay),
 			start_month: parseInt(newStartMonth),
 			start_year: parseInt(newStartYear),
@@ -103,7 +106,7 @@
 			end_year: 9999,
 			country: newCountry,
 			region: newRegion,
-			district: "",
+			district: '',
 			locality: newLocality,
 			degree: parseInt(newDegree),
 			minute: parseInt(newMinute),
@@ -167,6 +170,41 @@
 		setTimeout(() => (successMsg = ''), 3000);
 	}
 
+	// BUSCAR Evento
+	async function searchEvents() {
+		let query = [];
+
+		if (searchCountry) query.push(`country=${searchCountry}`);
+		if (searchRegion) query.push(`region=${searchRegion}`);
+		if (searchYear) query.push(`start_year=${searchYear}`);
+
+		let url = API_URL;
+		if (query.length > 0) {
+			url += '?' + query.join('&');
+		}
+
+		try {
+			const res = await fetch(url);
+
+			if (res.ok) {
+				events = await res.json();
+				errorMsg = '';
+			} else {
+				errorMsg = 'Error en la búsqueda';
+			}
+		} catch {
+			errorMsg = 'Error de conexión';
+		}
+	}
+
+	function clearSearch() {
+		searchCountry = '';
+		searchRegion = '';
+		searchYear = '';
+		getEvents();
+	}
+
+
 	onMount(() => {
 		getEvents();
 	});
@@ -176,37 +214,60 @@
 	<h1>⚠️ ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO</h1>
 
 	{#if errorMsg}
-		<div style="color:#b91c1c; margin-bottom:15px; background:#fee2e2; padding:10px; border-radius:6px; font-weight:bold;">
+		<div
+			style="color:#b91c1c; margin-bottom:15px; background:#fee2e2; padding:10px; border-radius:6px; font-weight:bold;"
+		>
 			{errorMsg}
 		</div>
 	{/if}
 	{#if successMsg}
-		<div style="color:#15803d; margin-bottom:15px; background:#dcfce7; padding:10px; border-radius:6px; font-weight:bold;">
+		<div
+			style="color:#15803d; margin-bottom:15px; background:#dcfce7; padding:10px; border-radius:6px; font-weight:bold;"
+		>
 			{successMsg}
 		</div>
 	{/if}
 
-	<div class="endpoint-group" style="background: var(--bg-color); padding:20px; border-radius:8px; border:1px solid var(--border-color);">
-		<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+	
+
+	<div
+		class="endpoint-group"
+		style="background: var(--bg-color); padding:20px; border-radius:8px; border:1px solid var(--border-color);"
+	>
+		<div
+			style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;"
+		>
 			<h3>➕ Añadir Nuevo Evento</h3>
 			<div>
-				<button on:click={loadInitialData} class="action-btn load-btn">Cargar Datos Iniciales</button>
+				<button on:click={loadInitialData} class="action-btn load-btn"
+					>Cargar Datos Iniciales</button
+				>
 				<button on:click={deleteAll} class="action-btn delete-btn">Borrar Todos</button>
 			</div>
 		</div>
 
 		<div style="display:grid; grid-template-columns: repeat(5,1fr); gap:10px;">
-			<input type="number" bind:value={newStartDay} placeholder="Día" class="form-input"/>
-			<input type="number" bind:value={newStartMonth} placeholder="Mes" class="form-input"/>
-			<input type="number" bind:value={newStartYear} placeholder="Año" class="form-input"/>
-			<input bind:value={newCountry} placeholder="País" class="form-input"/>
-			<input bind:value={newRegion} placeholder="Región" class="form-input"/>
-			<input bind:value={newLocality} placeholder="Localidad" class="form-input"/>
-			<input type="number" bind:value={newDegree} placeholder="Grados" class="form-input"/>
-			<input type="number" bind:value={newMinute} placeholder="Minutos" class="form-input"/>
-			<input type="number" bind:value={newSecond} placeholder="Segundos" class="form-input"/>
-			<input bind:value={newDirection} placeholder="Dirección" class="form-input"/>
+			<input type="number" bind:value={newStartDay} placeholder="Día" class="form-input" />
+			<input type="number" bind:value={newStartMonth} placeholder="Mes" class="form-input" />
+			<input type="number" bind:value={newStartYear} placeholder="Año" class="form-input" />
+			<input bind:value={newCountry} placeholder="País" class="form-input" />
+			<input bind:value={newRegion} placeholder="Región" class="form-input" />
+			<input bind:value={newLocality} placeholder="Localidad" class="form-input" />
+			<input type="number" bind:value={newDegree} placeholder="Grados" class="form-input" />
+			<input type="number" bind:value={newMinute} placeholder="Minutos" class="form-input" />
+			<input type="number" bind:value={newSecond} placeholder="Segundos" class="form-input" />
+			<input bind:value={newDirection} placeholder="Dirección" class="form-input" />
 			<button on:click={createEvent} class="action-btn create-btn">Añadir</button>
+		</div>
+				<!-- BUSCADOR -->
+
+		<h3 style="margin-top:25px;">🔎 Buscar Eventos</h3>
+		<div style="display:grid; grid-template-columns: repeat(4,1fr); gap:10px;">
+			<input type="number" bind:value={searchYear} placeholder="Año" class="form-input"/>
+			<!--<input type="number" bind:value={toYear} placeholder="Año hasta" class="form-input"/>-->
+			<input bind:value={searchCountry} placeholder="País" class="form-input"/>
+			<input bind:value={searchRegion} placeholder="Región" class="form-input"/>
+			<button on:click={searchEvents} class="action-btn load-btn">Buscar</button>
 		</div>
 	</div>
 
@@ -219,6 +280,7 @@
 						<th style="padding:12px;">País</th>
 						<th style="padding:12px;">Fecha</th>
 						<th style="padding:12px;">Localidad</th>
+						<th style="padding:12px;">Region</th>
 						<th style="padding:12px;">Tipo de evento</th>
 						<th style="padding:12px;"></th>
 					</tr>
@@ -226,7 +288,9 @@
 				<tbody>
 					{#if events.length === 0}
 						<tr>
-							<td colspan="5" style="text-align:center; padding:20px;">No hay datos disponibles en la base de datos.</td>
+							<td colspan="5" style="text-align:center; padding:20px;"
+								>No hay datos disponibles en la base de datos.</td
+							>
 						</tr>
 					{:else}
 						{#each events as e}
@@ -234,9 +298,20 @@
 								<td style="padding:12px;">{e.country}</td>
 								<td style="padding:12px;">{e.start_day}/{e.start_month}/{e.start_year}</td>
 								<td style="padding:12px;">{e.locality}</td>
+								<td style="padding:12px;">{e.region}</td>
 								<td style="padding:12px;">{e.event_type}</td>
-								<td style="padding:12px;">
-									<button class="action-btn delete-btn" on:click={() => deleteEvent(e)}>Borrar</button>
+								<td style="padding:12px; display:flex; gap:8px;">
+									<a
+										href={`/deliberate-violence-against-civilians-events-worldwide/${e.country}/${e.start_year}/${e.start_month}/${e.start_day}`}
+										class="action-btn load-btn"
+										style="text-decoration:none;"
+									>
+										Editar
+									</a>
+
+									<button class="action-btn delete-btn" on:click={() => deleteEvent(e)}>
+										Borrar
+									</button>
 								</td>
 							</tr>
 						{/each}
@@ -248,10 +323,31 @@
 </div>
 
 <style>
-	.action-btn { padding:8px 15px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; color:white; transition: opacity 0.2s;}
-	.action-btn:hover { opacity:0.8; }
-	.load-btn { background-color:#2563eb; }
-	.delete-btn { background-color:#dc2626; }
-	.create-btn { background-color:#16a34a; }
-	.form-input { padding:8px; border:1px solid #ccc; border-radius:4px; width:100%; }
+	.action-btn {
+		padding: 8px 15px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-weight: bold;
+		color: white;
+		transition: opacity 0.2s;
+	}
+	.action-btn:hover {
+		opacity: 0.8;
+	}
+	.load-btn {
+		background-color: #2563eb;
+	}
+	.delete-btn {
+		background-color: #dc2626;
+	}
+	.create-btn {
+		background-color: #16a34a;
+	}
+	.form-input {
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		width: 100%;
+	}
 </style>
