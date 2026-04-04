@@ -21,7 +21,8 @@
     "test-company-esg-scores-financial-performances": "newman run tests/MZA-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
     "test-deliberate-violence-against-civilians-events-worldwide": "newman run tests/JDD-collection-POSTMAN.json --env-var \"url=http://localhost:3000\"",
     "test-all": "npm run test-beneficial-ownership-merchant-fleets && npm run test-deliberate-violence-against-civilians-events-worldwide && npm run test-company-esg-scores-financial-performances",
-    "test": "start-server-and-test start http://localhost:3000 test-all"
+    "test": "start-server-and-test start http://localhost:3000 test-all",
+    "test-e2e": "start-server-and-test start http://localhost:3000 \"npx playwright test\""
   },
   "dependencies": {
     "cool-ascii-faces": "^1.3.4",
