@@ -204,10 +204,10 @@
 
 <div class="container" style="max-width: 1100px;">
 
-    <h1>🚢 FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO</h1>
+    <h1 data-testid="main-title">🚢 FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO</h1>
 
     {#if errorMsg || successMsg}
-        <div style="padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; font-size: 1.1em; text-align: center; border: 2px solid; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;
+        <div data-testid="alert-message" style="padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; font-size: 1.1em; text-align: center; border: 2px solid; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;
             {errorMsg ? 'background-color: #fee2e2; color: #991b1b; border-color: #f87171;' : 'background-color: #dcfce7; color: #166534; border-color: #4ade80;'}">
             
             {#if errorMsg}
@@ -230,10 +230,10 @@
     <div class="endpoint-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <h3 style="margin: 0; color: #1e293b;">⚙️ GESTIÓN DE LA BASE DE DATOS</h3>
         <div style="display: flex; gap: 10px;">
-            <button onclick={loadInitialData} style="padding: 8px 15px; background-color: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
+            <button data-testid="load-data-btn" onclick={loadInitialData} style="padding: 8px 15px; background-color: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
                 📥 CARGAR DATOS INICIALES
             </button>
-            <button onclick={deleteAll} style="padding: 8px 15px; background-color: #dc2626; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
+            <button data-testid="delete-all-btn" onclick={deleteAll} style="padding: 8px 15px; background-color: #dc2626; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
                 🗑️ BORRAR TODOS
             </button>
         </div>
@@ -243,18 +243,18 @@
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 style="margin: 0; color: #1e293b;">➕ AÑADIR NUEVO REGISTRO</h3>
-            <button onclick={createFleet} class="action-btn create-btn" style="padding: 8px 15px; background-color: #16a34a; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
+            <button data-testid="create-btn" onclick={createFleet} class="action-btn create-btn" style="padding: 8px 15px; background-color: #16a34a; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
                 ➕ AÑADIR
             </button>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-            <input type="number" bind:value={newYear} placeholder="Año" class="form-input">
-            <input type="text" bind:value={newFlag} placeholder="País Registro" class="form-input">
-            <input type="text" bind:value={newOwner} placeholder="País Propietario" class="form-input">
-            <input type="number" bind:value={newShips} placeholder="Nº Naves" class="form-input">
-            <input type="number" step="0.01" bind:value={newTons} placeholder="Peso (tons)" class="form-input">
-            <input type="number" step="0.001" bind:value={newPercent} placeholder="% Total" class="form-input">
+            <input data-testid="create-year" type="number" bind:value={newYear} placeholder="Año" class="form-input">
+            <input data-testid="create-flag" type="text" bind:value={newFlag} placeholder="País Registro" class="form-input">
+            <input data-testid="create-owner" type="text" bind:value={newOwner} placeholder="País Propietario" class="form-input">
+            <input data-testid="create-ships" type="number" bind:value={newShips} placeholder="Nº Naves" class="form-input">
+            <input data-testid="create-tons" type="number" step="0.01" bind:value={newTons} placeholder="Peso (tons)" class="form-input">
+            <input data-testid="create-percent" type="number" step="0.001" bind:value={newPercent} placeholder="% Total" class="form-input">
         </div>
         
     </div>
@@ -262,11 +262,11 @@
     <div class="endpoint-group" style="background: var(--bg-color); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
         <h3 style="margin-top: 0; color: #1e293b;">🔍 BUSCAR RECURSO CONCRETO</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-            <input type="number" bind:value={searchYear} placeholder="Año a buscar" class="form-input">
-            <input type="text" bind:value={searchFlag} placeholder="País Registro" class="form-input">
-            <input type="text" bind:value={searchOwner} placeholder="País Propietario" class="form-input">
-            <button onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6;">🔍 BUSCAR</button>
-            <button onclick={clearSearch} class="action-btn" style="background-color: #64748b;padding: 8px 5px;">🔄 LIMPIAR / VER TODOS</button>
+            <input data-testid="search-year" type="number" bind:value={searchYear} placeholder="Año a buscar" class="form-input">
+            <input data-testid="search-flag" type="text" bind:value={searchFlag} placeholder="País Registro" class="form-input">
+            <input data-testid="search-owner" type="text" bind:value={searchOwner} placeholder="País Propietario" class="form-input">
+            <button data-testid="search-btn" onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6;">🔍 BUSCAR</button>
+            <button data-testid="clear-search-btn" onclick={clearSearch} class="action-btn" style="background-color: #64748b;padding: 8px 5px;">🔄 LIMPIAR / VER TODOS</button>
         </div>
     </div>
 
@@ -274,7 +274,7 @@
         <h3>📊 LISTADO DE FLOTAS REGISTRADAS</h3>
         
         <div style="overflow-x: auto;">
-            <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 15px;">
+            <table data-testid="data-table" style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 15px;">
                 <thead>
                     <tr style="background-color: var(--primary-color); color: white; text-align: center;">
                         <th style="padding: 12px; border-radius: 8px 0 0 0;">Año</th>
@@ -288,14 +288,14 @@
                 </thead>
                 <tbody>
                     {#if fleets.length === 0}
-                        <tr>
+                        <tr data-testid="empty-row">
                             <td colspan="7" style="text-align: center; padding: 20px; font-weight: bold; color: #64748b;">
                                 No hay datos disponibles en la base de datos.
                             </td>
                         </tr>
                     {:else}
                         {#each fleets as fleet}
-                            <tr style="border-bottom: 1px solid var(--border-color);">
+                            <tr data-testid={`row-${fleet.year}-${fleet.flag_of_registration_label}`} style="border-bottom: 1px solid var(--border-color);">
                                 <td style="padding: 12px;">{fleet.year}</td>
                                 <td style="padding: 12px;">{fleet.flag_of_registration_label}</td>
                                 <td style="padding: 12px;">{fleet.beneficial_ownership_label}</td>
@@ -303,10 +303,10 @@
                                 <td style="padding: 12px;">{fleet.dead_weight_tons}</td>
                                 <td style="padding: 12px;">{fleet.percentage_of_total_fleet}%</td>
                                 <td style="padding: 12px; text-align: center; white-space: nowrap;">
-                                    <a href="/beneficial-ownership-merchant-fleets/{fleet.year}/{fleet.flag_of_registration_label}/{fleet.beneficial_ownership_label}" class="action-btn" style="background-color: #eab308; padding: 5px 10px; font-size: 0.9em; text-decoration: none; color: white; margin-right: 5px; display: inline-flex; align-items: center;">
+                                    <a data-testid="edit-btn" href="/beneficial-ownership-merchant-fleets/{fleet.year}/{fleet.flag_of_registration_label}/{fleet.beneficial_ownership_label}" class="action-btn" style="background-color: #eab308; padding: 5px 10px; font-size: 0.9em; text-decoration: none; color: white; margin-right: 5px; display: inline-flex; align-items: center;">
                                         ✏️ EDITAR
                                     </a>
-                                    <button onclick={() => deleteFleet(fleet.year, fleet.flag_of_registration_label, fleet.beneficial_ownership_label)} class="action-btn delete-btn" style="padding: 5px 10px; font-size: 0.9em; display: inline-flex; align-items: center;">
+                                    <button data-testid="delete-single-btn" onclick={() => deleteFleet(fleet.year, fleet.flag_of_registration_label, fleet.beneficial_ownership_label)} class="action-btn delete-btn" style="padding: 5px 10px; font-size: 0.9em; display: inline-flex; align-items: center;">
                                         🗑️ BORRAR
                                     </button>
                                 </td>
