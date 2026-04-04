@@ -160,6 +160,52 @@
         f_water_usage = ""; f_energy_consumption = "";
     }
 
+    // Campos de búsqueda
+    let s_company_name = $state("");
+    let s_industry = $state("");
+    let s_region = $state("");
+    let s_from = $state("");
+    let s_to = $state("");
+    let noResultados = $state(false);
+
+    async function buscar() {
+        const params = new URLSearchParams();
+        if (s_company_name.trim()) params.set("company_name", s_company_name.trim());
+        if (s_industry.trim())     params.set("industry", s_industry.trim());
+        if (s_region.trim())       params.set("region", s_region.trim());
+        if (s_from !== "")         params.set("from", s_from);
+        if (s_to !== "")           params.set("to", s_to);
+
+        const url = params.toString() ? `${API_URL}?${params}` : API_URL;
+
+        try {
+            const res = await fetch(url);
+            if (res.status === 404) {
+                registros = [];
+                noResultados = true;
+                errorMsg = "";
+                return;
+            }
+            if (res.ok) {
+                const datos = await res.json();
+                registros = datos;
+                noResultados = datos.length === 0;
+                errorMsg = "";
+            } else {
+                mostrarError(`⚠️ Error al realizar la búsqueda. Código: ${res.status}.`);
+            }
+        } catch {
+            mostrarError("⚠️ No se pudo conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.");
+        }
+    }
+
+    function limpiarBusqueda() {
+        s_company_name = ""; s_industry = ""; s_region = "";
+        s_from = ""; s_to = "";
+        noResultados = false;
+        cargarRegistros();
+    }
+
     onMount(() => {
         cargarRegistros();
     });
@@ -252,6 +298,39 @@
         </div>
     </div>
 
+    <!-- SECCIÓN: BÚSQUEDA -->
+    <div class="endpoint-group">
+        <div class="section-header">
+            <h3>🔍 Buscar Registros</h3>
+        </div>
+        <div class="form-grid">
+            <div class="form-field">
+                <label>Nombre Empresa</label>
+                <input type="text" bind:value={s_company_name} placeholder="Ej: Company_1" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Industria</label>
+                <input type="text" bind:value={s_industry} placeholder="Ej: Retail" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Región</label>
+                <input type="text" bind:value={s_region} placeholder="Ej: Europe" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Año desde</label>
+                <input type="number" bind:value={s_from} placeholder="Ej: 2020" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Año hasta</label>
+                <input type="number" bind:value={s_to} placeholder="Ej: 2024" class="form-input">
+            </div>
+        </div>
+        <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
+            <button on:click={limpiarBusqueda} class="action-btn load-btn">🧹 Limpiar búsqueda</button>
+            <button on:click={buscar} class="action-btn search-btn">🔍 Buscar</button>
+        </div>
+    </div>
+
     <!-- SECCIÓN: TABLA DE REGISTROS -->
     <div class="endpoint-group">
         <div class="section-header">
@@ -280,7 +359,11 @@
                     {#if registros.length === 0}
                         <tr>
                             <td colspan="11" style="text-align:center; padding:25px; color:var(--text-muted);">
-                                No hay registros disponibles. Pulsa "Cargar Datos Iniciales" para empezar.
+                                {#if noResultados}
+                                    No se encontraron resultados para los filtros aplicados.
+                                {:else}
+                                    No hay registros disponibles. Pulsa "Cargar Datos Iniciales" para empezar.
+                                {/if}
                             </td>
                         </tr>
                     {:else}
@@ -297,6 +380,7 @@
                                 <td>{r.esg_social}</td>
                                 <td>{r.esg_governance}</td>
                                 <td class="actions-cell">
+                                    <a href="/company-esg-scores-financial-performances/{r.company_id}/{r.year}" class="action-btn edit-btn">✏️ Editar</a>
                                     <button on:click={() => eliminarRegistro(r.company_id, r.year)} class="action-btn delete-btn">🗑️ Eliminar</button>
                                 </td>
                             </tr>
@@ -415,6 +499,8 @@
     .action-btn:hover { opacity: 0.82; }
 
     .load-btn { background-color: #2563eb; }
+    .search-btn { background-color: #0f766e; }
     .delete-btn { background-color: #dc2626; }
     .create-btn { background-color: #16a34a; padding: 9px 20px; font-size: 0.9rem; }
+    .edit-btn { background-color: #d97706; text-decoration: none; display: inline-flex; align-items: center; }
 </style>
