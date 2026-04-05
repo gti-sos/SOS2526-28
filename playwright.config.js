@@ -40,17 +40,18 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    /* Disable in development 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      dependencies: ['chromium'],
     },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      dependencies: ['firefox'],
     },
-    */
+
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
