@@ -221,7 +221,7 @@
 		</div>
 	{/if}
 	{#if successMsg}
-		<div
+		<div data-testid="alert-message"
 			style="color:#15803d; margin-bottom:15px; background:#dcfce7; padding:10px; border-radius:6px; font-weight:bold;"
 		>
 			{successMsg}
@@ -294,7 +294,7 @@
 						</tr>
 					{:else}
 						{#each events as e}
-							<tr style="border-bottom:1px solid var(--border-color);">
+							<tr data-testid="row-{e.start_year}-{e.country}" style="border-bottom:1px solid var(--border-color);">
 								<td style="padding:12px;">{e.country}</td>
 								<td style="padding:12px;">{e.start_day}/{e.start_month}/{e.start_year}</td>
 								<td style="padding:12px;">{e.locality}</td>
@@ -309,7 +309,7 @@
 										Editar
 									</a>
 
-									<button class="action-btn delete-btn" on:click={() => deleteEvent(e)}>
+									<button data-testid="delete-single-btn" class="action-btn delete-btn" on:click={() => deleteEvent(e)}>
 										Borrar
 									</button>
 								</td>
