@@ -53,8 +53,10 @@ test.describe.serial('E2E - Deliberate Violence Events', () => {
         const searchInputs = page.locator('.form-input');
 
         await searchInputs.nth(10).fill('2099'); // año búsqueda
-        await searchInputs.nth(11).fill('TESTLAND'); // país búsqueda
-        await searchInputs.nth(12).fill('TestRegion'); // región búsqueda
+        await searchInputs.nth(11).fill('2'); // mes búsqueda
+        await searchInputs.nth(12).fill('10'); // dia búsqueda
+        await searchInputs.nth(13).fill('TESTLAND'); // país búsqueda
+        await searchInputs.nth(14).fill('TestRegion'); // región búsqueda
 
         await page.getByRole('button', { name: 'Buscar' }).click();
 

@@ -20,6 +20,8 @@
 	let searchCountry = $state('');
 	let searchRegion = $state('');
 	let searchYear = $state('');
+	let searchMonth = $state('');
+	let searchDay = $state('');
 
 	// API
 	const API_URL = '/api/v1/deliberate-violence-against-civilians-events-worldwide';
@@ -177,6 +179,8 @@
 		if (searchCountry) query.push(`country=${searchCountry}`);
 		if (searchRegion) query.push(`region=${searchRegion}`);
 		if (searchYear) query.push(`start_year=${searchYear}`);
+		if (searchMonth) query.push(`start_month=${searchMonth}`);
+		if (searchDay) query.push(`start_day=${searchDay}`);
 
 		let url = API_URL;
 		if (query.length > 0) {
@@ -201,6 +205,8 @@
 		searchCountry = '';
 		searchRegion = '';
 		searchYear = '';
+		searchMonth = '';
+		searchDay = '';
 		getEvents();
 	}
 
@@ -265,6 +271,8 @@
 		<div style="display:grid; grid-template-columns: repeat(4,1fr); gap:10px;">
 			<input type="number" bind:value={searchYear} placeholder="Año" class="form-input"/>
 			<!--<input type="number" bind:value={toYear} placeholder="Año hasta" class="form-input"/>-->
+			<input type="number" bind:value={searchMonth} placeholder="Mes" class="form-input"/>
+			<input type="number" bind:value={searchDay} placeholder="Día" class="form-input"/>
 			<input bind:value={searchCountry} placeholder="País" class="form-input"/>
 			<input bind:value={searchRegion} placeholder="Región" class="form-input"/>
 			<button on:click={searchEvents} class="action-btn load-btn">Buscar</button>
