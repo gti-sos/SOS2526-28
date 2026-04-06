@@ -29,7 +29,7 @@ test.describe.serial('E2E - Deliberate Violence Events', () => {
         await inputs.nth(0).fill('10'); // día
         await inputs.nth(1).fill('2'); // mes
         await inputs.nth(2).fill('2099'); // año
-        await inputs.nth(3).fill('TESTLAND'); // país
+        await inputs.nth(3).fill('TESTLAND'); // paí
         await inputs.nth(4).fill('TestRegion'); // región
         await inputs.nth(5).fill('TestCity'); // localidad
         await inputs.nth(6).fill('10'); // grado
