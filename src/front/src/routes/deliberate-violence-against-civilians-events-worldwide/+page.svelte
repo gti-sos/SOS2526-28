@@ -22,6 +22,8 @@
 	let searchYear = $state('');
 	let searchMonth = $state('');
 	let searchDay = $state('');
+	let limit = $state(10);
+	let offset = $state(0);
 
 	// API
 	const API_URL = '/api/v1/deliberate-violence-against-civilians-events-worldwide';
@@ -29,7 +31,8 @@
 	// GET: Obtener todos los eventos
 	async function getEvents() {
 		try {
-			const res = await fetch(API_URL);
+			const res = await fetch(`${API_URL}?limit=${limit}&offset=${offset}`);
+
 			if (res.ok) {
 				events = await res.json();
 				errorMsg = '';
@@ -174,6 +177,7 @@
 
 	// BUSCAR Evento
 	async function searchEvents() {
+		offset = 0;
 		let query = [];
 
 		if (searchCountry) query.push(`country=${searchCountry}`);
@@ -182,10 +186,11 @@
 		if (searchMonth) query.push(`start_month=${searchMonth}`);
 		if (searchDay) query.push(`start_day=${searchDay}`);
 
-		let url = API_URL;
-		if (query.length > 0) {
-			url += '?' + query.join('&');
-		}
+		// añadir paginación
+		query.push(`limit=${limit}`);
+		query.push(`offset=${offset}`);
+
+		let url = API_URL + '?' + query.join('&');
 
 		try {
 			const res = await fetch(url);
@@ -210,7 +215,6 @@
 		getEvents();
 	}
 
-
 	onMount(() => {
 		getEvents();
 	});
@@ -227,14 +231,13 @@
 		</div>
 	{/if}
 	{#if successMsg}
-		<div data-testid="alert-message"
+		<div
+			data-testid="alert-message"
 			style="color:#15803d; margin-bottom:15px; background:#dcfce7; padding:10px; border-radius:6px; font-weight:bold;"
 		>
 			{successMsg}
 		</div>
 	{/if}
-
-	
 
 	<div
 		class="endpoint-group"
@@ -265,16 +268,16 @@
 			<input bind:value={newDirection} placeholder="Dirección" class="form-input" />
 			<button on:click={createEvent} class="action-btn create-btn">Añadir</button>
 		</div>
-				<!-- BUSCADOR -->
+		<!-- BUSCADOR -->
 
 		<h3 style="margin-top:25px;">🔎 Buscar Eventos</h3>
 		<div style="display:grid; grid-template-columns: repeat(4,1fr); gap:10px;">
-			<input type="number" bind:value={searchYear} placeholder="Año" class="form-input"/>
+			<input type="number" bind:value={searchYear} placeholder="Año" class="form-input" />
 			<!--<input type="number" bind:value={toYear} placeholder="Año hasta" class="form-input"/>-->
-			<input type="number" bind:value={searchMonth} placeholder="Mes" class="form-input"/>
-			<input type="number" bind:value={searchDay} placeholder="Día" class="form-input"/>
-			<input bind:value={searchCountry} placeholder="País" class="form-input"/>
-			<input bind:value={searchRegion} placeholder="Región" class="form-input"/>
+			<input type="number" bind:value={searchMonth} placeholder="Mes" class="form-input" />
+			<input type="number" bind:value={searchDay} placeholder="Día" class="form-input" />
+			<input bind:value={searchCountry} placeholder="País" class="form-input" />
+			<input bind:value={searchRegion} placeholder="Región" class="form-input" />
 			<button on:click={searchEvents} class="action-btn load-btn">Buscar</button>
 		</div>
 	</div>
@@ -302,7 +305,10 @@
 						</tr>
 					{:else}
 						{#each events as e}
-							<tr data-testid="row-{e.start_year}-{e.country}" style="border-bottom:1px solid var(--border-color);">
+							<tr
+								data-testid="row-{e.start_year}-{e.country}"
+								style="border-bottom:1px solid var(--border-color);"
+							>
 								<td style="padding:12px;">{e.country}</td>
 								<td style="padding:12px;">{e.start_day}/{e.start_month}/{e.start_year}</td>
 								<td style="padding:12px;">{e.locality}</td>
@@ -317,7 +323,11 @@
 										Editar
 									</a>
 
-									<button data-testid="delete-single-btn" class="action-btn delete-btn" on:click={() => deleteEvent(e)}>
+									<button
+										data-testid="delete-single-btn"
+										class="action-btn delete-btn"
+										on:click={() => deleteEvent(e)}
+									>
 										Borrar
 									</button>
 								</td>
@@ -327,6 +337,29 @@
 				</tbody>
 			</table>
 		</div>
+	</div>
+	<div style="display:flex; gap:10px; margin-top:15px;">
+		<button
+			class="action-btn load-btn"
+			on:click={() => {
+				if (offset >= limit) {
+					offset -= limit;
+					getEvents();
+				}
+			}}
+		>
+			⬅ Anterior
+		</button>
+
+		<button
+			class="action-btn load-btn"
+			on:click={() => {
+				offset += limit;
+				getEvents();
+			}}
+		>
+			Siguiente ➡
+		</button>
 	</div>
 </div>
 
