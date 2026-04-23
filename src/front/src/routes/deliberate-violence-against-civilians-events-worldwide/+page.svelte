@@ -22,6 +22,18 @@
 	let searchYear = $state('');
 	let searchMonth = $state('');
 	let searchDay = $state('');
+	let searchEventType = $state('');
+	let searchCampaign = $state('');
+	let searchReporting = $state('');
+	let searchEndDay = $state('');
+	let searchEndMonth = $state('');
+	let searchEndYear = $state('');
+	let searchDistrict = $state('');
+	let searchLocality = $state('');
+	let searchDegree = $state('');
+	let searchMinute = $state('');
+	let searchSecond = $state('');
+	let searchDirection = $state('');
 	let limit = $state(10);
 	let offset = $state(0);
 
@@ -185,6 +197,18 @@
 		if (searchYear) query.push(`start_year=${searchYear}`);
 		if (searchMonth) query.push(`start_month=${searchMonth}`);
 		if (searchDay) query.push(`start_day=${searchDay}`);
+		if (searchEventType) query.push(`event_type=${searchEventType}`);
+		if (searchCampaign) query.push(`campaign_identifier=${searchCampaign}`);
+		if (searchReporting) query.push(`event_reporting=${searchReporting}`);
+		if (searchEndDay) query.push(`end_day=${searchEndDay}`);
+		if (searchEndMonth) query.push(`end_month=${searchEndMonth}`);
+		if (searchEndYear) query.push(`end_year=${searchEndYear}`);
+		if (searchDistrict) query.push(`district=${searchDistrict}`);
+		if (searchLocality) query.push(`locality=${searchLocality}`);
+		if (searchDegree) query.push(`degree=${searchDegree}`);
+		if (searchMinute) query.push(`minute=${searchMinute}`);
+		if (searchSecond) query.push(`second=${searchSecond}`);
+		if (searchDirection) query.push(`direction=${searchDirection}`);
 
 		// añadir paginación
 		query.push(`limit=${limit}`);
@@ -212,6 +236,18 @@
 		searchYear = '';
 		searchMonth = '';
 		searchDay = '';
+		searchEventType = '';
+		searchCampaign = '';
+		searchReporting = '';
+		searchEndDay = '';
+		searchEndMonth = '';
+		searchEndYear = '';
+		searchDistrict = '';
+		searchLocality = '';
+		searchDegree = '';
+		searchMinute = '';
+		searchSecond = '';
+		searchDirection = '';
 		getEvents();
 	}
 
@@ -278,7 +314,22 @@
 			<input type="number" bind:value={searchDay} placeholder="Día" class="form-input" />
 			<input bind:value={searchCountry} placeholder="País" class="form-input" />
 			<input bind:value={searchRegion} placeholder="Región" class="form-input" />
+			<input bind:value={searchEventType} placeholder="Tipo evento" class="form-input" />
+			<input bind:value={searchCampaign} placeholder="Campaña" class="form-input" />
+			<input bind:value={searchReporting} placeholder="Reporting" class="form-input" />
+			<input bind:value={searchDistrict} placeholder="Distrito" class="form-input" />
+
+			<input bind:value={searchLocality} placeholder="Localidad" class="form-input" />
+			<input type="number" bind:value={searchDegree} placeholder="Grados" class="form-input" />
+			<input type="number" bind:value={searchMinute} placeholder="Minutos" class="form-input" />
+			<input type="number" bind:value={searchSecond} placeholder="Segundos" class="form-input" />
+
+			<input bind:value={searchDirection} placeholder="Dirección (N/S)" class="form-input" />
+			<input type="number" bind:value={searchEndDay} placeholder="End Día" class="form-input" />
+			<input type="number" bind:value={searchEndMonth} placeholder="End Mes" class="form-input" />
+			<input type="number" bind:value={searchEndYear} placeholder="End Año" class="form-input" />
 			<button on:click={searchEvents} class="action-btn load-btn">Buscar</button>
+			<button on:click={clearSearch} class="action-btn load-btn">Limpiar</button>
 		</div>
 	</div>
 
