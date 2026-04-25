@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-//const BASE_URL = 'http://localhost:3000/beneficial-ownership-merchant-fleets';
-const BASE_URL = 'http://localhost:5173/beneficial-ownership-merchant-fleets';
+const BASE_URL = 'http://localhost:3000/beneficial-ownership-merchant-fleets';
+//const BASE_URL = 'http://localhost:5173/beneficial-ownership-merchant-fleets';
 
 // MODO SERIAL
 test.describe.configure({ mode: 'serial' });
