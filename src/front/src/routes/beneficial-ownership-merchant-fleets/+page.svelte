@@ -15,10 +15,17 @@
     let newTons = $state("");
     let newPercent = $state("");
 
-    // Variables para el Buscador GET
-    let searchYear = $state("");
+    // Nuevas Variables para el Buscador GET (Avanzado y por Rangos)
     let searchFlag = $state("");
     let searchOwner = $state("");
+    let searchYearMin = $state("");
+    let searchYearMax = $state("");
+    let searchShipsMin = $state("");
+    let searchShipsMax = $state("");
+    let searchTonsMin = $state("");
+    let searchTonsMax = $state("");
+    let searchPercentMin = $state("");
+    let searchPercentMax = $state("");
 
     //const API_URL = "http://localhost:3000/api/v1/beneficial-ownership-merchant-fleets";
     const API_URL = "/api/v1/beneficial-ownership-merchant-fleets";
@@ -52,7 +59,7 @@
         } catch (error) {
             errorMsg = "Error de conexión.";
         }
-        setTimeout(() => successMsg = "", 5000); // El mensaje desaparece a los 5 seg
+        setTimeout(() => successMsg = "", 5000);
     }
 
     // BOTÓN (BORRAR TODOS LOS DATOS)
@@ -76,21 +83,18 @@
 
     // POST (FORMULARIO QUE CREA UN NUEVO REGISTRO)
     async function createFleet() {
-        // Valida que no haya campos vacíos
         if (!newYear || !newFlag || !newOwner || !newShips || !newTons || !newPercent) {
             errorMsg = "⚠️ Error (400 Bad Request): Por favor, rellena todos los campos.";
             setTimeout(() => errorMsg = "", 5000);
             return;
         }
 
-        // Valida que los países no sean números puros
         if (!isNaN(Number(newFlag)) || !isNaN(Number(newOwner))) {
             errorMsg = "⚠️ Error (400 Bad Request): Los nombres de los países no pueden ser números.";
             setTimeout(() => errorMsg = "", 5000);
             return;
         }
 
-        // Valida que los campos numéricos sean realmente números
         if (isNaN(Number(newYear)) || isNaN(Number(newShips)) || isNaN(Number(newTons)) || isNaN(Number(newPercent))) {
             errorMsg = "⚠️ Error (400 Bad Request): El Año, Nº de Naves, Peso y % Total deben ser números válidos.";
             setTimeout(() => errorMsg = "", 5000);
@@ -116,9 +120,7 @@
             if (res.status === 201) {
                 successMsg = "✅ Recurso creado correctamente.";
                 errorMsg = "";
-                getFleets(); // Recarga la tabla
-                
-                // Limpia el formulario
+                getFleets();
                 newYear = ""; newFlag = ""; newOwner = ""; newShips = ""; newTons = ""; newPercent = "";
             } else if (res.status === 409) {
                 errorMsg = "⚠️ Error: El recurso ya existe (Conflicto).";
@@ -132,15 +134,9 @@
     }
 
     // DELETE ESPECÍFICO (BOTÓN PARA BORRAR UN RECURSO CONCRETO)
-    /**
-     * @param {number|string} year
-     * @param {string} flag
-     * @param {string} owner
-     */
     async function deleteFleet(year, flag, owner) {
         if(confirm(`¿Estás seguro de que quieres borrar el registro de ${flag} en ${year} cuyo país propietario es ${owner}?`)) {
             try {
-                // Monta la URL exacta con las claves primarias
                 const res = await fetch(`${API_URL}/${year}/${flag}/${owner}`, { 
                     method: "DELETE" 
                 });
@@ -148,7 +144,7 @@
                 if (res.ok) {
                     successMsg = "✅ Recurso borrado correctamente.";
                     errorMsg = "";
-                    getFleets(); // Recarga la tabla para que desaparezca
+                    getFleets(); 
                 } else if (res.status === 404) {
                     errorMsg = "⚠️ Error: El recurso que intentas borrar no existe.";
                 } else {
@@ -161,40 +157,65 @@
         }
     }
 
-    // GET RECURSO CONCRETO (BUSCADOR)
+    // GET BUSCADOR MULTICAMPO Y POR RANGOS (NUEVA LÓGICA)
     async function searchFleet() {
-        if (!searchYear || !searchFlag || !searchOwner) {
-            errorMsg = "⚠️ Introduce Año, País de Registro y País Propietario para buscar.";
-            setTimeout(() => errorMsg = "", 5000);
-            return;
-        }
-
         try {
-            const res = await fetch(`${API_URL}/${searchYear}/${searchFlag}/${searchOwner}`);
+            // 1. Mandamos las búsquedas de texto a la API mediante Query Parameters
+            let queryParams = [];
+            if (searchFlag) queryParams.push(`flag_of_registration_label=${encodeURIComponent(searchFlag)}`);
+            if (searchOwner) queryParams.push(`beneficial_ownership_label=${encodeURIComponent(searchOwner)}`);
+            
+            let url = API_URL;
+            if (queryParams.length > 0) {
+                url += "?" + queryParams.join("&");
+            }
+
+            const res = await fetch(url);
             if (res.ok) {
-                const data = await res.json();
-                // IMPORTANTE: Meto el objeto entre corchetes [data] para convertirlo en un array de 1 elemento y que la tabla no se rompa
-                fleets = [data]; 
-                successMsg = "✅ Recurso encontrado.";
-                errorMsg = "";
-            } else if (res.status === 404) {
-                fleets = []; // Vacia la tabla porque no hay nada
-                errorMsg = "⚠️ No se encontró ningún recurso con esos datos.";
+                let data = await res.json();
+                
+                // Por si la API devuelve un solo objeto en vez de un array
+                if (!Array.isArray(data)) data = [data];
+
+                // 2. Filtramos localmente por los rangos numéricos si el usuario los ha rellenado
+                if (searchYearMin !== "") data = data.filter(d => d.year >= Number(searchYearMin));
+                if (searchYearMax !== "") data = data.filter(d => d.year <= Number(searchYearMax));
+                
+                if (searchShipsMin !== "") data = data.filter(d => d.number_of_ships >= Number(searchShipsMin));
+                if (searchShipsMax !== "") data = data.filter(d => d.number_of_ships <= Number(searchShipsMax));
+                
+                if (searchTonsMin !== "") data = data.filter(d => d.dead_weight_tons >= Number(searchTonsMin));
+                if (searchTonsMax !== "") data = data.filter(d => d.dead_weight_tons <= Number(searchTonsMax));
+                
+                if (searchPercentMin !== "") data = data.filter(d => d.percentage_of_total_fleet >= Number(searchPercentMin));
+                if (searchPercentMax !== "") data = data.filter(d => d.percentage_of_total_fleet <= Number(searchPercentMax));
+
+                fleets = data; // Actualizamos la tabla
+                
+                if (fleets.length > 0) {
+                    successMsg = `✅ Búsqueda completada. Se encontraron ${fleets.length} registros.`;
+                    errorMsg = "";
+                } else {
+                    errorMsg = "⚠️ No se encontró ningún recurso con esos filtros.";
+                    successMsg = "";
+                }
             } else {
-                errorMsg = "Error al buscar el recurso.";
+                errorMsg = "Error al buscar el recurso en la base de datos.";
             }
         } catch (error) {
             errorMsg = "Error de conexión.";
         }
-        setTimeout(() => successMsg = "", 5000);
+        setTimeout(() => { successMsg = ""; errorMsg = ""; }, 5000);
     }
 
     // BOTÓN (LIMPIA LA BÚSQUEDA Y VUELVE A VER TODOS)
     function clearSearch() {
-        searchYear = "";
-        searchFlag = "";
-        searchOwner = "";
-        getFleets(); // Vuelvo a pedir todos los datos al backend
+        searchFlag = ""; searchOwner = "";
+        searchYearMin = ""; searchYearMax = "";
+        searchShipsMin = ""; searchShipsMax = "";
+        searchTonsMin = ""; searchTonsMax = "";
+        searchPercentMin = ""; searchPercentMax = "";
+        getFleets(); // Vuelvo a pedir todos los datos limpios
     }
 
     onMount(() => {
@@ -210,19 +231,27 @@
         <div data-testid="alert-message" style="padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; font-size: 1.1em; text-align: center; border: 2px solid; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;
             {errorMsg ? 'background-color: #fee2e2; color: #991b1b; border-color: #f87171;' : 'background-color: #dcfce7; color: #166534; border-color: #4ade80;'}">
             
-            {#if errorMsg}
-                {errorMsg}
-            {/if}
-            
-            {#if successMsg}
-                {successMsg}
-            {/if}
+            {#if errorMsg}{errorMsg}{/if}
+            {#if successMsg}{successMsg}{/if}
             
         </div>
     {/if}
+
+    <div class="endpoint-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; color: #1e293b;">📈 VISUALIZACIÓN GRÁFICA</h3>
+        <div>
+            <a href="/analytics/beneficial-ownership-merchant-fleets" style="text-decoration: none; padding: 8px 15px; background-color: #4a0487; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
+            📈 GRÁFICA
+        </a>
+        <a href="/analytics/beneficial-ownership-merchant-fleets/map" style="text-decoration: none; padding: 8px 15px; background-color: #4a0487; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
+            🌏 VISUALIZACIÓN GEOSPACIAL
+        </a>
+        </div>
+    </div>
+
     <div class="endpoint-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <h3 style="margin: 0; color: #1e293b;">📙 DOCUMENTACIÓN DE POSTMAN</h3>
-        <a href="/beneficial-ownership-merchant-fleets/postman" style="text-decoration: none; padding: 8px 15px; background-color: #ff6c37; color: white; border-radius: 5px; font-weight: bold; display: inline-flex; align-items: center;">
+        <a href="/beneficial-ownership-merchant-fleets/postman" style="text-decoration: none; padding: 8px 15px; background-color: #ff6c37; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
             📙 DOCUMENTACIÓN
         </a>
     </div>
@@ -242,7 +271,7 @@
     <div class="endpoint-group" style="background: var(--bg-color); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
         
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h3 style="margin: 0; color: #1e293b;">➕ AÑADIR NUEVO REGISTRO</h3>
+            <h3 style="margin: 0; color: #1e293b;">➕ AÑADIR NUEVO RECURSO</h3>
             <button data-testid="create-btn" onclick={createFleet} class="action-btn create-btn" style="padding: 8px 15px; background-color: #16a34a; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center;">
                 ➕ AÑADIR
             </button>
@@ -260,13 +289,55 @@
     </div>
 
     <div class="endpoint-group" style="background: var(--bg-color); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 20px;">
-        <h3 style="margin-top: 0; color: #1e293b;">🔍 BUSCAR RECURSO CONCRETO</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
-            <input data-testid="search-year" type="number" bind:value={searchYear} placeholder="Año a buscar" class="form-input">
-            <input data-testid="search-flag" type="text" bind:value={searchFlag} placeholder="País Registro" class="form-input">
-            <input data-testid="search-owner" type="text" bind:value={searchOwner} placeholder="País Propietario" class="form-input">
-            <button data-testid="search-btn" onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6;">🔍 BUSCAR</button>
-            <button data-testid="clear-search-btn" onclick={clearSearch} class="action-btn" style="background-color: #64748b;padding: 8px 5px;">🔄 LIMPIAR / VER TODOS</button>
+        <h3 style="margin-top: 0; color: #1e293b; margin-bottom: 15px;">🔍 BUSCADOR</h3>
+        <h4 style="margin-top: 0; color: #1e293b; margin-bottom: 15px;">Si necesita buscar un determinado año/ nº naves / peso / %total, debe marcar ambas casillas con el valor deseado.</h4>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">País Registro</label>
+                <input type="text" bind:value={searchFlag} placeholder="Ej: Antigua and Barbuda" class="form-input" style="margin-top: 5px;">
+            </div>
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">País Propietario</label>
+                <input type="text" bind:value={searchOwner} placeholder="Ej: Germany" class="form-input" style="margin-top: 5px;">
+            </div>
+            
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">Año (Rango)</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="number" bind:value={searchYearMin} placeholder="Mín" class="form-input">
+                    <input type="number" bind:value={searchYearMax} placeholder="Máx" class="form-input">
+                </div>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">Nº Naves (Rango)</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="number" bind:value={searchShipsMin} placeholder="Mín" class="form-input">
+                    <input type="number" bind:value={searchShipsMax} placeholder="Máx" class="form-input">
+                </div>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">Peso/Tons (Rango)</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="number" bind:value={searchTonsMin} placeholder="Mín" class="form-input">
+                    <input type="number" bind:value={searchTonsMax} placeholder="Máx" class="form-input">
+                </div>
+            </div>
+
+            <div>
+                <label style="font-weight: bold; font-size: 12px; color: #475569;">% Total (Rango)</label>
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <input type="number" bind:value={searchPercentMin} placeholder="Mín" class="form-input">
+                    <input type="number" bind:value={searchPercentMax} placeholder="Máx" class="form-input">
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: right;">
+            <button onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6; padding: 10px 30px; font-size: 15px;">🔍 APLICAR FILTROS</button>
+            <button onclick={clearSearch} class="action-btn" style="background-color: #64748b; padding: 10px 30px; font-size: 15px;">🔄 LIMPIAR</button>
         </div>
     </div>
 
@@ -290,18 +361,18 @@
                     {#if fleets.length === 0}
                         <tr data-testid="empty-row">
                             <td colspan="7" style="text-align: center; padding: 20px; font-weight: bold; color: #64748b;">
-                                No hay datos disponibles en la base de datos.
+                                No hay datos disponibles.
                             </td>
                         </tr>
                     {:else}
                         {#each fleets as fleet}
                             <tr data-testid={`row-${fleet.year}-${fleet.flag_of_registration_label}`} style="border-bottom: 1px solid var(--border-color);">
-                                <td style="padding: 12px;">{fleet.year}</td>
+                                <td style="padding: 12px; text-align: center;">{fleet.year}</td>
                                 <td style="padding: 12px;">{fleet.flag_of_registration_label}</td>
                                 <td style="padding: 12px;">{fleet.beneficial_ownership_label}</td>
-                                <td style="padding: 12px; font-weight: bold;">{fleet.number_of_ships}</td>
-                                <td style="padding: 12px;">{fleet.dead_weight_tons}</td>
-                                <td style="padding: 12px;">{fleet.percentage_of_total_fleet}%</td>
+                                <td style="padding: 12px; font-weight: bold; text-align: center;">{fleet.number_of_ships}</td>
+                                <td style="padding: 12px; text-align: center;">{fleet.dead_weight_tons}</td>
+                                <td style="padding: 12px; text-align: center;">{fleet.percentage_of_total_fleet}%</td>
                                 <td style="padding: 12px; text-align: center; white-space: nowrap;">
                                     <a data-testid="edit-btn" href="/beneficial-ownership-merchant-fleets/{fleet.year}/{fleet.flag_of_registration_label}/{fleet.beneficial_ownership_label}" class="action-btn" style="background-color: #eab308; padding: 5px 10px; font-size: 0.9em; text-decoration: none; color: white; margin-right: 5px; display: inline-flex; align-items: center;">
                                         ✏️ EDITAR

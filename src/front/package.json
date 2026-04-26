@@ -33,5 +33,9 @@
 	},
 	"optionalDependencies": {
 		"@rollup/rollup-linux-x64-gnu": "^4.59.0"
+	},
+	"dependencies": {
+		"@highcharts/map-collection": "^2.3.2",
+		"highcharts": "^12.6.0"
 	}
 }
