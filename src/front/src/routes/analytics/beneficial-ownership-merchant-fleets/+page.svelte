@@ -7,7 +7,7 @@
     onMount(async () => {
         try {
             // 1. OBTENGO LOS DATOS DE LA API
-            const res = await fetch('http://localhost:3000/api/v1/beneficial-ownership-merchant-fleets');
+            const res = await fetch('/api/v1/beneficial-ownership-merchant-fleets');
             if (!res.ok) throw new Error("Error al conectar con la API");
             const datosApi = await res.json();
 
