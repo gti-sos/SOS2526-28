@@ -193,7 +193,7 @@
                 fleets = data; // Actualizamos la tabla
                 
                 if (fleets.length > 0) {
-                    successMsg = `✅ Búsqueda completada. Se encontraron ${fleets.length} registros.`;
+                    successMsg = "✅ Recurso encontrado.";
                     errorMsg = "";
                 } else {
                     errorMsg = "⚠️ No se encontró ningún recurso con esos filtros.";
