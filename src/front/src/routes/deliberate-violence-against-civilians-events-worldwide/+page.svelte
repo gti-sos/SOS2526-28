@@ -139,7 +139,7 @@
 			});
 
 			if (res.status === 201) {
-				successMsg = '✅ Evento creado correctamente.';
+				successMsg = '✅ Evento creado correctamente';
 				errorMsg = '';
 				getEvents();
 
