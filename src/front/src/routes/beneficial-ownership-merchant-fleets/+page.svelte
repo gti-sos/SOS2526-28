@@ -295,17 +295,17 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
             <div>
                 <label style="font-weight: bold; font-size: 12px; color: #475569;">País Registro</label>
-                <input type="text" bind:value={searchFlag} placeholder="Ej: Antigua and Barbuda" class="form-input" style="margin-top: 5px;">
+                <input data-testid="search-flag" type="text" bind:value={searchFlag} placeholder="Ej: Antigua and Barbuda" class="form-input" style="margin-top: 5px;">
             </div>
             <div>
                 <label style="font-weight: bold; font-size: 12px; color: #475569;">País Propietario</label>
-                <input type="text" bind:value={searchOwner} placeholder="Ej: Germany" class="form-input" style="margin-top: 5px;">
+                <input data-testid="search-owner" type="text" bind:value={searchOwner} placeholder="Ej: Germany" class="form-input" style="margin-top: 5px;">
             </div>
             
             <div>
                 <label style="font-weight: bold; font-size: 12px; color: #475569;">Año (Rango)</label>
                 <div style="display: flex; gap: 5px; margin-top: 5px;">
-                    <input type="number" bind:value={searchYearMin} placeholder="Mín" class="form-input">
+                    <input data-testid="search-year" type="number" bind:value={searchYearMin} placeholder="Mín" class="form-input">
                     <input type="number" bind:value={searchYearMax} placeholder="Máx" class="form-input">
                 </div>
             </div>
@@ -336,8 +336,8 @@
         </div>
 
         <div style="display: flex; gap: 10px; justify-content: right;">
-            <button onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6; padding: 10px 30px; font-size: 15px;">🔍 APLICAR FILTROS</button>
-            <button onclick={clearSearch} class="action-btn" style="background-color: #64748b; padding: 10px 30px; font-size: 15px;">🔄 LIMPIAR</button>
+            <button data-testid="search-btn" onclick={searchFleet} class="action-btn" style="background-color: #8b5cf6; padding: 10px 30px; font-size: 15px;">🔍 APLICAR FILTROS</button>
+            <button data-testid="clear-search-btn" onclick={clearSearch} class="action-btn" style="background-color: #64748b; padding: 10px 30px; font-size: 15px;">🔄 LIMPIAR</button>
         </div>
     </div>
 
