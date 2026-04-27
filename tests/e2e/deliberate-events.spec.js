@@ -4,6 +4,23 @@ test.describe.serial('E2E - Deliberate Violence Events', () => {
 
     const BASE_PAGE = 'http://localhost:3000/deliberate-violence-against-civilians-events-worldwide';
 
+
+    // =================================================
+    // 0. BORRAR TODOS LOS RECURSOS
+    // =================================================
+    test('0. Borrar todos los recursos', async ({ page }) => {
+
+        await page.goto(BASE_PAGE);
+
+        page.once('dialog', dialog => dialog.accept());
+
+        await page.getByRole('button', { name: 'Borrar Todos' }).click();
+
+        await expect(page.getByText('No hay datos disponibles en la base de datos.')).toBeVisible();
+
+    });
+
+
     // =================================================
     // 1. LISTAR RECURSOS (y cargar datos iniciales)
     // =================================================
