@@ -161,20 +161,44 @@
     }
 
     // Campos de búsqueda
+    let s_company_id = $state("");
     let s_company_name = $state("");
     let s_industry = $state("");
     let s_region = $state("");
     let s_from = $state("");
     let s_to = $state("");
+    let s_revenue = $state("");
+    let s_profit_margin = $state("");
+    let s_market_cap = $state("");
+    let s_growth_rate = $state("");
+    let s_esg_overall = $state("");
+    let s_esg_environmental = $state("");
+    let s_esg_social = $state("");
+    let s_esg_governance = $state("");
+    let s_carbon_emission = $state("");
+    let s_water_usage = $state("");
+    let s_energy_consumption = $state("");
     let noResultados = $state(false);
 
     async function buscar() {
         const params = new URLSearchParams();
-        if (s_company_name.trim()) params.set("company_name", s_company_name.trim());
-        if (s_industry.trim())     params.set("industry", s_industry.trim());
-        if (s_region.trim())       params.set("region", s_region.trim());
-        if (s_from !== "")         params.set("from", s_from);
-        if (s_to !== "")           params.set("to", s_to);
+        if (s_company_id !== "")           params.set("company_id", s_company_id);
+        if (s_company_name.trim())         params.set("company_name", s_company_name.trim());
+        if (s_industry.trim())             params.set("industry", s_industry.trim());
+        if (s_region.trim())               params.set("region", s_region.trim());
+        if (s_from !== "")                 params.set("from", s_from);
+        if (s_to !== "")                   params.set("to", s_to);
+        if (s_revenue !== "")             params.set("revenue", s_revenue);
+        if (s_profit_margin !== "")       params.set("profit_margin", s_profit_margin);
+        if (s_market_cap !== "")          params.set("market_cap", s_market_cap);
+        if (s_growth_rate !== "")         params.set("growth_rate", s_growth_rate);
+        if (s_esg_overall !== "")         params.set("esg_overall", s_esg_overall);
+        if (s_esg_environmental !== "")   params.set("esg_environmental", s_esg_environmental);
+        if (s_esg_social !== "")          params.set("esg_social", s_esg_social);
+        if (s_esg_governance !== "")      params.set("esg_governance", s_esg_governance);
+        if (s_carbon_emission !== "")     params.set("carbon_emission", s_carbon_emission);
+        if (s_water_usage !== "")         params.set("water_usage", s_water_usage);
+        if (s_energy_consumption !== "")  params.set("energy_consumption", s_energy_consumption);
 
         const url = params.toString() ? `${API_URL}?${params}` : API_URL;
 
@@ -200,8 +224,11 @@
     }
 
     function limpiarBusqueda() {
-        s_company_name = ""; s_industry = ""; s_region = "";
-        s_from = ""; s_to = "";
+        s_company_id = ""; s_company_name = ""; s_industry = ""; s_region = "";
+        s_from = ""; s_to = ""; s_revenue = ""; s_profit_margin = "";
+        s_market_cap = ""; s_growth_rate = ""; s_esg_overall = "";
+        s_esg_environmental = ""; s_esg_social = ""; s_esg_governance = "";
+        s_carbon_emission = ""; s_water_usage = ""; s_energy_consumption = "";
         noResultados = false;
         cargarRegistros();
     }
@@ -305,6 +332,10 @@
         </div>
         <div class="form-grid">
             <div class="form-field">
+                <label>ID Empresa</label>
+                <input type="number" bind:value={s_company_id} placeholder="Ej: 1" class="form-input">
+            </div>
+            <div class="form-field">
                 <label>Nombre Empresa</label>
                 <input type="text" bind:value={s_company_name} placeholder="Ej: Company_1" class="form-input">
             </div>
@@ -323,6 +354,50 @@
             <div class="form-field">
                 <label>Año hasta</label>
                 <input type="number" bind:value={s_to} placeholder="Ej: 2024" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Ingresos (M$)</label>
+                <input type="number" step="0.1" bind:value={s_revenue} placeholder="Ej: 459.2" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Margen de Beneficio (%)</label>
+                <input type="number" step="0.1" bind:value={s_profit_margin} placeholder="Ej: 6.0" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Capitalización de Mercado</label>
+                <input type="number" step="0.1" bind:value={s_market_cap} placeholder="Ej: 337.5" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Tasa de Crecimiento (%)</label>
+                <input type="number" step="0.1" bind:value={s_growth_rate} placeholder="Ej: 3.2" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>ESG General</label>
+                <input type="number" step="0.1" bind:value={s_esg_overall} placeholder="Ej: 57.0" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>ESG Ambiental</label>
+                <input type="number" step="0.1" bind:value={s_esg_environmental} placeholder="Ej: 60.7" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>ESG Social</label>
+                <input type="number" step="0.1" bind:value={s_esg_social} placeholder="Ej: 33.5" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>ESG Gobernanza</label>
+                <input type="number" step="0.1" bind:value={s_esg_governance} placeholder="Ej: 76.8" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Emisiones de CO₂</label>
+                <input type="number" step="0.1" bind:value={s_carbon_emission} placeholder="Ej: 35577.4" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Consumo de Agua</label>
+                <input type="number" step="0.1" bind:value={s_water_usage} placeholder="Ej: 17788.7" class="form-input">
+            </div>
+            <div class="form-field">
+                <label>Consumo de Energía</label>
+                <input type="number" step="0.1" bind:value={s_energy_consumption} placeholder="Ej: 71154.7" class="form-input">
             </div>
         </div>
         <div style="margin-top:15px; display:flex; gap:10px; justify-content:flex-end;">
