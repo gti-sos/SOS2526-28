@@ -151,6 +151,7 @@
 		</div>
 	{/if}
 
+	<a href="/analytics/deliberate-violence-against-civilians-events-worldwide/map" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">VISUALIZACIÓN GEOSPACIAL</a>
 </div>
 
 <style>
