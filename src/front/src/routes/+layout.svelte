@@ -9,7 +9,7 @@
             <nav>
                 <a href="/" class="nav-btn">🏠 INICIO</a>
                 <a href="https://github.com/gti-sos/SOS2526-28" target="_blank" class="nav-btn">📁 REPOSITORIO</a>
-                <a href="/about" class="nav-btn">ℹ️ NOSOTROS</a>
+                <a href="/about" class="nav-btn">ℹ️ NOSOTROS/VIDEOS</a>
             </nav>
         </div>
     </header>

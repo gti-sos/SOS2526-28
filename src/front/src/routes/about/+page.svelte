@@ -19,7 +19,9 @@
         { name: "API ALBERTO  ", // <--(beneficial-ownership-merchant-fleets)
         url: "/api/v1/beneficial-ownership-merchant-fleets",
         fuente: " (FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO)", 
-        urlFuente: "https://unctadstat.unctad.org/datacentre/reportInfo/US.FleetBeneficialOwners"},
+        urlFuente: "https://unctadstat.unctad.org/datacentre/reportInfo/US.FleetBeneficialOwners",
+        urlv2: "/api/v2/beneficial-ownership-merchant-fleets",
+        hasV2: true},
 
         { name: "API JORGE  ", // <--(deliberate-violence-against-civilians-events-worldwide)
         url: "/api/v1/deliberate-violence-against-civilians-events-worldwide", 
@@ -31,6 +33,18 @@
         fuente: " (CONJUNTO DE DATOS SOBRE ESG Y DESEMPEÑO FINANCIERO)", 
         urlFuente: "https://www.kaggle.com/datasets/shriyashjagtap/esg-and-financial-performance-dataset?resource=download&select=company_esg_financial_dataset.csv"}
     ];
+
+    const videos = [
+        {name: "ALBERTO JIMÉNEZ",
+        urlVideo: ""},
+
+        {name: "JORGE DAYOUB",
+        urlVideo: ""},
+
+        {name: "ZHILLAN AVEROUS",
+        urlVideo: ""}
+    ];
+
 </script>
 
 <svelte:head>
@@ -55,6 +69,20 @@
                     <h5 style="margin-top: 0; color: #1e293b; font-size: 0.9em;">{member.name}</h5>
                     <a href={member.github} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 8px 15px; background-color: #24292e; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-block; margin-top: 10px;">
                         🐙 PERFIL DE GITHUB
+                    </a>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div style="margin-bottom: 40px;">
+        <h3 style="color: #334155;">🎞️ VÍDEOS DE FUNCIONALIDADES</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            {#each videos as video}
+                <div style="border: 1px solid #cbd5e1; padding: 20px; border-radius: 8px; background: #f8fafc; text-align: center;">
+                    <h5 style="margin-top: 0; color: #1e293b; font-size: 0.9em;">{video.name}</h5>
+                    <a href={video.urlVideo} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 8px 15px; background-color: #FF2400; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-block; margin-top: 10px;">
+                        ► VER VÍDEO
                     </a>
                 </div>
             {/each}
@@ -87,6 +115,11 @@
                         <a href={api.url} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 10px 15px; background-color: #10b981; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
                             ⚙️ VER API (JSON)
                         </a>
+                        {#if api.hasV2}
+                            <a href={api.urlv2} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 10px 15px; background-color: #10b981; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
+                                ⚙️ VER API (v2) (JSON)
+                            </a>
+                        {/if}
                         <a href={api.urlFuente} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 10px 15px; background-color: #f97316; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
                             📈 VER FUENTE DATOS
                         </a>
