@@ -12,6 +12,13 @@
                     📙 VER DOCUMENTACIÓN v1 EN POSTMAN
                 </a>
             </li>
+            <li style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #cbd5e1;">
+                <h2 style="margin-top: 0; color: #1e293b;">VERSIÓN 2 (v2)</h2>
+                <p style="color: #475569; margin-bottom: 15px;">Documentación actual de la API estable con los datos precargados.</p>
+                <a href="https://documenter.getpostman.com/view/52406665/2sBXqKnenc" target="_blank" style="display: inline-block; padding: 12px 20px; background-color: #ff6c37; color: white; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px;">
+                    📙 VER DOCUMENTACIÓN v2 EN POSTMAN
+                </a>
+            </li>
 
             </ul>
     </div>
