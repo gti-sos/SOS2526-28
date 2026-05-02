@@ -167,12 +167,12 @@
     <div bind:this={chartContainer} style="width: 100%; height: 600px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"></div>
     
     <div class="mt-5 mb-5" style="display: flex; justify-content: space-between; width: 100%; padding-top: 20px;">
-    <a href="/beneficial-ownership-merchant-fleets" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-        ⬅ ACCEDER A LOS DATOS
-    </a>
-    
-    <a href="/analytics/beneficial-ownership-merchant-fleets/map" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-        VISUALIZACIÓN GEOSPACIAL ➡
-    </a>
-</div>
+        <a href="/beneficial-ownership-merchant-fleets" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            ⬅ ACCEDER A LOS DATOS
+        </a>
+        
+        <a href="/analytics/beneficial-ownership-merchant-fleets/map" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            VISUALIZACIÓN GEOSPACIAL ➡
+        </a>
+    </div>
 </main>

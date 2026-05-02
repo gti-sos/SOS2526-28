@@ -250,6 +250,13 @@
     </div>
 
     <div class="endpoint-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="margin: 0; color: #1e293b;">🔗 INTEGRACIONES Y USO DE APIs</h3>
+        <a href="/integrations" style="text-decoration: none; padding: 8px 15px; background-color: #f59e0b; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
+            🔌 INTEGRACIONES 
+        </a>
+    </div>
+
+    <div class="endpoint-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <h3 style="margin: 0; color: #1e293b;">📙 DOCUMENTACIÓN DE POSTMAN</h3>
         <a href="/beneficial-ownership-merchant-fleets/postman" style="text-decoration: none; padding: 8px 15px; background-color: #ff6c37; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center;">
             📙 DOCUMENTACIÓN 
