@@ -8,7 +8,7 @@
         try {
             // 1. LLAMADA A LAS 3 APIS SIMULTÁNEAMENTE
             const [res1, res2, res3] = await Promise.all([
-                fetch('/api/v1/beneficial-ownership-merchant-fleets'),
+                fetch('/api/v2/beneficial-ownership-merchant-fleets'),
                 fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide'),
                 fetch('/api/v1/company-esg-scores-financial-performances')
             ]);
@@ -27,7 +27,19 @@
                 "Cameroon": "CMR", "Democratic Republic of the Congo": "COD", 
                 "El Salvador": "ELS", "Ethiopia": "ETH", "Colombia": "COL",
                 "Germany": "DEU", "Spain": "ESP", "Greece": "GRC", "Brazil": "BRA",
-                "China": "CHN", "Japan": "JPN", "United States": "USA", "Australia": "AUS"
+                "China": "CHN", "Japan": "JPN", "United States": "USA", "Australia": "AUS",
+                "Antigua and Barbuda": "ATG", "Bahamas": "BHS","Bangladesh": "BGD",
+                "Belgium": "BEL","Canada": "CAN","Chile": "CHL","China, Hong Kong SAR": "HKG",
+                "China, Macao SAR": "MAC","China, Taiwan Province of": "TWN","Cyprus": "CYP",
+                "Denmark": "DNK","Estonia": "EST","Finland": "FIN","France": "FRA",
+                "Greenland": "GRL","Guadeloupe": "GLP","Iceland": "ISL","India": "IND",
+                "Indonesia": "IDN","Ireland": "IRL","Italy": "ITA","Latvia": "LVA",
+                "Liberia": "LBR","Lithuania": "LTU","Malta": "MLT","Marshall Islands": "MHL",
+                "Netherlands (Kingdom of the)": "NLD","Norway": "NOR","Panama": "PAN",
+                "Philippines": "PHL","Poland": "POL","Portugal": "PRT","Republic of Korea": "KOR",
+                "Russian Federation": "RUS","Singapore": "SGP","Switzerland": "CHE",
+                "Syrian Arab Republic": "SYR","Turkiye": "TUR","Ukraine": "UKR",
+                "United Arab Emirates": "ARE","United Kingdom": "GBR"
             };
 
             // B) De Nombre Completo a Región de ESG (Latin America, Europe, etc)
@@ -35,9 +47,20 @@
                 "Colombia": "Latin America", "Brazil": "Latin America", "El Salvador": "Latin America",
                 "Germany": "Europe", "Spain": "Europe", "Greece": "Europe", "Denmark": "Europe",
                 "China": "Asia", "Japan": "Asia", "Afghanistan": "Asia",
-                "United States": "North America",
-                "Cameroon": "Africa", "Burundi": "Africa", "Ethiopia": "Africa",
-                "Australia": "Oceania"
+                "United States": "North America","Cameroon": "Africa", "Burundi": "Africa", 
+                "Ethiopia": "Africa","Australia": "Oceania","Antigua and Barbuda": "Latin America",
+                "Bahamas": "Latin America","Bangladesh": "Asia","Belgium": "Europe",
+                "Canada": "North America","Chile": "Latin America","China, Hong Kong SAR": "Asia",
+                "China, Macao SAR": "Asia","China, Taiwan Province of": "Asia","Cyprus": "Europe",
+                "Estonia": "Europe","Finland": "Europe","France": "Europe","Greenland": "North America",
+                "Guadeloupe": "Latin America","Iceland": "Europe","India": "Asia","Indonesia": "Asia",
+                "Ireland": "Europe","Italy": "Europe","Latvia": "Europe","Liberia": "Africa",
+                "Lithuania": "Europe","Malta": "Europe","Marshall Islands": "Oceania",
+                "Netherlands (Kingdom of the)": "Europe","Norway": "Europe","Panama": "Latin America",
+                "Philippines": "Asia","Poland": "Europe","Portugal": "Europe","Republic of Korea": "Asia",
+                "Russian Federation": "Europe","Singapore": "Asia","Switzerland": "Europe",
+                "Syrian Arab Republic": "Asia","Turkiye": "Europe","Ukraine": "Europe",
+                "United Arab Emirates": "Asia","United Kingdom": "Europe"
             };
 
             // 3. PROCESAMIENTO DE DATOS: Mezcla de las 3 APIs
