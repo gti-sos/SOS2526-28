@@ -90,7 +90,8 @@ function estructuraValida(obj){
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 25, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "CMR", region: "Far North", district: "", locality: "Bodo", degree: 12, minute: 21, second: 35, direction: "N" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 7, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "COD", region: "Nord Kivu", district: "", locality: "Miriki", degree: 0, minute: 42, second: 43, direction: "S" },
     { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 1, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "ELS", region: "", district: "", locality: "Los Cerritos", degree: 13, minute: 46, second: 55, direction: "N" },
-    { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 28, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "ETH", region: "Gambela Regional State", district: "", locality: "", degree: 7, minute: 50, second: 0, direction: "N" }
+    { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 28, start_month: 1, start_year: 2016, end_day: 99, end_month: 99, end_year: 9999, country: "ETH", region: "Gambela Regional State", district: "", locality: "", degree: 7, minute: 50, second: 0, direction: "N" },
+    { event_type: "Incident", campaign_identifier: "", event_reporting: "Eyewitness Account", start_day: 29, start_month: 2, start_year: 2014, end_day: 99, end_month: 99, end_year: 9999, country: "ETH", region: "Gambela Regional State", district: "", locality: "", degree: 7, minute: 50, second: 0, direction: "N" }
 ];
 
 // ==============================
