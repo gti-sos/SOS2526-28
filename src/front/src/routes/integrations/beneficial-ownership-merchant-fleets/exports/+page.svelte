@@ -46,11 +46,11 @@
             else if (typeof heatmap === 'function') heatmap(Highcharts);
             else if (heatmap.default && typeof heatmap.default.default === 'function') heatmap.default.default(Highcharts);
 
-            console.log("Descargando datos de tu API...");
+            console.log("Descargando datos de mi API...");
             const miUrl = '/api/v2/beneficial-ownership-merchant-fleets'; 
             const miRespuesta = await fetch(miUrl);
             
-            if (!miRespuesta.ok) throw new Error("Fallo al cargar tu API");
+            if (!miRespuesta.ok) throw new Error("Fallo al cargar mi API");
             misDatosTotales = await miRespuesta.json();
             
             await cargarDatosComercio(añoSeleccionado);
@@ -101,12 +101,11 @@
                 }
             });
 
-            // Preparación de las variables para el Heatmap
-            let categoriasY = []; // Aquí irán los nombres de los países
-            let dataHeatmap = []; // Aquí irán las celdas de colores
+            // Variables para el Heatmap
+            let categoriasY = []; // Nombres de los países
+            let dataHeatmap = []; // Celdas de colores
             
             if (paisesValidos.length > 0) {
-                // Orden alfabético
                 paisesValidos.sort((a, b) => a.nombre.localeCompare(b.nombre));
                 
                 let maxBarcos = Math.max(...paisesValidos.map(p => p.barcos));
@@ -119,7 +118,7 @@
                     let intensidadBarcos = (pais.barcos / maxBarcos) * 100;
                     let intensidadExportaciones = (pais.exportaciones / maxExportaciones) * 100;
 
-                    // CELDA 0 (Columna Izquierda): Flota Mercante
+                    // CELDA (Columna Izquierda): Flota Mercante
                     dataHeatmap.push({
                         x: 0, // Posición columna
                         y: indicePais, // Posición fila
@@ -128,7 +127,7 @@
                         tipo: 'barcos'
                     });
 
-                    // CELDA 1 (Columna Derecha): Exportaciones
+                    // CELDA (Columna Derecha): Exportaciones
                     dataHeatmap.push({
                         x: 1, 
                         y: indicePais, 
@@ -139,7 +138,7 @@
                 });
             }
 
-            // Dibujo el Gráfico de Mapa de Calor
+            // Gráfico de Mapa de Calor
             Highcharts.chart(chartContainer, {
                 chart: { 
                     type: 'heatmap', 
@@ -157,13 +156,13 @@
                 },
                 xAxis: {
                     categories: ['🚢 Poder Logístico (Nº Flota)', '💰 Poder Comercial (Exportaciones)'],
-                    opposite: true, // Ponemos los títulos de las columnas arriba
+                    opposite: true, // Títulos de las columnas arriba
                     labels: { style: { fontWeight: 'bold', fontSize: '13px', color: '#1e293b' } }
                 },
                 yAxis: {
                     categories: categoriasY,
                     title: null,
-                    reversed: true, // Para que el orden alfabético vaya de arriba a abajo
+                    reversed: true, // Orden alfabético vaya de arriba a abajo
                     labels: { style: { fontWeight: 'bold', fontSize: '12px' } }
                 },
                 colorAxis: {
@@ -172,9 +171,9 @@
                     // Escala de colores
                     stops: [
                         [0, '#f8fafc'],   // Casi blanco (0%)
-                        [0.1, '#bae6fd'], // Azul cielo clarito (10%)
-                        [0.5, '#0ea5e9'], // Azul estándar (50%)
-                        [1, '#082f49']    // Azul marino profundo (100% - Líder absoluto)
+                        [0.1, '#bae6fd'], 
+                        [0.5, '#0ea5e9'], 
+                        [1, '#082f49']    // Azul marino (100% - Líder absoluto)
                     ],
                     labels: { format: '{value}%' }
                 },
@@ -219,7 +218,7 @@
                 },
                 series: [{
                     name: 'Matriz de Datos',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     borderColor: '#ffffff',
                     data: dataHeatmap,
                     dataLabels: {
@@ -252,17 +251,17 @@
 <div class="container" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        Integración Externa: World Bank API (Comercio Internacional)
+        🌍 Integración (Externa 2): Exportaciones
     </h2>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
         Este <strong>Mapa de Calor (Heatmap)</strong> compara a los principales países de manera equitativa, asignando una celda fija a cada variable. La intensidad del color (del blanco al azul oscuro) indica el peso relativo de ese país en el mercado mundial. Esto permite comparar gigantes logísticos con economías emergentes sin que ningún dato quede oculto por la escala gráfica.
     </p>
 
-    <!-- Panel de Controles -->
+    <!-- Panel de Control -->
     <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px;">
         <label for="selector-año" style="font-weight: bold; color: #1e293b; font-size: 1.1rem;">
-            📅 Ejercicio Fiscal:
+            📅 Año seleccionado:
         </label>
         
         <select 
@@ -278,7 +277,7 @@
         </select>
         
         {#if cargando}
-            <span style="color: #0ea5e9; font-weight: bold;">Auditando matrices de datos...</span>
+            <span style="color: #0ea5e9; font-weight: bold;">Auditando datos...</span>
         {/if}
     </div>
 
@@ -289,7 +288,7 @@
     {/if}
 
     <div style="position: relative; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 15px; background-color: white;">
-        <div bind:this={chartContainer} style="width: 100%; height: 650px;"></div>
+        <div bind:this={chartContainer} style="width: 100%; height: 700px;"></div>
     </div>
 
     <div class="mt-5 mb-5" style="display: flex; justify-content: space-between; width: 100%; padding-top: 20px;">

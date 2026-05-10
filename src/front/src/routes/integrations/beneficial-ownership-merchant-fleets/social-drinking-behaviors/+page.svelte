@@ -133,7 +133,7 @@
                             name: 'Vino', 
                             yAxis: 0, 
                             data: dataVino, 
-                            color: '#9f1239', // Rojo vino
+                            color: '#9f1239', // Vino
                             stack: 'alcohol', // Se agrupa en la barra de alcohol
                             tooltip: { valueSuffix: ' Litros' } 
                         },
@@ -150,7 +150,7 @@
                             yAxis: 1, 
                             data: dataBarcos, 
                             color: '#0ea5e9', // Azul marino
-                            stack: 'barcos', // Se agrupa en su PROPIA barra separada
+                            stack: 'barcos', // Se agrupa en su propia barra separada
                             tooltip: { valueSuffix: ' buques' } 
                         }
                     ]
@@ -170,7 +170,7 @@
 <div class="container" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        Integración SOS: Grupo 25 (Consumo social de alcohol)
+        🎓 Integración SOS (Grupo 25): Consumo social de alcohol
     </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
