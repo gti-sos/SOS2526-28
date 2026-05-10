@@ -1,34 +1,36 @@
-funciona integración carga 2
-
-
 <script>
     import { onMount } from 'svelte';
     
     // Variables de estado
     let cargando = $state(true);
     let errorMensaje = $state("");
-    let chartContainer; 
     
-    let misDatosTotales = []; 
+    // Contenedores para los 3 gráficos
+    let chartContainer1; // Puntos de carga
+    let chartContainer2; // Potencia total
+    let chartContainer3; // Eficiencia
+    
     let evDatosTotales = []; 
     let Highcharts; 
 
-    // Variables reactivas para la tabla
+    // Variables de estado para las tablas dinámicas
     let añosTabla = $state([]);
-    let tablaGer = $state({ tons: [], kw: [] });
-    let tablaSwi = $state({ tons: [], kw: [] });
+    let paisesTabla = $state([]);
+    
+    // Matrices para guardar los datos y pintarlos en las tablas
+    let matrizCargadores = $state({});
+    let matrizPotencia = $state({});
+    let matrizEficiencia = $state({});
 
     onMount(async () => {
         try {
-            // Importación dinámica de Highcharts
             const hc = await import('highcharts');
             const hcm = await import('highcharts/highcharts-more');
-            const hcd = await import('highcharts/modules/dumbbell');
+            const hcd = await import('highcharts/modules/dumbbell'); //Porque el lollipop lo utiliza
             const hcl = await import('highcharts/modules/lollipop');
             
             Highcharts = hc.default || hc;
 
-            // Función segura para inicializar módulos en Vite
             const inicializarModulo = (modulo) => {
                 const initFunc = modulo.default || modulo;
                 if (typeof initFunc === 'function') {
@@ -40,17 +42,13 @@ funciona integración carga 2
             inicializarModulo(hcd);
             inicializarModulo(hcl);
 
-            const miUrl = 'https://sos2526-28.onrender.com/api/v2/beneficial-ownership-merchant-fleets';
+            // URL del compañero (Solo 1 Uso)
             const evUrl = 'https://sos2526-16.onrender.com/api/v1/global-ev-charging-infrastructures';
             
-            const [resBarcos, resEv] = await Promise.all([
-                fetch(miUrl),
-                fetch(evUrl)
-            ]);
+            const resEv = await fetch(evUrl);
 
-            if (!resBarcos.ok || !resEv.ok) throw new Error("Fallo al conectar con las APIs");
+            if (!resEv.ok) throw new Error("Fallo al conectar con la API del Grupo 16");
 
-            misDatosTotales = await resBarcos.json();
             evDatosTotales = await resEv.json();
 
             procesarYDibujar();
@@ -65,115 +63,129 @@ funciona integración carga 2
 
     function procesarYDibujar() {
         let añosSet = new Set();
-        let aggFleets = { 'Germany': {}, 'Switzerland': {} };
-        let aggEvs = { 'germany': {}, 'switzerland': {} };
+        let paisesSet = new Set();
+        let aggEvs = {}; 
 
-        misDatosTotales.forEach(d => {
-            let p = d.beneficial_ownership_label;
-            if (p === 'Germany' || p === 'Switzerland') {
-                let y = parseInt(d.year);
-                añosSet.add(y);
-                if (!aggFleets[p][y]) aggFleets[p][y] = { tons: 0, ships: 0 };
-                aggFleets[p][y].tons += parseFloat(d.dead_weight_tons) || 0;
-                aggFleets[p][y].ships += parseInt(d.number_of_ships) || 0;
-            }
-        });
-
+        // Recorro los datos
         evDatosTotales.forEach(d => {
-            let p = d.country.toLowerCase();
-            if (p === 'germany' || p === 'switzerland') {
-                let y = parseInt(d.year);
-                añosSet.add(y);
-                if (!aggEvs[p][y]) aggEvs[p][y] = { power: 0, chargers: 0 };
-                aggEvs[p][y].power += parseFloat(d.total_power_kw) || 0;
-                aggEvs[p][y].chargers += parseInt(d.charging_point) || 0;
-            }
+            let pais = d.country; 
+            let año = parseInt(d.year);
+
+            if (!pais || !año) return;
+
+            añosSet.add(año);
+            paisesSet.add(pais);
+
+            if (!aggEvs[pais]) aggEvs[pais] = {};
+            if (!aggEvs[pais][año]) aggEvs[pais][año] = { power: 0, chargers: 0 };
+
+            aggEvs[pais][año].power += parseFloat(d.total_power_kw) || 0;
+            aggEvs[pais][año].chargers += parseInt(d.charging_point) || 0;
         });
 
-        let añosArray = Array.from(añosSet).sort((a, b) => a - b);
-        añosTabla = añosArray;
+        // Ordeno Años y Países
+        añosTabla = Array.from(añosSet).sort((a, b) => a - b);
+        paisesTabla = Array.from(paisesSet).sort();
 
-        // Cálculo de medias
-        const calcMedia = (agg, pais, año, campo1, campo2) => {
-            let d = agg[pais][año];
-            return d && d[campo2] > 0 ? Number((d[campo1] / d[campo2]).toFixed(2)) : null;
-        };
+        let tempMatrizCargadores = {};
+        let tempMatrizPotencia = {};
+        let tempMatrizEficiencia = {};
+        
+        let seriesCargadores = [];
+        let seriesPotencia = [];
+        let seriesEficiencia = [];
 
-        tablaGer.tons = añosArray.map(y => calcMedia(aggFleets, 'Germany', y, 'tons', 'ships'));
-        tablaSwi.tons = añosArray.map(y => calcMedia(aggFleets, 'Switzerland', y, 'tons', 'ships'));
-        tablaGer.kw = añosArray.map(y => calcMedia(aggEvs, 'germany', y, 'power', 'chargers'));
-        tablaSwi.kw = añosArray.map(y => calcMedia(aggEvs, 'switzerland', y, 'power', 'chargers'));
+        // Formateo los datos para los 3 gráficos y 3 tablas
+        paisesTabla.forEach(pais => {
+            tempMatrizCargadores[pais] = {};
+            tempMatrizPotencia[pais] = {};
+            tempMatrizEficiencia[pais] = {};
+            
+            let datosCargadores = [];
+            let datosPotencia = [];
+            let datosEficiencia = [];
 
-        if (!chartContainer) return;
+            añosTabla.forEach(año => {
+                let d = aggEvs[pais][año];
+                
+                let valCargadores = d ? d.chargers : null;
+                let valPotencia = d ? Number(d.power.toFixed(2)) : null;
+                let valEficiencia = (d && d.chargers > 0) ? Number((d.power / d.chargers).toFixed(2)) : null;
+                
+                tempMatrizCargadores[pais][año] = valCargadores;
+                tempMatrizPotencia[pais][año] = valPotencia;
+                tempMatrizEficiencia[pais][año] = valEficiencia;
 
-        // Gráfico Lollipop en Paneles
-        Highcharts.chart(chartContainer, {
-            chart: { 
-                type: 'lollipop', 
-                backgroundColor: 'transparent',
-                height: 650 
-            },
-            title: { text: 'Eficiencia Comparada: Marítima vs EV', style: { fontWeight: 'bold' } },
-            xAxis: { categories: añosArray, crosshair: true },
-            yAxis: [{
-                title: { text: 'Tonelaje Medio (Tons/Barco)', style: { color: '#0f766e' } },
-                height: '45%',
-                lineWidth: 2,
-                min: 0
-            }, {
-                title: { text: 'Potencia Media (kW/Cargador)', style: { color: '#be123c' } },
-                top: '55%',
-                height: '45%',
-                offset: 0,
-                lineWidth: 2,
-                min: 0
-            }],
-            tooltip: {
-                shared: true
-            },
-            series: [
-                {
-                    name: 'Alemania - Marítimo',
-                    yAxis: 0,
-                    data: tablaGer.tons,
-                    color: '#0f766e',
-                    marker: { symbol: 'circle' }
-                },
-                {
-                    name: 'Suiza - Marítimo',
-                    yAxis: 0,
-                    data: tablaSwi.tons,
-                    color: '#14b8a6',
-                    marker: { symbol: 'diamond' }
-                },
-                {
-                    name: 'Alemania - Terrestre EV',
-                    yAxis: 1,
-                    data: tablaGer.kw,
-                    color: '#be123c',
-                    marker: { symbol: 'circle' }
-                },
-                {
-                    name: 'Suiza - Terrestre EV',
-                    yAxis: 1,
-                    data: tablaSwi.kw,
-                    color: '#f43f5e',
-                    marker: { symbol: 'diamond' }
-                }
-            ]
+                datosCargadores.push(valCargadores);
+                datosPotencia.push(valPotencia);
+                datosEficiencia.push(valEficiencia);
+            });
+
+            // Series para Highcharts
+            seriesCargadores.push({ name: pais, data: datosCargadores });
+            seriesPotencia.push({ name: pais, data: datosPotencia });
+            seriesEficiencia.push({ name: pais, data: datosEficiencia, marker: { symbol: 'circle' } });
         });
+
+        // Actualizo el estado de las tablas
+        matrizCargadores = tempMatrizCargadores;
+        matrizPotencia = tempMatrizPotencia;
+        matrizEficiencia = tempMatrizEficiencia;
+
+        if (!Highcharts) return;
+
+        // --- GRÁFICO 1: Número de Puntos de Carga ---
+        if (chartContainer1) {
+            Highcharts.chart(chartContainer1, {
+                chart: { type: 'lollipop', backgroundColor: 'transparent', height: 450 },
+                title: { text: '1. Total de Puntos de Carga por País', style: { fontWeight: 'bold' } },
+                xAxis: { categories: añosTabla, crosshair: true },
+                yAxis: { title: { text: 'Nº Puntos de Carga' }, min: 0 },
+                tooltip: { shared: true, valueSuffix: ' pts' },
+                series: seriesCargadores
+            });
+        }
+
+        // --- GRÁFICO 2: Potencia Total ---
+        if (chartContainer2) {
+            Highcharts.chart(chartContainer2, {
+                chart: { type: 'lollipop', backgroundColor: 'transparent', height: 450 },
+                title: { text: '2. Potencia Total Instalada (kW)', style: { fontWeight: 'bold' } },
+                xAxis: { categories: añosTabla, crosshair: true },
+                yAxis: { title: { text: 'Potencia Total (kW)' }, min: 0 },
+                tooltip: { shared: true, valueSuffix: ' kW' },
+                series: seriesPotencia
+            });
+        }
+
+        // --- GRÁFICO 3: Eficiencia ---
+        if (chartContainer3) {
+            Highcharts.chart(chartContainer3, {
+                chart: { type: 'lollipop', backgroundColor: 'transparent', height: 500 },
+                title: { text: '3. Eficiencia: Potencia Media por Cargador', style: { fontWeight: 'bold' } },
+                subtitle: { text: '(Total kW / Total Cargadores)' },
+                xAxis: { categories: añosTabla, crosshair: true },
+                yAxis: { title: { text: 'Potencia Media (kW/Cargador)' }, min: 0 },
+                tooltip: { shared: true, valueSuffix: ' kW' },
+                series: seriesEficiencia
+            });
+        }
     }
 </script>
 
-<div class="container" style="max-width: 1100px; margin: 40px auto; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div class="container" style="max-width: 1200px; margin: 40px auto; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
     
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        Integración SOS: Eficiencia Marítima vs EV (G16)
+        🎓 Uso SOS (Grupo 16): Infraestructuras globales de carga de vehículos eléctricos
     </h2>
+
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        Este uso de la API externa del Grupo 16 extrae dinámicamente todos los países y años. A continuación se presentan tres visualizaciones del tipo <em>Lollipop Chart</em>) para entender la evolución de la infraestructura, su potencia y su eficiencia real.
+    </p>
 
     {#if cargando}
         <div style="padding: 20px; background-color: #f0f9ff; color: #0284c7; border-radius: 8px; text-align: center; margin-bottom: 20px;">
-            ⏳ Sincronizando datos de flotas y cargadores...
+            ⏳ Construyendo las visualizaciones...
         </div>
     {/if}
 
@@ -183,34 +195,101 @@ funciona integración carga 2
         </div>
     {/if}
 
-    <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">
-        <div bind:this={chartContainer}></div>
+    <!--ZONA DE GRÁFICOS-->
+    <div style="display: flex; flex-direction: column; gap: 40px; margin-bottom: 40px;">
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div bind:this={chartContainer1}></div>
+        </div>
+        
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div bind:this={chartContainer2}></div>
+        </div>
+        
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+            <div bind:this={chartContainer3}></div>
+        </div>
     </div>
 
+    <!--TABLAS-->
+    <h3 style="color: #334155; margin-bottom: 20px; border-left: 4px solid #3b82f6; padding-left: 10px;">Tabla de datos</h3>
+    
     {#if añosTabla.length > 0}
-        <div style="overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-            <table style="width: 100%; border-collapse: collapse; background: white;">
+        
+        <!-- Tabla 1: Puntos de carga -->
+        <h4 style="color: #475569; margin-top: 30px;">1. PUNTOS DE CARGA TOTALES</h4>
+        <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+            <table style="width: 100%; border-collapse: collapse; background: white; white-space: nowrap;">
                 <thead>
-                    <tr style="background-color: #f8fafc; border-bottom: 2px solid #cbd5e1;">
-                        <th style="padding: 15px; border-right: 1px solid #e2e8f0;" rowspan="2">Año</th>
-                        <th style="padding: 15px; color: #0f766e; border-bottom: 1px solid #e2e8f0;" colspan="2">Eficiencia Marítima (T/B)</th>
-                        <th style="padding: 15px; color: #be123c; border-bottom: 1px solid #e2e8f0;" colspan="2">Eficiencia EV (kW/C)</th>
-                    </tr>
-                    <tr style="background-color: #f8fafc;">
-                        <th style="padding: 10px; border-right: 1px solid #e2e8f0;">Alemania</th>
-                        <th style="padding: 10px; border-right: 1px solid #e2e8f0;">Suiza</th>
-                        <th style="padding: 10px; border-right: 1px solid #e2e8f0;">Alemania</th>
-                        <th style="padding: 10px;">Suiza</th>
+                    <tr style="background-color: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+                        <th style="padding: 12px; border-right: 2px solid #cbd5e1; text-align: center;">Año</th>
+                        {#each paisesTabla as pais}
+                            <th style="padding: 10px; border-right: 1px solid #e2e8f0; text-align: center;">{pais}</th>
+                        {/each}
                     </tr>
                 </thead>
                 <tbody>
                     {#each añosTabla as año, i}
-                        <tr style="border-bottom: 1px solid #e2e8f0; background-color: {i % 2 === 0 ? 'white' : '#f8fafc'}; transition: background 0.2s;">
-                            <td style="padding: 12px; font-weight: bold; text-align: center; border-right: 1px solid #e2e8f0;">{año}</td>
-                            <td style="padding: 12px; text-align: center; border-right: 1px solid #e2e8f0;">{tablaGer.tons[i] || '-'}</td>
-                            <td style="padding: 12px; text-align: center; border-right: 1px solid #e2e8f0;">{tablaSwi.tons[i] || '-'}</td>
-                            <td style="padding: 12px; text-align: center; border-right: 1px solid #e2e8f0;">{tablaGer.kw[i] || '-'}</td>
-                            <td style="padding: 12px; text-align: center;">{tablaSwi.kw[i] || '-'}</td>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background-color: {i % 2 === 0 ? 'white' : '#f8fafc'};">
+                            <td style="padding: 10px; font-weight: bold; text-align: center; border-right: 2px solid #cbd5e1;">{año}</td>
+                            {#each paisesTabla as pais}
+                                <td style="padding: 10px; text-align: center; border-right: 1px solid #e2e8f0;">
+                                    {matrizCargadores[pais][año] !== null ? matrizCargadores[pais][año] : '-'}
+                                </td>
+                            {/each}
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla 2: Potencia total-->
+        <h4 style="color: #475569;">2. POTENCIA TOTAL INSTALADA (kW)</h4>
+        <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+            <table style="width: 100%; border-collapse: collapse; background: white; white-space: nowrap;">
+                <thead>
+                    <tr style="background-color: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+                        <th style="padding: 12px; border-right: 2px solid #cbd5e1; text-align: center;">Año</th>
+                        {#each paisesTabla as pais}
+                            <th style="padding: 10px; border-right: 1px solid #e2e8f0; text-align: center;">{pais}</th>
+                        {/each}
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each añosTabla as año, i}
+                        <tr style="border-bottom: 1px solid #e2e8f0; background-color: {i % 2 === 0 ? 'white' : '#f8fafc'};">
+                            <td style="padding: 10px; font-weight: bold; text-align: center; border-right: 2px solid #cbd5e1;">{año}</td>
+                            {#each paisesTabla as pais}
+                                <td style="padding: 10px; text-align: center; border-right: 1px solid #e2e8f0;">
+                                    {matrizPotencia[pais][año] !== null ? matrizPotencia[pais][año] : '-'}
+                                </td>
+                            {/each}
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla 3: Eficiencia -->
+        <h4 style="color: #475569;">3. EFICIENCIA: POTENCIA MEDIA (kW / Cargador)</h4>
+        <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+            <table style="width: 100%; border-collapse: collapse; background: white; white-space: nowrap;">
+                <thead>
+                    <tr style="background-color: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
+                        <th style="padding: 12px; border-right: 2px solid #cbd5e1; text-align: center;">Año</th>
+                        {#each paisesTabla as pais}
+                            <th style="padding: 10px; border-right: 1px solid #e2e8f0; text-align: center;">{pais}</th>
+                        {/each}
+                    </tr>
+                </thead>
+                <tbody>
+                    {#each añosTabla as año, i}
+                        <tr style="border-bottom: 1px solid #e2e8f0; background-color: {i % 2 === 0 ? 'white' : '#f8fafc'};">
+                            <td style="padding: 10px; font-weight: bold; text-align: center; border-right: 2px solid #cbd5e1;">{año}</td>
+                            {#each paisesTabla as pais}
+                                <td style="padding: 10px; text-align: center; border-right: 1px solid #e2e8f0;">
+                                    {matrizEficiencia[pais][año] !== null ? matrizEficiencia[pais][año] : '-'}
+                                </td>
+                            {/each}
                         </tr>
                     {/each}
                 </tbody>
@@ -218,18 +297,13 @@ funciona integración carga 2
         </div>
     {/if}
 
-
     <div class="mt-5 mb-5" style="display: flex; justify-content: space-between; width: 100%; padding-top: 20px;">
         <a href="/integrations" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
             ⬅ VOLVER A INTEGRACIONES
         </a>
-
-        <a href="/beneficial-ownership-merchant-fleets/v2" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            DATOS FLOTA MERCANTE (v2)
-        </a>
         
         <a href="https://sos2526-16.onrender.com/global-ev-charging-infrastructures" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            API GRUPO 16 ➡
+            VER DATOS JSON CRUDS GRUPO 16 ➡
         </a>
     </div>
 </div>

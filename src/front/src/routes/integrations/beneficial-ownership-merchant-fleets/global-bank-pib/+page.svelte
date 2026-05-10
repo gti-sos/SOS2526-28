@@ -30,7 +30,6 @@
 
     onMount(async () => {
         try {
-            // SSR (Importaciones seguras para Vite)
             const hc = await import('highcharts');
             Highcharts = hc.default || hc;
             
@@ -65,7 +64,7 @@
 
             cargando = false;
             
-            // Pinto la gráfica por primera vez (con 2022)
+            // Pinto la gráfica por primera vez (2022)
             actualizarGrafica();
 
         } catch (error) {
@@ -75,14 +74,14 @@
         }
     });
 
-    // 🔥 NUEVA FUNCIÓN: Se ejecuta al arrancar y cada vez que el usuario cambia el año
+    // Se ejecuta al arrancar y cada vez que el usuario cambia el año
     function actualizarGrafica() {
         if (!Highcharts) return;
 
-        // 1. Filtrar Banco Mundial por el año seleccionado
+        // Filtro el Banco Mundial por el año seleccionado
         let pibPaises = {};
         wbDatosTotales.forEach(item => {
-            // Compruebo que el dato no es nulo y coincide con el año elegido
+            // Compruebo que el dato no sea nulo y coincide con el año elegido
             if (item.value !== null && item.country && item.country.value && item.date === String(añoSeleccionado)) {
                 let paisWB = item.country.value;
                 let paisTraducido = mapaBancoMundial[paisWB] || paisWB;
@@ -90,7 +89,7 @@
             }
         });
 
-        // 2. Filtrar los barcos por el año seleccionado
+        // Filtro los barcos por el año seleccionado
         let acumuladorBarcos = {};
         misDatosTotales.forEach(dato => {
             if (Number(dato.year) === añoSeleccionado) {
@@ -100,14 +99,14 @@
             }
         });
 
-        // 3. Cruzar datos
+        // Mezclo los datos
         let dataTreemap = [];
         Object.keys(acumuladorBarcos).forEach(pais => {
             if (pibPaises[pais]) {
                 dataTreemap.push({
                     name: pais,
-                    value: pibPaises[pais],         // TAMAÑO = PIB
-                    colorValue: acumuladorBarcos[pais] // COLOR = Nº de Barcos
+                    value: pibPaises[pais],         // tamaño = PIB
+                    colorValue: acumuladorBarcos[pais] // color = Nº de Barcos
                 });
             }
         });
@@ -117,7 +116,7 @@
             dataTreemap.push({ name: `Sin datos suficientes para ${añoSeleccionado}`, value: 1, colorValue: 0 });
         }
 
-        // 4. Dibujar/Actualizar la Gráfica
+        // 4. Dibujo la Gráfica
         Highcharts.chart(chartContainer, {
             chart: { backgroundColor: 'transparent', animation: true },
             title: { 
@@ -173,7 +172,7 @@
     
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        Integración Externa: World Bank API (Economía Global)
+        🌍 Integración (Externa 3): Poder comercial (PIB)
     </h2>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
