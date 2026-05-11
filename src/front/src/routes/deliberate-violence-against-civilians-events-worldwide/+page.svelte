@@ -325,9 +325,9 @@
 			<input type="number" bind:value={searchSecond} placeholder="Segundos" class="form-input" />
 
 			<input bind:value={searchDirection} placeholder="Dirección (N/S)" class="form-input" />
-			<input type="number" bind:value={searchEndDay} placeholder="End Día" class="form-input" />
-			<input type="number" bind:value={searchEndMonth} placeholder="End Mes" class="form-input" />
-			<input type="number" bind:value={searchEndYear} placeholder="End Año" class="form-input" />
+			<input type="number" bind:value={searchEndDay} placeholder="Día Fin" class="form-input" />
+			<input type="number" bind:value={searchEndMonth} placeholder="Mes Fin" class="form-input" />
+			<input type="number" bind:value={searchEndYear} placeholder="Año Fin" class="form-input" />
 			<button on:click={searchEvents} class="action-btn load-btn">Buscar</button>
 			<button on:click={clearSearch} class="action-btn load-btn">Limpiar</button>
 		</div>
