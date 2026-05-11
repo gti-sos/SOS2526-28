@@ -3,10 +3,9 @@
 
     let loading = $state(true);
     let error = $state(null);
-    let scatterData = $state([]);
+    let chartData = $state({ puntos: [], categorias: [] });
     let tableData = $state([]);
 
-    // Mapa de códigos de país (tu API) a nombres (API compañero)
     const mapaCodigoPais = {
         "AFG": "afghanistan",
         "BDI": "burundi",
@@ -29,56 +28,64 @@
         try {
             loading = true;
 
-            // 1. Tus datos: violence events
+            await fetch('https://sos2526-26.onrender.com/api/v2/countries-idh-per-years/loadInitialData')
+                .catch(() => {});
+
             const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
             const violenceData = await violenceRes.json();
 
-            // Contar eventos por país
             const eventosPorPais = {};
             violenceData.forEach(event => {
                 const code = event.country;
                 eventosPorPais[code] = (eventosPorPais[code] || 0) + 1;
             });
 
-            // 2. API del compañero: IDH por país
             const idhRes = await fetch('https://sos2526-26.onrender.com/api/v2/countries-idh-per-years/');
             const idhData = await idhRes.json();
 
-            // Calcular IDH medio por país
             const idhPorPais = {};
             idhData.forEach(item => {
                 const pais = item.country.toLowerCase();
-                if (!idhPorPais[pais]) idhPorPais[pais] = { total: 0, count: 0 };
+                if (!idhPorPais[pais]) idhPorPais[pais] = { valores: [], total: 0, count: 0 };
+                idhPorPais[pais].valores.push(item.hdi_value);
                 idhPorPais[pais].total += item.hdi_value;
                 idhPorPais[pais].count += 1;
             });
 
-            // 3. Cruzar por país usando el mapa de códigos
             const puntos = [];
             const filas = [];
+            const categorias = [];
 
             Object.entries(eventosPorPais).forEach(([code, eventos]) => {
                 const nombrePais = mapaCodigoPais[code];
                 if (nombrePais && idhPorPais[nombrePais]) {
-                    const idhMedio = parseFloat(
-                        (idhPorPais[nombrePais].total / idhPorPais[nombrePais].count).toFixed(3)
-                    );
-                    puntos.push({ x: eventos, y: idhMedio, name: nombrePais });
-                    filas.push({ pais: nombrePais, eventos, idhMedio });
+                    const vals = idhPorPais[nombrePais].valores;
+                    const minIDH = parseFloat(Math.min(...vals).toFixed(3));
+                    const maxIDH = parseFloat(Math.max(...vals).toFixed(3));
+                    const mediaIDH = parseFloat((idhPorPais[nombrePais].total / idhPorPais[nombrePais].count).toFixed(3));
+
+                    categorias.push(nombrePais);
+                    puntos.push({ low: minIDH, high: maxIDH, name: nombrePais, eventos, mediaIDH });
+                    filas.push({ pais: nombrePais, eventos, minIDH, maxIDH, mediaIDH });
                 }
             });
 
-            // Si hay pocos cruces, añadir todos los países del IDH con 0 eventos
+            // Añadir países del IDH sin eventos de violencia
             Object.entries(idhPorPais).forEach(([pais, datos]) => {
                 const yaEsta = filas.find(f => f.pais === pais);
                 if (!yaEsta) {
-                    const idhMedio = parseFloat((datos.total / datos.count).toFixed(3));
-                    puntos.push({ x: 0, y: idhMedio, name: pais });
-                    filas.push({ pais, eventos: 0, idhMedio });
+                    const vals = datos.valores;
+                    const minIDH = parseFloat(Math.min(...vals).toFixed(3));
+                    const maxIDH = parseFloat(Math.max(...vals).toFixed(3));
+                    const mediaIDH = parseFloat((datos.total / datos.count).toFixed(3));
+
+                    categorias.push(pais);
+                    puntos.push({ low: minIDH, high: maxIDH, name: pais, eventos: 0, mediaIDH });
+                    filas.push({ pais, eventos: 0, minIDH, maxIDH, mediaIDH });
                 }
             });
 
-            scatterData = puntos;
+            chartData = { puntos, categorias };
             tableData = filas.sort((a, b) => b.eventos - a.eventos);
 
             loading = false;
@@ -92,33 +99,42 @@
     }
 
     function initChart() {
-        if (scatterData.length === 0) return;
+        if (chartData.puntos.length === 0) return;
 
         // @ts-ignore
         Highcharts.chart('chart-container', {
-            chart: { type: 'scatter', zoomType: 'xy' },
+            chart: { type: 'columnrange', inverted: true },
             title: { text: '' },
             xAxis: {
-                title: { text: 'Nº Eventos de Violencia contra Civiles' },
-                gridLineWidth: 1
+                categories: chartData.categorias,
+                title: { text: 'País' }
             },
             yAxis: {
-                title: { text: 'IDH Medio' },
+                title: { text: 'Rango IDH histórico (mín - máx)' },
                 min: 0,
                 max: 1
             },
             tooltip: {
                 formatter: function() {
                     return `<b>${this.point.name}</b><br/>
-                            Eventos: <b>${this.x}</b><br/>
-                            IDH medio: <b>${this.y}</b>`;
+                            IDH mínimo: <b>${this.point.low}</b><br/>
+                            IDH máximo: <b>${this.point.high}</b><br/>
+                            IDH medio: <b>${this.point.mediaIDH}</b><br/>
+                            Eventos de violencia: <b>${this.point.eventos}</b>`;
+                }
+            },
+            plotOptions: {
+                columnrange: {
+                    colorByPoint: true,
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function() { return this.y.toFixed(2); }
+                    }
                 }
             },
             series: [{
-                name: 'Países',
-                color: '#dc2626',
-                data: scatterData,
-                marker: { radius: 8 }
+                name: 'Rango IDH',
+                data: chartData.puntos
             }],
             credits: { enabled: false },
             legend: { enabled: false }
@@ -129,12 +145,13 @@
 <svelte:head>
     <title>Integración: Violence Events + IDH por País</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
 </svelte:head>
 
 <div class="integration-container">
     <h1>💥 Violencia contra Civiles vs 🌍 Índice de Desarrollo Humano</h1>
     <p class="subtitle">
-        ¿Los países con más eventos de violencia tienen menor IDH? Comparativa por país.
+        Rango histórico del IDH por país y su número de eventos de violencia contra civiles.
     </p>
 
     <div class="info-api">
@@ -158,7 +175,9 @@
                 <tr>
                     <th>País</th>
                     <th>Nº Eventos de Violencia</th>
+                    <th>IDH Mínimo</th>
                     <th>IDH Medio</th>
+                    <th>IDH Máximo</th>
                 </tr>
             </thead>
             <tbody>
@@ -166,7 +185,9 @@
                     <tr>
                         <td>{row.pais}</td>
                         <td>{row.eventos}</td>
-                        <td>{row.idhMedio}</td>
+                        <td>{row.minIDH}</td>
+                        <td>{row.mediaIDH}</td>
+                        <td>{row.maxIDH}</td>
                     </tr>
                 {/each}
             </tbody>

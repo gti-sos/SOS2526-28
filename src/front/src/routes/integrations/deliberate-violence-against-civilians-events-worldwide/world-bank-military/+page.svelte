@@ -16,9 +16,11 @@
         try {
             loading = true;
 
+            // 1. Tus datos: violence events
             const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
             const violenceData = await violenceRes.json();
 
+            // Contar eventos por país y obtener códigos únicos
             const eventosPorISO = {};
             violenceData.forEach(e => {
                 const code = countryFix[e.country] || e.country;
@@ -28,36 +30,39 @@
             const codigosUnicos = Object.keys(eventosPorISO);
             const codigosStr = codigosUnicos.join(';');
 
+            // 2. World Bank API: Gasto militar (MS.MIL.XPND.CD)
             const wbRes = await fetch(
-                `https://api.worldbank.org/v2/country/${codigosStr}/indicator/NY.GDP.MKTP.CD?format=json&per_page=100&mrv=1`
+                `https://api.worldbank.org/v2/country/${codigosStr}/indicator/MS.MIL.XPND.CD?format=json&per_page=100&mrv=1`
             );
             const wbData = await wbRes.json();
             const registros = wbData[1] || [];
 
-            const pibPorISO = {};
+            // Agrupar por país (valor más reciente no nulo)
+            const gastoPorISO = {};
             registros.forEach(r => {
                 if (r.value !== null) {
                     const iso = r.countryiso3code;
-                    if (!pibPorISO[iso]) {
-                        pibPorISO[iso] = {
+                    if (!gastoPorISO[iso]) {
+                        gastoPorISO[iso] = {
                             nombre: r.country.value,
-                            pib: r.value,
+                            gasto: r.value,
                             anyo: r.date
                         };
                     }
                 }
             });
 
+            // 3. Cruzar
             tableData = codigosUnicos
-                .filter(iso => pibPorISO[iso])
+                .filter(iso => gastoPorISO[iso])
                 .map(iso => ({
                     iso,
-                    nombre: pibPorISO[iso].nombre,
-                    pib: pibPorISO[iso].pib,
-                    anyo: pibPorISO[iso].anyo,
+                    nombre: gastoPorISO[iso].nombre,
+                    gasto: gastoPorISO[iso].gasto,
+                    anyo: gastoPorISO[iso].anyo,
                     eventos: eventosPorISO[iso]
                 }))
-                .sort((a, b) => b.pib - a.pib);
+                .sort((a, b) => b.gasto - a.gasto);
 
             loading = false;
             setTimeout(() => initChart(), 300);
@@ -74,7 +79,7 @@
 
         const pieData = tableData.map(d => ({
             name: d.nombre,
-            y: d.pib,
+            y: d.gasto,
             eventos: d.eventos
         }));
 
@@ -91,10 +96,10 @@
             title: { text: '' },
             tooltip: {
                 formatter: function () {
-                    const pibBillones = (this.point.y / 1e9).toFixed(1);
+                    const gastoMillones = (this.point.y / 1e6).toFixed(1);
                     return `<b>${this.point.name}</b><br/>
-                            PIB: <b>$${pibBillones}B</b><br/>
-                            Porcentaje: <b>${this.percentage.toFixed(1)}%</b><br/>
+                            Gasto militar: <b>$${gastoMillones}M</b><br/>
+                            Porcentaje del total: <b>${this.percentage.toFixed(1)}%</b><br/>
                             Eventos de violencia: <b>${this.point.eventos}</b>`;
                 }
             },
@@ -119,7 +124,7 @@
                 }
             },
             series: [{
-                name: 'PIB',
+                name: 'Gasto Militar',
                 colorByPoint: true,
                 data: pieData
             }],
@@ -132,21 +137,21 @@
 </script>
 
 <svelte:head>
-    <title>Integración: Violence Events + World Bank PIB</title>
+    <title>Integración: Violence Events + Gasto Militar (World Bank)</title>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </svelte:head>
 
 <div class="integration-container">
-    <h1>💥 Eventos de Violencia + 💰 PIB (World Bank)</h1>
+    <h1>💥 Eventos de Violencia + ⚔️ Gasto Militar (World Bank)</h1>
     <p class="subtitle">
-        Distribución del PIB entre los países con eventos de violencia deliberada contra civiles.
+        Distribución del gasto militar entre los países con eventos de violencia deliberada contra civiles.
     </p>
 
     <div class="info-api">
         <p><strong>API 1 (propia):</strong> Deliberate Violence Against Civilians Events Worldwide</p>
         <p>
             <strong>API 2 (externa):</strong> World Bank Indicators —
-            <code>api.worldbank.org/v2/country/&#123;code&#125;/indicator/NY.GDP.MKTP.CD</code>
+            <code>api.worldbank.org/v2/country/&#123;code&#125;/indicator/MS.MIL.XPND.CD</code>
         </p>
     </div>
 
@@ -159,7 +164,7 @@
         <div class="error"><p>❌ Error: {error}</p></div>
     {:else if tableData.length === 0}
         <div class="error" style="background:#fffbeb; color:#d97706;">
-            <p>⚠️ No hay datos disponibles.</p>
+            <p>⚠️ No hay datos disponibles. Es posible que el World Bank no tenga datos de gasto militar para estos países.</p>
         </div>
     {:else}
         <div id="chart-container" style="height: 350px; width: 100%; margin-bottom: 2rem;"></div>
@@ -170,7 +175,7 @@
                 <tr>
                     <th>País</th>
                     <th>Código ISO</th>
-                    <th>PIB (USD)</th>
+                    <th>Gasto Militar (USD)</th>
                     <th>Año del dato</th>
                     <th>Nº Eventos de Violencia</th>
                 </tr>
@@ -180,7 +185,7 @@
                     <tr>
                         <td>{row.nombre}</td>
                         <td>{row.iso}</td>
-                        <td>${(row.pib / 1e9).toFixed(1)}B</td>
+                        <td>${(row.gasto / 1e6).toFixed(1)}M</td>
                         <td>{row.anyo}</td>
                         <td>{row.eventos}</td>
                     </tr>
@@ -201,19 +206,19 @@
         position: relative;
         min-height: 600px;
     }
-    h1 { color: #15803d; text-align: center; margin-bottom: 0.5rem; }
+    h1 { color: #7c3aed; text-align: center; margin-bottom: 0.5rem; }
     h2 { margin-top: 2rem; color: #374151; }
     .subtitle { text-align: center; color: #666; margin-bottom: 1rem; }
     .info-api {
-        background: #f0fdf4;
+        background: #f5f3ff;
         padding: 0.75rem 1rem;
         border-radius: 8px;
         margin-bottom: 1.5rem;
         font-size: 0.85rem;
-        border-left: 4px solid #15803d;
+        border-left: 4px solid #7c3aed;
     }
     code {
-        background: #dcfce7;
+        background: #ede9fe;
         padding: 0.1rem 0.3rem;
         border-radius: 4px;
         font-size: 0.8rem;
@@ -227,19 +232,39 @@
     }
     .spinner {
         border: 4px solid #f3f3f3;
-        border-top: 4px solid #15803d;
+        border-top: 4px solid #7c3aed;
         border-radius: 50%;
-        width: 50px; height: 50px;
+        width: 50px;
+        height: 50px;
         animation: spin 1s linear infinite;
         margin-bottom: 1rem;
     }
-    @keyframes spin { 0%{ transform: rotate(0deg); } 100%{ transform: rotate(360deg); } }
-    .error {
-        text-align: center; padding: 2rem;
-        color: #dc2626; background: #fee2e2; border-radius: 8px;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #e5e7eb; padding: 0.6rem 1rem; text-align: center; }
-    th { background: #f9fafb; font-weight: 600; }
-    tr:hover { background: #f0fdf4; }
+    .error {
+        text-align: center;
+        padding: 2rem;
+        color: #dc2626;
+        background: #fee2e2;
+        border-radius: 8px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    th, td {
+        border: 1px solid #e5e7eb;
+        padding: 0.6rem 1rem;
+        text-align: center;
+    }
+    th {
+        background: #f9fafb;
+        font-weight: 600;
+    }
+    tr:hover {
+        background: #f5f3ff;
+    }
 </style>
