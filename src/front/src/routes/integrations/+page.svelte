@@ -5,13 +5,13 @@
             nombre: "Alberto Jiménez Mateos",
             titulo: "FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO",
             integraciones: [
-                { nombre: "🛡️ Uso Externa 1 (Proxy/OAuth): Spotify", url: "/integrations/beneficial-ownership-merchant-fleets/spotify", color: "#f59e0b" },
-                { nombre: "🌍 Integración Externa 2: Exportaciones", url: "/integrations/beneficial-ownership-merchant-fleets/exports", color: "#3b82f6" },
-                { nombre: "🌍 Integración Externa 3: Poder comercial", url: "/integrations/beneficial-ownership-merchant-fleets/global-bank-pib", color: "#0ea5e9" },
-                { nombre: "🎓 Integración SOS (Grupo 23): global-ads-performance", url: "/integrations/beneficial-ownership-merchant-fleets/global-ads-performance", color: "#10b981" },
-                { nombre: "🎓 Integración SOS (Grupo 25): social-drinking-behaviors", url: "/integrations/beneficial-ownership-merchant-fleets/social-drinking-behaviors", color: "#059669" },
-                { nombre: "🎓 Integración SOS (Grupo 26): fifa-squad-value-per-years", url: "/integrations/beneficial-ownership-merchant-fleets/fifa-squad-value-per-years", color: "#65a30d" },
-                { nombre: "🎓 Integración SOS (Grupo 16): global-ev-charging-infrastructures", url: "/integrations/beneficial-ownership-merchant-fleets/global-ev-charging-infrastructures", color: "#ea580c" }
+                { nombre: "🛡️ Uso con Proxy (Externa 1): SpaceX", url: "/integrations/beneficial-ownership-merchant-fleets/spacex-proxy", color: "#3b82f6" },
+                { nombre: "🌍 Integración (Externa 2): Exportaciones", url: "/integrations/beneficial-ownership-merchant-fleets/exports", color: "#0ea5e9" },
+                { nombre: "🌍 Integración (Externa 3): Poder comercial", url: "/integrations/beneficial-ownership-merchant-fleets/global-bank-pib", color: "#10b981" },
+                { nombre: "🎓 Uso SOS (Grupo 16): Infraestructuras globales de carga de vehículos eléctricos", url: "/integrations/beneficial-ownership-merchant-fleets/global-ev-charging-infrastructures", color: "#059669" },
+                { nombre: "🎓 Uso SOS (Grupo 26): FIFA Valores de los equipos nacionales", url: "/integrations/beneficial-ownership-merchant-fleets/fifa-squad-value-per-years", color: "#65a30d" },
+                { nombre: "🎓 Integración SOS (Grupo 23): Rendimiento de anuncios globales", url: "/integrations/beneficial-ownership-merchant-fleets/global-ads-performance", color: "#f59e0b" },
+                { nombre: "🎓 Integración SOS (Grupo 25): Consumo social de alcohol", url: "/integrations/beneficial-ownership-merchant-fleets/social-drinking-behaviors", color: "#ea580c" }
             ]
         },
         {

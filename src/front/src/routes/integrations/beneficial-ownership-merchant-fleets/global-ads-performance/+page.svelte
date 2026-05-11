@@ -94,19 +94,19 @@
         title: { text: 'Regiones' } 
     }],
     yAxis: [
-        { // Eje Y Primario (Izquierda) - Gasto en Anuncios
+        { // Eje Y (Izquierda) - Gasto en Anuncios
             labels: { format: '${value}', style: { color: '#f59e0b' } }, 
             title: { text: 'Gasto en Anuncios (USD)', style: { color: '#f59e0b', fontWeight: 'bold' } } 
         }, 
-        { // Eje Y Secundario (Derecha) - Número de Barcos
+        { // Eje Y (Derecha) - Número de Barcos
             title: { text: 'Número de Barcos', style: { color: '#3b82f6', fontWeight: 'bold' } }, 
             labels: { format: '{value} buques', style: { color: '#3b82f6' } }, 
-            opposite: true 
+            opposite: true  //Para que salga a la derecha 
         }
     ],
     tooltip: {
     shared: true,
-    // Título del cuadrito con el nombre de la región
+    // Título del cuadro con el nombre de la región
     headerFormat: '<span style="font-size: 14px; font-weight: bold;">{point.key}</span><br/>',
     // Formato a los valores, ocultando la 'x'
     pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
@@ -116,7 +116,7 @@
     series: [
         { 
             name: 'Gasto Publicitario (Ads)', 
-            type: 'area',  // TIPO 1: ÁREA (Muestra el volumen de dinero)
+            type: 'area',  // TIPO ÁREA (Muestra el volumen de dinero)
             yAxis: 0, 
             data: dataSuGasto, 
             color: 'rgba(245, 158, 11, 0.6)', 
@@ -124,7 +124,7 @@
         }, 
         { 
             name: 'Flota Mercante (Barcos)', 
-            type: 'scatter', // TIPO 2: SCATTER (Puntos de dispersión flotantes)
+            type: 'scatter', // TIPO SCATTER (Puntos de dispersión flotantes)
             yAxis: 1, 
             data: dataMisBarcos, 
             color: '#1d4ed8', 
@@ -147,7 +147,7 @@
 <div class="container" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-        Integración SOS: Grupo 23 (Rendimiento de anuncios globales)
+        🎓 Integración SOS (Grupo 23): Rendimiento de anuncios globales
     </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
