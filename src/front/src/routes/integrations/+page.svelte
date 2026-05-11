@@ -19,8 +19,8 @@
             titulo: "ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO",
             integraciones: [
                 { nombre: "🛡️ Integración Externa (Vía Proxy Propio)", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/proxy", color: "#f59e0b" },
-                { nombre: "🌍 Integración Externa 2", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/externa-2", color: "#3b82f6" },
-                { nombre: "🌍 Integración Externa 3", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/externa-3", color: "#0ea5e9" },
+                { nombre: "🌍 Integración Externa 2: Rest Countries", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/rest-countries", color: "#3b82f6" },
+                { nombre: "🌍 Integración Externa 3: World Bank", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/world-bank", color: "#0ea5e9" },
                 { nombre: "🎓 Integración SOS (Grupo 13): conflict-stats", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/conflict-stats", color: "#10b981" },
                 { nombre: "🎓 Integración SOS (Grupo 26): countries-idh-per-years", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/countries-idh-per-years", color: "#059669" }
             ]
