@@ -177,10 +177,13 @@
     
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         🎓 Uso SOS (Grupo 16): Infraestructuras globales de carga de vehículos eléctricos
-    </h2>
+    </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Este uso de la API externa del Grupo 16 extrae dinámicamente todos los países y años. A continuación se presentan tres visualizaciones del tipo <em>Lollipop Chart</em>) para entender la evolución de la infraestructura, su potencia y su eficiencia real.
+        <strong>Tipo de visualización:</strong> Gráficos de Piruleta (Lollipop Charts)
+    </p>
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción del uso:</strong> La api usada pertenece a un compañero del grupo 16, consiste en un conjunto de datos sobre las infraestructuras de carga para vehículos. La utilizo para generar tres gráficos que facilitan la comprensión sobre cómo han evolucionado las infraestructuras de estos países (1º gráfico), qué potencia han suministrado ese año (2º gráfico) y si realmente son eficientes en esos años (KW totales / puntos de carga). También he complementado la información, añadiendo tres tablas al final que recogen estos datos.
     </p>
 
     {#if cargando}
@@ -303,7 +306,7 @@
         </a>
         
         <a href="https://sos2526-16.onrender.com/global-ev-charging-infrastructures" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            VER DATOS JSON CRUDS GRUPO 16 ➡
+            VER DATOS G16 ➡
         </a>
     </div>
 </div>

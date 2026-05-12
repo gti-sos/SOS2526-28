@@ -149,10 +149,13 @@
     
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         🎓 Uso SOS (Grupo 26): FIFA Valores de los equipos nacionales
-    </h2>
+    </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        En este <strong>uso</strong> de la API, se utiliza un <strong>gráfico de Pirámide (Pyramid Chart)</strong> de Highcharts. Se visualiza únicamente el valor económico de las selecciones, ordenados de menor(punta) a mayor(base), así como su muestra a través de una tabla HTML dinámica.
+        <strong>Tipo de visualización:</strong> Gráfico de Pirámide (Pyramid chart)
+    </p>
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción del uso:</strong> La api usada pertenece a un compañero del grupo 26, consiste en un conjunto de datos que representan el valor de los equipos nacionales de fútbol durante varios años. Se emplea la forma de una pirámide para mostrar el valor económico de los equipos según el año seleccionado. Los valores más pequeños se sitúan en la punta y los más grandes forman la base. Además, todos los datos exactos se pueden consultar ordenados en una tabla situada en la parte inferior.
     </p>
 
     <!-- Panel de Control -->
@@ -225,7 +228,7 @@
         </a>
 
         <a href="https://sos2526-26.onrender.com/front-rfr" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            DATOS GRUPO 26 ➡
+            VER DATOS G26 ➡
         </a>
     </div>
 

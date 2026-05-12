@@ -174,7 +174,11 @@
     </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Esta visualización emplea un <strong>Gráfico de Barras Apiladas (Stacked Bar Chart)</strong> de doble eje. Por cada país común entre ambas APIs, se muestran dos barras horizontales: la primera desglosa el consumo promedio per cápita de alcohol dividido en sus tres componentes principales (cerveza, vino y licores); la segunda barra representa el tamaño total de la flota mercante bajo la propiedad de dicho país.
+        <strong>Tipo de visualización:</strong> Stacked bar con doble eje x
+    </p>
+
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción de la integración:</strong> La api usada pertenece a un compañero del grupo 25, consiste en un conjunto de datos que representan el consumo promedio per cápita de alcohol. En la representación se muestran dos barras horizontales por cada país. La primera barra detalla el consumo medio de alcohol (cerveza, vino y licores) por habitante. La segunda barra representa la cantidad total de barcos mercantes que posee ese mismo país.
     </p>
 
     {#if errorMensaje}
@@ -204,7 +208,7 @@
         </a>
         
         <a href="https://sos2526-25.onrender.com/social-drinking-behaviors" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            DATOS G25 CONSUMO SOCIAL ALCOHOL ➡
+            VER DATOS G25 ➡
         </a>
     </div>
 

@@ -6,7 +6,7 @@
 
     onMount(async () => {
         try {
-            // 1. LLAMADA A LAS 3 APIS SIMULTÁNEAMENTE
+            // LLAMADA A LAS 3 APIS SIMULTÁNEAMENTE
             const [res1, res2, res3] = await Promise.all([
                 fetch('/api/v2/beneficial-ownership-merchant-fleets'),
                 fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide'),
@@ -19,9 +19,9 @@
             const datosViolencia = await res2.json();
             const datosESG = await res3.json();
 
-            // 2. DICCIONARIOS TRADUCTORES
+            // DICCIONARIOS TRADUCTORES
             
-            // A) De Nombre Completo a Código de 3 letras (Para cruzar con Violencia)
+            // De nombre completo a código de 3 letras (Para cruzar con Violencia)
             const mapaCodigosPais = {
                 "Afghanistan": "AFG", "Burundi": "BDI", "Burkina Faso": "BFA", 
                 "Cameroon": "CMR", "Democratic Republic of the Congo": "COD", 
@@ -42,7 +42,7 @@
                 "United Arab Emirates": "ARE","United Kingdom": "GBR"
             };
 
-            // B) De Nombre Completo a Región de ESG (Latin America, Europe, etc)
+            // De nombre completo a región de ESG (Latin America, Europe, etc)
             const mapaRegiones = {
                 "Colombia": "Latin America", "Brazil": "Latin America", "El Salvador": "Latin America",
                 "Germany": "Europe", "Spain": "Europe", "Greece": "Europe", "Denmark": "Europe",
@@ -63,18 +63,18 @@
                 "United Arab Emirates": "Asia","United Kingdom": "Europe"
             };
 
-            // 3. PROCESAMIENTO DE DATOS: Mezcla de las 3 APIs
+            // PROCESAMIENTO DE DATOS: Mezcla de las 3 APIs
             // Sacamos los países propietarios de la base de datos de la flota Mercante
             const paisesPropietarios = [...new Set(datosFlota.map(d => d.beneficial_ownership_label))];
             const burbujas = [];
 
             paisesPropietarios.forEach(pais => {
-                // A) Datos Flota (Tamaño Z = Nº Barcos)
+                // Datos flota (Tamaño Z = Nº Barcos)
                 const totalBarcos = datosFlota
                     .filter(d => d.beneficial_ownership_label === pais)
                     .reduce((sum, d) => sum + d.number_of_ships, 0);
 
-                // B) Datos Violencia (Eje Y = Nº de Eventos)
+                // Datos violencia (Eje Y = Nº de Eventos)
                 // Buscamos por "AFG" en vez de "Afghanistan"
                 const codigoIso = mapaCodigosPais[pais];
                 let totalViolencia = 0;
@@ -82,11 +82,11 @@
                     totalViolencia = datosViolencia.filter(d => d.country === codigoIso).length;
                 }
 
-                // C) Datos ESG (Eje X = Puntuación esg_overall de la Región)
+                // Datos ESG (Eje X = Puntuación esg_overall de la Región)
                 const regionDelPais = mapaRegiones[pais] || "Global";
                 const empresasDeLaRegion = datosESG.filter(d => d.region === regionDelPais);
                 
-                let mediaESG = 50; // Valor neutro por defecto
+                let mediaESG = 50; // Valor por defecto
                 if (empresasDeLaRegion.length > 0) {
                     const sumaESG = empresasDeLaRegion.reduce((sum, d) => sum + (d.esg_overall || 0), 0);
                     mediaESG = parseFloat((sumaESG / empresasDeLaRegion.length).toFixed(2));
@@ -98,13 +98,13 @@
                         name: pais,
                         x: mediaESG,        // Eje X: esg_overall
                         y: totalViolencia,  // Eje Y: Eventos de Violencia
-                        z: totalBarcos,     // Tamaño Z: number_of_ships
+                        z: totalBarcos,     // Tamaño Z: numero de barcos
                         region: regionDelPais
                     });
                 }
             });
 
-            // 4. CONFIGURACIÓN DE HIGHCHARTS BUBBLE
+            // CONFIGURACIÓN DE HIGHCHARTS BUBBLE
             const HighchartsModule = await import('highcharts');
             const Highcharts = HighchartsModule.default || HighchartsModule;
             const HighchartsMore = await import('highcharts/highcharts-more');

@@ -6,12 +6,12 @@
 
     onMount(async () => {
         try {
-            // 1. OBTENCIÓN DE DATOS
+            // OBTENCIÓN DE DATOS
             const res = await fetch('/api/v2/beneficial-ownership-merchant-fleets');
             if (!res.ok) throw new Error("Error en la API");
             const datosApi = await res.json();
 
-            // 2. DICCIONARIO DE COORDENADAS Y CLAVES (hc-key)
+            // DICCIONARIO DE COORDENADAS Y CLAVES (hc-key)
             const paisesInfo = {
                 "Antigua and Barbuda": { lat: 17.0608, lon: -61.7964, hcKey: 'ag' },
                 "Germany": { lat: 51.1657, lon: 10.4515, hcKey: 'de' },
@@ -50,7 +50,7 @@
             const dataPaises = [];
             const puntosMarcadores = [];
 
-            // 3. PROCESAMIENTO DE DATOS
+            // PROCESAMIENTO DE DATOS
             const historialPorPais = {};
 
             datosApi.forEach(d => {
@@ -72,7 +72,7 @@
                 }
             });
 
-            // 4. CREACIÓN DEL TOOLTIP DIVIDIDO (Recibe vs Envía)
+            // CREACIÓN DEL TOOLTIP DIVIDIDO (Recibe vs Envía)
             for (const nombrePais in historialPorPais) {
                 const info = paisesInfo[nombrePais];
                 if (info) {
@@ -85,7 +85,7 @@
                         <b style="font-size:16px; color: #38bdf8;">${nombrePais}</b>
                         <hr style="border-color: #334155; margin: 8px 0;">`;
 
-                    //  SECCIÓN A: Lo que el país recibe (Bandera)
+                    //  Lo que el país recibe (Bandera)
                     if (recibe.length > 0) {
                         resumenHTML += `<div style="margin-bottom: 10px;">
                             <b style="color: #a7f3d0; font-size: 13px;">📥 Flota Registrada Aquí (Bandera):</b><br>`;
@@ -95,7 +95,7 @@
                         resumenHTML += `</div>`;
                     }
 
-                    // SECCIÓN B: Lo que el país envía (Dueño)
+                    // Lo que el país envía (Dueño)
                     if (envia.length > 0) {
                         resumenHTML += `<div>
                             <b style="color: #fca5a5; font-size: 13px;">📤 Flota Propiedad de este País (Dueño):</b><br>`;
@@ -119,7 +119,7 @@
                 }
             }
 
-            // 5. INICIALIZACIÓN DEL MAPA
+            // INICIALIZACIÓN DEL MAPA
             const HighchartsModule = await import('highcharts/highmaps');
             const Highcharts = HighchartsModule.default || HighchartsModule;
             const worldMap = await fetch('https://code.highcharts.com/mapdata/custom/world.topo.json').then(r => r.json());

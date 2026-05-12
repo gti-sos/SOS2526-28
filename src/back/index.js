@@ -5,6 +5,9 @@ import apiJDD from "./api-JDD.js";
 import hungermapProxy from './proxy-hungermap.js';
 import express from 'express';
 
+//PROXYs
+import proxySpaceX from "./AJM-proxy/server-spacex.js";
+
 import cors from 'cors';
 import {handler} from '../front/build/handler.js';
 
@@ -23,33 +26,14 @@ app.use(express.json());
 app.use(cors());
 
 
-
-
-//Para utilizar los archivos estáticos desde la carpeta "public"
-//const frontPath = path.join(__dirname, '../front');
-//const publicPath = path.join(__dirname, '../../public');
-
-//app.use(express.static(frontPath));
-//app.use(express.static(publicPath));
-
-// Rutas para el Front-end
-//app.get("/", (req, res) => {
-  //  res.sendFile(path.join(frontPath, 'index.html'));
-    //console.log("New request to /");
-//});
-
-//Para el about
-//app.get("/about", (req, res) => {
-  //  res.sendFile(path.join(publicPath, 'about', 'index.html'));
-    //console.log("New request to /about");
-//});
-
-
 //NUESTRAS APIs
 apiAJM(app);
 apiMZA(app);
 apiJDD(app);
 app.use('/proxy/hungermap', hungermapProxy);
+
+//NUESTROS PROXYs
+proxySpaceX(app);
 
 app.use('/api', (req, res) => {
     res.status(404).send("Not Found");

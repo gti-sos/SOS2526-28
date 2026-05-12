@@ -151,7 +151,11 @@
     </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Esta gráfica interactiva explora la relación entre la distribución geográfica de las flotas mercantes (según el país del propietario beneficiario) y el volumen de inversión en publicidad digital por región. Al cruzar estos datos, buscamos identificar si existe una correlación entre las potencias que dominan el transporte marítimo mundial y aquellas que lideran el gasto en marketing digital a nivel global.
+        <strong>Tipo de visualización:</strong> Area y Scatter
+    </p>
+
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción de la integración:</strong>La api usada pertenece a un compañero del grupo 23, consiste en un conjunto de datos que representan el volumen de inversión en publicidad digital por región. Este gráfico compara dos ámbitos distintos: la propiedad de los barcos mercantes frente al gasto en publicidad en internet por región. Las regiones son Oceanía, Norteamérica, Asia y el resto del mundo. El objetivo es descubrir si los países que dominan el comercio marítimo son los mismos que más invierten en marketing digital a nivel global.
     </p>
 
     {#if cargando}
@@ -179,7 +183,7 @@
         </a>
         
         <a href="https://sos2526-23.onrender.com/global-ads-performance/v2" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            DATOS G23 RENDIMIENTO ➡
+            VER DATOS G23 ➡
         </a>
     </div>
 

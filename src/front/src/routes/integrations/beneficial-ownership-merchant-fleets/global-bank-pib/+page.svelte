@@ -173,10 +173,14 @@
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         🌍 Integración (Externa 3): Poder comercial (PIB)
-    </h2>
+    </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Esta integración utiliza un <strong>Mapa de Árbol (Treemap)</strong> interactivo. Selecciona un año en el menú inferior para ver la radiografía económica y naviera exacta de ese momento histórico. El tamaño indica el PIB del país, mientras que la oscuridad del azul indica la flota mercante.
+        <strong>Tipo de visualización:</strong> Mapa de Árbol Interactivo (Treemap)
+    </p>
+
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción de la integración:</strong> La api usada es pública y se ha obtenido de World Bank Open Data. Muestra la economía y la flota de distintos países en un año concreto, que se puede seleccionar en el menú inferior. En la visualización, el tamaño de los cuadrados representa la riqueza del país, mientras que la intensidad del color azul indica la cantidad de barcos mercantes que posee para el mismo año.
     </p>
 
     <!-- Panel de Controles Interactivo -->
@@ -222,8 +226,8 @@
             DATOS FLOTA MERCANTE (v2)
         </a>
         
-        <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            THE WORLD BANK ➡
+        <a href="https://data.worldbank.org/indicator/NY.GDP.MKTP.CD" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            VER THE WORLD BANK ➡
         </a>
     </div>
 

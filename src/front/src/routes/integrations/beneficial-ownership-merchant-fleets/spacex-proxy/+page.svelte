@@ -1,5 +1,4 @@
 <script>
-	import { height } from 'highcharts';
     import { onMount } from 'svelte';
     
     // Variables de estado
@@ -41,7 +40,8 @@
             else if (typeof hcs === 'function') hcs(Highcharts);
 
             // Llamada al proxy
-            const miProxyUrl = '/integrations/beneficial-ownership-merchant-fleets/spacex-proxy'; 
+            //const miProxyUrl = 'http://localhost:3000/api/spacex/v4/ships'; //Lo tengo para mis pruebas en local
+            const miProxyUrl = '/api/spacex/v4/ships';
             
             const resSpacex = await fetch(miProxyUrl);
 
@@ -132,11 +132,15 @@
     
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         🛡️ Uso con Proxy (Externa 1): Barcos SpaceX
-    </h2>
+    </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Este caso de uso se conecta a la API de SpaceX <strong>a través de un Proxy propio</strong>. Se utiliza un <strong>Sankey Diagram</strong> para visualizar el flujo jerárquico que conecta los puertos base, con los tipos de embarcaciones y el año de fabricación de la embarcaciones, de la compañía aeroespacial. Los datos han sido localizados al español mediante un diccionario interno.
+        <strong>Tipo de visualización:</strong> Diagrama de Flujo (Sankey Diagram)
     </p>
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción del uso:</strong> La api usada es pública y hecha por aficionados a las misiones espaciales. Esta api recoge los datos de SpaceX para mostrar cómo se organiza la flota naval que emplean en sus misiones para recoger los restos de los aterrizajes en el mar. El gráfico traza de forma visual el camino que une el puerto base de cada barco con su tipo de embarcación y su año de fabricación. Toda la información se ha traducido al español para facilitar la lectura.
+    </p><br>
+
 
     {#if cargando}
         <div style="padding: 20px; background-color: #f0f9ff; color: #0284c7; border-radius: 8px; text-align: center; margin-bottom: 20px;">
@@ -193,7 +197,7 @@
             ⬅ VOLVER A INTEGRACIONES
         </a>
         <a href="https://github.com/r-spacex/SpaceX-API" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            GITHUB SpaceX REST API ➡
+            VER GITHUB SpaceX REST API ➡
         </a>
     </div>
 </div>

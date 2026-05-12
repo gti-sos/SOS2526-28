@@ -15,8 +15,8 @@
     let errorMsg = $state("");
     let successMsg = $state("");
 
-    // Ruta relativa por el proxy
-    const API_URL = `/api/v1/beneficial-ownership-merchant-fleets/${year}/${flag}/${owner}`;
+    // Ruta relativa
+    const API_URL = `/api/v2/beneficial-ownership-merchant-fleets/${year}/${flag}/${owner}`;
 
     // Al cargar la página, pido los datos actuales de este país
     async function getDato() {
@@ -73,7 +73,7 @@
                 errorMsg = "";
                 // Redirigir de vuelta a la tabla principal tras 2 segundos
                 setTimeout(() => {
-                    window.location.href = "/beneficial-ownership-merchant-fleets";
+                    window.location.href = "/beneficial-ownership-merchant-fleets/v2";
                 }, 2000);
             } else if (res.status === 400) {
                 errorMsg = "⚠️ Error: Faltan campos o los datos no son válidos.";
@@ -138,7 +138,7 @@
         </div>
 
         <div style="display: flex; justify-content: space-between;">
-            <a href="/beneficial-ownership-merchant-fleets" style="text-decoration: none; padding: 10px 20px; background: #64748b; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: flex; align-items: center;">
+            <a href="/beneficial-ownership-merchant-fleets/v2" style="text-decoration: none; padding: 10px 20px; background: #64748b; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: flex; align-items: center;">
                 ⬅️ VOLVER SIN GUARDAR
             </a>
             <button onclick={updateDato} style="padding: 10px 20px; background: #eab308; color: white; border: none; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center;">
