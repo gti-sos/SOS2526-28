@@ -2,6 +2,7 @@
 import apiAJM from "./api-AJM.js";
 import apiMZA from "./api-MZA.js";
 import apiJDD from "./api-JDD.js";
+import hungermapProxy from './proxy-hungermap.js';
 import express from 'express';
 
 import cors from 'cors';
@@ -48,6 +49,7 @@ app.use(cors());
 apiAJM(app);
 apiMZA(app);
 apiJDD(app);
+app.use('/proxy/hungermap', hungermapProxy);
 
 app.use('/api', (req, res) => {
     res.status(404).send("Not Found");
