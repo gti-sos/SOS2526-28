@@ -5,7 +5,7 @@
     
     <header class="site-header">
         <div class="header-content">
-            <h2>👥 SOS GRUPO 28</h2>
+            <h2>SOS GRUPO 28</h2>
             <nav>
                 <a href="/" class="nav-btn">🏠 INICIO</a>
                 <a href="https://github.com/gti-sos/SOS2526-28" target="_blank" class="nav-btn">📁 REPOSITORIO</a>
@@ -115,10 +115,8 @@
             background-color: var(--background);
             color: var(--text-main);
             line-height: 1.6;
-            /* Hemos quitado el flexbox de aquí para que el header ocupe todo el ancho */
         }
 
-        /* ... (resto de tus estilos de tarjetas) ... */
         .container {
             background: var(--card-bg);
             max-width: 800px;

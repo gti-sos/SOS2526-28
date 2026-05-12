@@ -1,14 +1,15 @@
 <script>
-    // Enlace al repositorio del grupo (Requisito d)
+    // Enlace al repositorio del grupo
     const githubRepo = "https://github.com/gti-sos/SOS2526-28";
 
-    // Array con los datos de los 3 miembros (Requisito e)
+    // Array con los datos de los 3 miembros
     const apis = [
         {
             nombre: "Alberto Jiménez Mateos",
             recurso: "beneficial-ownership-merchant-fleets",
             titulo: "FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO",
             postman: "/beneficial-ownership-merchant-fleets/postman",
+            video:"",
             hasV2: true,
             recursov2: "beneficial-ownership-merchant-fleets/v2"
 
@@ -17,13 +18,15 @@
             nombre: "Jorge Dayoub Dayoub",
             recurso: "deliberate-violence-against-civilians-events-worldwide",
             titulo: "ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO",
-            postman: "https://documenter.getpostman.com/view/52833055/2sBXigMZ14"
+            postman: "https://documenter.getpostman.com/view/52833055/2sBXigMZ14",
+            video:""
         },
         {
             nombre: "Muhammad Zhillan Averous",
             recurso: "company-esg-scores-financial-performances",
             titulo: "CONJUNTO DE DATOS SOBRE ESG Y DESEMPEÑO FINANCIERO",
-            postman: "https://documenter.getpostman.com/view/52377542/2sBXigMZP8"
+            postman: "https://documenter.getpostman.com/view/52377542/2sBXigMZP8",
+            video:""
         }
     ];
 </script>
@@ -77,6 +80,26 @@
                 <a href="/integrations" style="text-decoration: none; padding: 15px 30px; background-color: #f59e0b; color: white; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3); width: 100%; max-width: 500px; transition: background-color 0.2s;">
                     🔌 ACCEDER AL PANEL DE INTEGRACIONES
                 </a>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="endpoint-group" style="margin-bottom: 40px;">
+        <h3 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">🎞️ VÍDEOS</h3>
+        
+        <div style="border: 1px solid #cbd5e1; padding: 25px; border-radius: 8px; background: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            
+            <h4 style="margin-top: 0; color: #475569; margin-bottom: 20px; text-align: center; font-weight: normal; line-height: 1.5;">
+                Accede a los vídeos donde se muestran todas las funcionalidades de los proyectos realizados por los integrantes del grupo.
+            </h4>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                {#each apis as api}
+                    <a href="/analytics/{api.video}" style="text-decoration: none; padding: 12px 20px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 250px; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
+                        ⏯ {api.nombre}
+                    </a>
+                {/each}
             </div>
             
         </div>

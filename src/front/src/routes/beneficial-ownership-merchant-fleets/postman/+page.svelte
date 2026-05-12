@@ -1,6 +1,6 @@
 <div class="container" style="max-width: 800px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
     <h1 style="color: #333;">🚀 DOCUMENTACIÓN DE LA API<br>FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO</h1>
-    <p style="color: #666; font-size: 1.1em;">Aquí puedes encontrar los enlaces a la documentación oficial de la API de Flotas Mercantes (Alberto).</p>
+    <p style="color: #666; font-size: 1em;">Aquí puedes encontrar los enlaces a la documentación oficial de la API de Flotas Mercantes (Alberto).</p>
     
     <div style="background: #f8fafc; padding: 25px; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 20px;">
         <ul style="list-style-type: none; padding: 0; margin: 0;">
@@ -24,8 +24,8 @@
     </div>
 
     <div style="margin-top: 30px;">
-        <a href="/beneficial-ownership-merchant-fleets" style="text-decoration: none; padding: 10px 20px; background: #64748b; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center;">
-            ⬅️ IR A LA API
+        <a href="/beneficial-ownership-merchant-fleets/v2" style="text-decoration: none; padding: 10px 20px; background: #64748b; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center;">
+            ⬅️ IR A LA API (v2)
         </a>
     </div>
 </div>

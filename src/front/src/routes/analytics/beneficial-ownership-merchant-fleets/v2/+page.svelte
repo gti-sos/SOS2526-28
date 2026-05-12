@@ -6,12 +6,12 @@
 
     onMount(async () => {
         try {
-            // 1. OBTENGO LOS DATOS DE LA API
+            // 1.OBTENGO LOS DATOS DE LA API
             const res = await fetch('/api/v2/beneficial-ownership-merchant-fleets');
             if (!res.ok) throw new Error("Error al conectar con la API");
             const datosApi = await res.json();
 
-            // 2. CONFIGURACIÓN DE COLORES FIJOS (2014 - 2025)
+            // 2.CONFIGURACIÓN DE COLORES FIJOS (2014 - 2025)
             const colorPorAño = {
                 "2014": "#FF6B6B", // Rojo pastel
                 "2015": "#4ECDC4", // Turquesa
@@ -27,7 +27,7 @@
                 "2025": "#27AE60"  // Verde bosque
             };
 
-            // 3. PROCESAMIENTO DE DATOS
+            // 3.PROCESAMIENTO DE DATOS
             const registrosUnicos = [...new Set(datosApi.map(d => d.flag_of_registration_label))];
             
             const seriesPrincipal = [];
@@ -76,14 +76,14 @@
                 diccionarioDrilldown[reg] = seriesDeEsteReg;
             });
 
-            // 4. IMPORTACIONES SEGURAS PARA SVELTEKIT
+            // 4.IMPORTACIONES SEGURAS PARA SVELTEKIT
             const HighchartsModule = await import('highcharts');
             const Highcharts = HighchartsModule.default || HighchartsModule;
             const DrilldownModule = await import('highcharts/modules/drilldown');
             const drilldownFunc = DrilldownModule.default || DrilldownModule;
             if (typeof drilldownFunc === 'function') drilldownFunc(Highcharts);
 
-            // 5. INYECCIÓN Y CONFIGURACIÓN DEL LIENZO
+            // 5.INYECCIÓN Y CONFIGURACIÓN DEL LIENZO
             Highcharts.chart(chartContainer, {
                 chart: {
                     type: 'column',

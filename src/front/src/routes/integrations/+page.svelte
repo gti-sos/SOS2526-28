@@ -1,5 +1,5 @@
 <script>
-    // Array con los datos de los miembros y sus respectivas integraciones
+    // Array con los datos de los miembros y sus integraciones
     const integrantes = [
         {
             nombre: "Alberto Jiménez Mateos",
@@ -45,7 +45,6 @@
 
 <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
     
-    <!-- Cabecera y botón de volver -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
         <h1 style="margin: 0; color: #1e293b;">🔗 INTEGRACIONES Y USOS (RESTful / JSON)</h1>
         <a href="/" style="text-decoration: none; padding: 10px 20px; background-color: #475569; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(71, 85, 105, 0.3);">
@@ -53,14 +52,14 @@
         </a>
     </div>
 
-    <!-- Lista de tarjetas de integrantes -->
+    <!-- Tarjetas para las integraciones o usos de cada uno -->
     <div class="endpoint-group">
         <ul style="list-style-type: none; padding: 0;">
             
             {#each integrantes as integrante}
                 <li style="border: 1px solid #cbd5e1; padding: 25px; margin-bottom: 25px; border-radius: 8px; background: #f8fafc; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
                     
-                    <!-- Información del integrante -->
+                    <!-- cada tarjeta -->
                     <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
                         <h3 style="margin: 0 0 5px 0; color: #1e293b; font-size: 1.2rem;">{integrante.titulo}</h3>
                         <span style="display:block; font-weight: bold; color: #475569; font-size: 1rem;">
@@ -68,7 +67,7 @@
                         </span>
                     </div>
                     
-                    <!-- Lista Vertical de Integraciones -->
+                    <!-- Lista de Integraciones -->
                     <h4 style="margin-top: 0; color: #64748b; margin-bottom: 15px;">Lista de integraciones operativas:</h4>
 
                     <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">

@@ -252,10 +252,13 @@
 
     <h2 style="color: #1e293b; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
         🌍 Integración (Externa 2): Exportaciones
-    </h2>
+    </h2><br>
 
     <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
-        Este <strong>Mapa de Calor (Heatmap)</strong> compara a los principales países de manera equitativa, asignando una celda fija a cada variable. La intensidad del color (del blanco al azul oscuro) indica el peso relativo de ese país en el mercado mundial. Esto permite comparar gigantes logísticos con economías emergentes sin que ningún dato quede oculto por la escala gráfica.
+        <strong>Tipo de visualización:</strong> Mapa de Calor (Heatmap)
+    </p>
+    <p style="color: #475569; line-height: 1.6; font-size: 1.05rem; margin-bottom: 20px;">
+        <strong>Descripción de la integración:</strong> La api usada es pública y se ha obtenido de World Bank Open Data. Este gráfico compara distintos países, haciendo uso del color para indicar la importancia del mismo: cuanto más oscuro es el azul, mayor es su peso. Esto permite observar la diferencia entre grandes potencias logísticas comparando sus barcos (columna de la izquierda) y su poder comercial obtenido de las exportaciones (columna de la derecha).
     </p>
 
     <!-- Panel de Control -->
@@ -300,8 +303,8 @@
             DATOS FLOTA MERCANTE (v2)
         </a>
         
-        <a href="https://api.worldbank.org/v2/country/all/indicator/TX.VAL.MRCH.CD.WT?format=json" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
-            WORLD BANK OPEN DATA ➡
+        <a href="https://data.worldbank.org/indicator/TX.VAL.MRCH.CD.WT" target="_blank" style="text-decoration: none; padding: 12px 25px; background-color: #3b82f6; color: white; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            VER WORLD BANK OPEN DATA ➡
         </a>
     </div>
 </div>

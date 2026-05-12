@@ -33,6 +33,7 @@
     "express": "^5.2.1",
     "highcharts": "^12.6.0",
     "nedb": "^1.8.0",
+    "request": "^2.88.2",
     "topojson": "^3.0.2"
   },
   "devDependencies": {

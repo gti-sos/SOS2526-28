@@ -160,7 +160,7 @@
     // GET BUSCADOR MULTICAMPO Y POR RANGOS (NUEVA LÓGICA)
     async function searchFleet() {
         try {
-            // 1. Mandamos las búsquedas de texto a la API mediante Query Parameters
+            // 1. Mando las búsquedas de texto a la API mediante Query Parameters
             let queryParams = [];
             if (searchFlag) queryParams.push(`flag_of_registration_label=${encodeURIComponent(searchFlag)}`);
             if (searchOwner) queryParams.push(`beneficial_ownership_label=${encodeURIComponent(searchOwner)}`);
@@ -177,7 +177,7 @@
                 // Por si la API devuelve un solo objeto en vez de un array
                 if (!Array.isArray(data)) data = [data];
 
-                // 2. Filtramos localmente por los rangos numéricos si el usuario los ha rellenado
+                // 2. Filtro localmente por los rangos numéricos si el usuario los ha rellenado
                 if (searchYearMin !== "") data = data.filter(d => d.year >= Number(searchYearMin));
                 if (searchYearMax !== "") data = data.filter(d => d.year <= Number(searchYearMax));
                 
@@ -190,7 +190,7 @@
                 if (searchPercentMin !== "") data = data.filter(d => d.percentage_of_total_fleet >= Number(searchPercentMin));
                 if (searchPercentMax !== "") data = data.filter(d => d.percentage_of_total_fleet <= Number(searchPercentMax));
 
-                fleets = data; // Actualizamos la tabla
+                fleets = data; // Actualizo la tabla
                 
                 if (fleets.length > 0) {
                     successMsg = "✅ Recurso encontrado.";
