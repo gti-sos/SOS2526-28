@@ -19,7 +19,7 @@
             recurso: "deliberate-violence-against-civilians-events-worldwide",
             titulo: "ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO",
             postman: "https://documenter.getpostman.com/view/52833055/2sBXigMZ14",
-            video:""
+            video:"https://youtu.be/qFAHxdnCOLA"
         },
         {
             nombre: "Muhammad Zhillan Averous",
@@ -96,7 +96,7 @@
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
                 {#each apis as api}
-                    <a href="/analytics/{api.video}" style="text-decoration: none; padding: 12px 20px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 250px; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
+                    <a href="{api.video}" style="text-decoration: none; padding: 12px 20px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 250px; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
                         ⏯ {api.nombre}
                     </a>
                 {/each}
