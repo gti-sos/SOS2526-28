@@ -27,7 +27,7 @@
             });
 
             // 2. Obtener datos del compañero: conflict-stats (grupo 13)
-            const conflictRes = await fetch('https://sos2526-13-production.up.railway.app/api/v2/conflict-stats');
+            const conflictRes = await fetch('https://sos2526-13.onrender.com/api/v2/conflict-stats');
             const conflictData = await conflictRes.json();
 
             const intensityByYear = {};
