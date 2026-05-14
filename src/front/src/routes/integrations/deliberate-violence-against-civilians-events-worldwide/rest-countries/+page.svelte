@@ -17,7 +17,7 @@
             loading = true;
 
             // 1. Tus datos: violence events
-            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
+            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide');
             const violenceData = await violenceRes.json();
 
             // Obtener códigos ISO únicos
@@ -126,7 +126,7 @@
 
     <div class="info-api">
         <p><strong>API 1 (propia):</strong> Deliberate Violence Against Civilians Events Worldwide</p>
-        <p><strong>API 2 (externa):</strong> REST Countries — <code>restcountries.com/v3.1/alpha/&#123;code&#125;</code></p>
+        <p><strong>API 2 (externa):</strong> REST Countries — <code class="svelte-1qlqszf">restcountries.com/v3.1/alpha/&#123;code&#125;</code></p>
     </div>
 
     {#if loading}

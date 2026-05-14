@@ -17,7 +17,7 @@
             loading = true;
 
             // 1. Tus datos: violence events
-            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
+            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide');
             const violenceData = await violenceRes.json();
 
             // Contar eventos por país y obtener códigos únicos
@@ -151,7 +151,7 @@
         <p><strong>API 1 (propia):</strong> Deliberate Violence Against Civilians Events Worldwide</p>
         <p>
             <strong>API 2 (externa):</strong> World Bank Indicators —
-            <code>api.worldbank.org/v2/country/&#123;code&#125;/indicator/MS.MIL.XPND.CD</code>
+            <code class="svelte-1qlqszf">https://api.worldbank.org/v2/country/&#123;code&#125;/indicator/MS.MIL.XPND.CD?format=json&per_page=100&mrv=1</code>
         </p>
     </div>
 

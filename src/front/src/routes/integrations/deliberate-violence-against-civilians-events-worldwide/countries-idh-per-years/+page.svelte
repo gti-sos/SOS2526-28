@@ -31,7 +31,7 @@
             await fetch('https://sos2526-26.onrender.com/api/v2/countries-idh-per-years/loadInitialData')
                 .catch(() => {});
 
-            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
+            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide');
             const violenceData = await violenceRes.json();
 
             const eventosPorPais = {};
@@ -156,7 +156,7 @@
 
     <div class="info-api">
         <p><strong>API 1 (propia):</strong> Deliberate Violence Against Civilians Events Worldwide — eventos por país</p>
-        <p><strong>API 2 (compañero SOS-28):</strong> Countries IDH per Years — IDH medio por país</p>
+        <p><strong>API 2 (SOS-26):</strong> Countries IDH per Years — IDH medio por país <code class="svelte-1qlqszf">https://sos2526-26.onrender.com/api/v2/countries-idh-per-years/</code></p>
     </div>
 
     {#if loading}

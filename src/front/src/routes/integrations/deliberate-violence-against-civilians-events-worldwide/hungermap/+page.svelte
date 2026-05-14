@@ -1,6 +1,5 @@
-
 <script>
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
 
     let loading = $state(true);
     let error = $state(null);
@@ -17,15 +16,33 @@
     ];
 
     onMount(() => {
-        fetchData();
+        loadScripts().then(() => fetchData());
     });
+
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            if (document.querySelector(`script[src="${src}"]`)) {
+                resolve(); return;
+            }
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    async function loadScripts() {
+        await loadScript('https://code.highcharts.com/highcharts.js');
+        await loadScript('https://code.highcharts.com/modules/variable-pie.js');
+    }
 
     async function fetchData() {
         try {
             loading = true;
 
             // 1. Tu API: eventos de violencia por país
-            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide?limit=1000');
+            const violenceRes = await fetch('/api/v1/deliberate-violence-against-civilians-events-worldwide');
             const violenceData = await violenceRes.json();
 
             const eventosPorPais = {};
@@ -82,7 +99,8 @@
             tableData = filas.sort((a, b) => b.eventos - a.eventos);
 
             loading = false;
-            setTimeout(() => initChart(seriesData), 300);
+            await tick(); // ← espera a que Svelte renderice #chart-container
+            initChart(seriesData);
 
         } catch (e) {
             console.error('Error:', e);
@@ -123,12 +141,6 @@
         });
     }
 </script>
-
-<svelte:head>
-    <title>Violencia contra Civiles vs Inflación Alimentaria</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
-</svelte:head>
 
 <div class="integration-container">
     <h1>💥 Violencia contra Civiles vs 🍽️ Inflación Alimentaria</h1>

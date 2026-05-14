@@ -134,7 +134,7 @@
 
     <div class="info-api">
         <p><strong>API 1 (propia):</strong> Deliberate Violence Against Civilians Events Worldwide — agrupado por año</p>
-        <p><strong>API 2 (compañero SOS-13):</strong> Conflict Stats — intensidad media por año</p>
+        <p><strong>API 2 (SOS-13):</strong> Conflict Stats — intensidad media por año <code class="svelte-1qlqszf">https://sos2526-13.onrender.com/api/v2/conflict-stats</code></p>
     </div>
 
     {#if loading}
