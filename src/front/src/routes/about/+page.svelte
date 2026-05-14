@@ -3,15 +3,18 @@
     const teamMembers = [
         {
             name: "ALBERTO JIMÉNEZ MATEOS",
-            github: "https://github.com/AlbertoJimenezMateos"
+            github: "https://github.com/AlbertoJimenezMateos",
+            video: ""
         },
         {
             name: "JORGE DAYOUB DAYOUB",
-            github: "https://github.com/jorgedx2"
+            github: "https://github.com/jorgedx2",
+            video: "https://youtu.be/qFAHxdnCOLA"
         },
         {
             name: "MUHAMMAD ZHILLAN AVEROUS",
-            github: "https://github.com/zaverous"
+            github: "https://github.com/zaverous",
+            video: ""
         }
     ];
 
@@ -27,6 +30,7 @@
         url: "/api/v1/deliberate-violence-against-civilians-events-worldwide", 
         fuente: " (ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO)", 
         urlFuente: "https://parusanalytics.com/eventdata/data.dir/atrocities.html"},
+       
 
         { name: "API ZHILLAN  ", 
         url: "/api/v1/company-esg-scores-financial-performances", 
@@ -65,6 +69,19 @@
         </div>
     </div>
 
+    <div style="margin-bottom: 40px;">
+        <h3 style="color: #334155;">👥 VIDEOS</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+            {#each teamMembers as member}
+                <div style="border: 1px solid #cbd5e1; padding: 20px; border-radius: 8px; background: #f8fafc; text-align: center;">
+                    <h5 style="margin-top: 0; color: #1e293b; font-size: 0.9em;">{member.name}</h5>
+                    <a href={member.video} target="_blank" rel="noopener noreferrer" style="text-decoration: none; padding: 8px 15px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-block; margin-top: 10px;">
+                        ⏯ VER FUNCIONALIDADES
+                    </a>
+                </div>
+            {/each}
+        </div>
+    </div>
 
     <div style="margin-bottom: 40px;">
         <h3 style="color: #334155;">🔗 ENLACES</h3>
