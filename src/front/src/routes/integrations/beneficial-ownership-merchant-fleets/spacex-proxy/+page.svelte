@@ -112,7 +112,7 @@
             chart:{
                 height: 750
             },
-            tittle:{
+            title:{
                 text: 'Flujo de Naves SpaceX: Puertos a Tipos de Embarcación'
             },
             series: [{
