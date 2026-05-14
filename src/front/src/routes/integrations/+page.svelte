@@ -18,7 +18,7 @@
             nombre: "Jorge Dayoub Dayoub",
             titulo: "ACTOS DE VIOLENCIA DELIBERADA CONTRA CIVILES EN TODO EL MUNDO",
             integraciones: [
-                { nombre: "🛡️ Integración Externa (Vía Proxy Propio) HungerMap", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/hungermap", color: "#f59e0b" },
+                { nombre: "🛡️ Integración Externa (Vía Proxy Propio): HungerMap", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/hungermap", color: "#f59e0b" },
                 { nombre: "🌍 Integración Externa 2: Informacion demográfica", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/rest-countries", color: "#3b82f6" },
                 { nombre: "🌍 Integración Externa 3: Gasto Militar Global", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/world-bank-military", color: "#0ea5e9" },
                 { nombre: "🎓 Integración SOS (Grupo 13): Estadistica de conflictos", url: "/integrations/deliberate-violence-against-civilians-events-worldwide/conflict-stats", color: "#10b981" },
