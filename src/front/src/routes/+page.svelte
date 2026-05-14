@@ -9,7 +9,7 @@
             recurso: "beneficial-ownership-merchant-fleets",
             titulo: "FLOTA MERCANTE POR PAÍS DE BENEFICIARIO EFECTIVO",
             postman: "/beneficial-ownership-merchant-fleets/postman",
-            video:"",
+            video:"https://youtu.be/K1y5U3FcWh0",
             hasV2: true,
             recursov2: "beneficial-ownership-merchant-fleets/v2"
 
@@ -96,7 +96,7 @@
             
             <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
                 {#each apis as api}
-                    <a href="{api.video}" style="text-decoration: none; padding: 12px 20px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 250px; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
+                    <a href="{api.video}" target="_blank" style="text-decoration: none; padding: 12px 20px; background-color: #F54927; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; text-align: center; flex: 1; min-width: 250px; box-shadow: 0 4px 6px rgba(168, 85, 247, 0.2);">
                         ⏯ {api.nombre}
                     </a>
                 {/each}

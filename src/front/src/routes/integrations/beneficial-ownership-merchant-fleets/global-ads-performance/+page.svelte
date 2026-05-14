@@ -47,8 +47,10 @@
             let acumuladorGasto = { "Oceania": 0, "North America": 0, "Asia": 0, "Europe": 0, "Resto del mundo": 0 };
 
             misDatos.forEach(dato => {
-                let region = mapaRegiones[dato.beneficial_ownership_label] || "Resto del mundo";
+                if (Number(dato.year) === 2024) {
+                    let region = mapaRegiones[dato.beneficial_ownership_label] || "Resto del mundo";
                 acumuladorBarcos[region] += (Number(dato.number_of_ships) || 0);
+                }
             });
 
             susDatos.forEach(dato => {

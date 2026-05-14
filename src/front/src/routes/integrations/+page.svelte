@@ -46,10 +46,7 @@
 <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
-        <h1 style="margin: 0; color: #1e293b;">🔗 INTEGRACIONES Y USOS (RESTful / JSON)</h1>
-        <a href="/" style="text-decoration: none; padding: 10px 20px; background-color: #475569; color: white; border-radius: 5px; font-weight: bold; font-size: 14px; box-shadow: 0 2px 4px rgba(71, 85, 105, 0.3);">
-            ⬅️ VOLVER AL INICIO
-        </a>
+        <h1 style="margin: 0; color: #1e293b;">🔗 INTEGRACIONES Y USOS</h1>
     </div>
 
     <!-- Tarjetas para las integraciones o usos de cada uno -->

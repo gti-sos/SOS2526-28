@@ -6,12 +6,12 @@
 
     onMount(async () => {
         try {
-            // 1.OBTENGO LOS DATOS DE LA API
+            // OBTENGO LOS DATOS DE LA API
             const res = await fetch('/api/v1/beneficial-ownership-merchant-fleets');
             if (!res.ok) throw new Error("Error al conectar con la API");
             const datosApi = await res.json();
 
-            // 2.CONFIGURACIÓN DE COLORES FIJOS (2014 - 2025)
+            // CONFIGURACIÓN DE COLORES FIJOS (2014 - 2025)
             const colorPorAño = {
                 "2014": "#FF6B6B", // Rojo pastel
                 "2015": "#4ECDC4", // Turquesa
@@ -27,7 +27,7 @@
                 "2025": "#27AE60"  // Verde bosque
             };
 
-            // 3.PROCESAMIENTO DE DATOS
+            // PROCESAMIENTO DE DATOS
             const registrosUnicos = [...new Set(datosApi.map(d => d.flag_of_registration_label))];
             
             const seriesPrincipal = [];
@@ -83,11 +83,11 @@
             const drilldownFunc = DrilldownModule.default || DrilldownModule;
             if (typeof drilldownFunc === 'function') drilldownFunc(Highcharts);
 
-            // 5.INYECCIÓN Y CONFIGURACIÓN DEL LIENZO
+            // VISUALIZACIÓN
             Highcharts.chart(chartContainer, {
                 chart: {
                     type: 'column',
-                    // EVENTO MANUAL: Evita el bug de Highcharts que borra las series
+                    // EVENTO MANUAL: Evita que Highcharts borre las series
                     events: {
                         drilldown: function (e) {
                             if (!e.seriesOptions) {

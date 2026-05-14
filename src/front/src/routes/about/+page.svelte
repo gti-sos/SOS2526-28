@@ -4,7 +4,7 @@
         {
             name: "ALBERTO JIMÉNEZ MATEOS",
             github: "https://github.com/AlbertoJimenezMateos",
-            video: ""
+            video: "https://youtu.be/K1y5U3FcWh0"
         },
         {
             name: "JORGE DAYOUB DAYOUB",
